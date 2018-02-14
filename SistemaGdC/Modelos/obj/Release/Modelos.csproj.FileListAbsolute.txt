@@ -1,0 +1,11 @@
+C:\Users\user Dell\Documents\Visual Studio 2015\Projects\SistemaGdC\Modelos\bin\Release\Modelos.pdb
+C:\Users\user Dell\Documents\Visual Studio 2015\Projects\SistemaGdC\Modelos\obj\Release\Modelos.pdb
+C:\Users\user Dell\Documents\Visual Studio 2015\Projects\SistemaGdC\Modelos\bin\Release\Modelos.dll.config
+C:\Users\user Dell\Documents\Visual Studio 2015\Projects\SistemaGdC\Modelos\bin\Release\Modelos.dll
+C:\Users\user Dell\Documents\Visual Studio 2015\Projects\SistemaGdC\Modelos\obj\Release\Modelos.dll
+C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Modelos\bin\Release\Modelos.dll.config
+C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Modelos\bin\Release\Modelos.dll
+C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Modelos\bin\Release\Modelos.pdb
+C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Modelos\obj\Release\Modelos.csprojResolveAssemblyReference.cache
+C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Modelos\obj\Release\Modelos.dll
+C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Modelos\obj\Release\Modelos.pdb

@@ -1,0 +1,12 @@
+C:\Users\user Dell\Documents\Visual Studio 2015\Projects\SistemaGdC\Modelos\bin\Debug\Modelos.pdb
+C:\Users\user Dell\Documents\Visual Studio 2015\Projects\SistemaGdC\Modelos\obj\Debug\Modelos.pdb
+C:\Users\user Dell\Documents\Visual Studio 2015\Projects\SistemaGdC\Modelos\bin\Debug\Modelos.dll.config
+C:\Users\user Dell\Documents\Visual Studio 2015\Projects\SistemaGdC\Modelos\bin\Debug\Modelos.dll
+C:\Users\user Dell\Documents\Visual Studio 2015\Projects\SistemaGdC\Modelos\obj\Debug\Modelos.dll
+C:\Users\user Dell\Documents\Visual Studio 2015\Projects\SistemaGdC\Modelos\obj\Debug\Modelos.csprojResolveAssemblyReference.cache
+C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Modelos\bin\Debug\Modelos.dll.config
+C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Modelos\bin\Debug\Modelos.dll
+C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Modelos\bin\Debug\Modelos.pdb
+C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Modelos\obj\Debug\Modelos.dll
+C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Modelos\obj\Debug\Modelos.pdb
+C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Modelos\obj\Debug\Modelos.csprojResolveAssemblyReference.cache

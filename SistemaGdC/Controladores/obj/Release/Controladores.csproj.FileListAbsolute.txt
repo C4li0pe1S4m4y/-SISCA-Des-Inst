@@ -1,0 +1,18 @@
+C:\Users\user Dell\Documents\Visual Studio 2015\Projects\SistemaGdC\Controladores\bin\Release\Controladores.pdb
+C:\Users\user Dell\Documents\Visual Studio 2015\Projects\SistemaGdC\Controladores\bin\Release\MySql.Data.dll
+C:\Users\user Dell\Documents\Visual Studio 2015\Projects\SistemaGdC\Controladores\bin\Release\Modelos.pdb
+C:\Users\user Dell\Documents\Visual Studio 2015\Projects\SistemaGdC\Controladores\obj\Release\Controladores.csprojResolveAssemblyReference.cache
+C:\Users\user Dell\Documents\Visual Studio 2015\Projects\SistemaGdC\Controladores\obj\Release\Controladores.pdb
+C:\Users\user Dell\Documents\Visual Studio 2015\Projects\SistemaGdC\Controladores\bin\Release\Controladores.dll.config
+C:\Users\user Dell\Documents\Visual Studio 2015\Projects\SistemaGdC\Controladores\bin\Release\Controladores.dll
+C:\Users\user Dell\Documents\Visual Studio 2015\Projects\SistemaGdC\Controladores\bin\Release\Modelos.dll
+C:\Users\user Dell\Documents\Visual Studio 2015\Projects\SistemaGdC\Controladores\obj\Release\Controladores.dll
+C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Controladores\bin\Release\Controladores.dll.config
+C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Controladores\bin\Release\Controladores.dll
+C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Controladores\bin\Release\Controladores.pdb
+C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Controladores\bin\Release\Modelos.dll
+C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Controladores\bin\Release\MySql.Data.dll
+C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Controladores\bin\Release\Modelos.pdb
+C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Controladores\obj\Release\Controladores.csprojResolveAssemblyReference.cache
+C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Controladores\obj\Release\Controladores.dll
+C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Controladores\obj\Release\Controladores.pdb
