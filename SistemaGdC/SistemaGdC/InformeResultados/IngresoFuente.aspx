@@ -33,16 +33,11 @@
                         <label class="col-sm-2"><span style="font-size: small">Dependencia</span>: </label>
                         <asp:DropDownList ID="ddlDependencia" CssClass="dropdown input-sm" Width="100%" runat="server" Enabled="true"></asp:DropDownList>
                     </div>
-
-
-
-
                     <div class="col-sm-12">
                         <label class="col-sm-2"><span style="font-size: small">Descripcion</span>: </label>
                         <asp:TextBox ID="txtDescripcion" Width="100%" CssClass="form-control col-lg-8" TextMode="MultiLine" runat="server"></asp:TextBox>
                         <br />
                     </div>
-
                 </div>
             </div>
             <asp:Panel ID="pSatisfaccionCliente" runat="server" Visible="false">

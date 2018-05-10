@@ -12,11 +12,11 @@ namespace SistemaGdC.InformeResultados
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            cInformeResultados informe = new cInformeResultados();
+            cInformeEI informe = new cInformeEI();
             if (!IsPostBack)
             {
-                gvListadoAcciones.DataSource = informe.ListadoAcciones(Convert.ToInt16(Request.QueryString["idInforme"]));
-                gvListadoAcciones.DataBind();
+                string fullname2 = Request["Correlativo"];
+                //Response.Redirect("~/InformeResultados/ListadoAcciones.aspx?idInforme=" + lblCorr.Text);
             }
            
         }

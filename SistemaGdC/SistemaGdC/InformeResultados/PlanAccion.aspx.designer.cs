@@ -13,6 +13,15 @@ namespace SistemaGdC.InformeResultados {
     public partial class PlanAccion {
         
         /// <summary>
+        /// Control updatepanel1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel updatepanel1;
+        
+        /// <summary>
         /// Control txtanio.
         /// </summary>
         /// <remarks>
@@ -40,22 +49,22 @@ namespace SistemaGdC.InformeResultados {
         protected global::System.Web.UI.WebControls.DropDownList ddldependencia;
         
         /// <summary>
-        /// Control lblEvaluacion.
+        /// Control txtEvaluacion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList lblEvaluacion;
+        protected global::System.Web.UI.WebControls.TextBox txtEvaluacion;
         
         /// <summary>
-        /// Control ddlHallazgo.
+        /// Control txtHallazgo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlHallazgo;
+        protected global::System.Web.UI.WebControls.TextBox txtHallazgo;
         
         /// <summary>
         /// Control ddlTipoAccionInforme.
@@ -85,13 +94,13 @@ namespace SistemaGdC.InformeResultados {
         protected global::System.Web.UI.WebControls.DropDownList ddlTecnicaAnalisis;
         
         /// <summary>
-        /// Control txtCausa.
+        /// Control RFVddlTecnicaAnalisis.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCausa;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVddlTecnicaAnalisis;
         
         /// <summary>
         /// Control ddlLider.
@@ -103,6 +112,60 @@ namespace SistemaGdC.InformeResultados {
         protected global::System.Web.UI.WebControls.DropDownList ddlLider;
         
         /// <summary>
+        /// Control RFVddlLider.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVddlLider;
+        
+        /// <summary>
+        /// Control txtCausa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCausa;
+        
+        /// <summary>
+        /// Control RFVtxtCausa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVtxtCausa;
+        
+        /// <summary>
+        /// Control FileEvidencia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload FileEvidencia;
+        
+        /// <summary>
+        /// Control btnCancelar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancelar;
+        
+        /// <summary>
+        /// Control btnDescargar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDescargar;
+        
+        /// <summary>
         /// Control btnGuardarCausa.
         /// </summary>
         /// <remarks>
@@ -112,13 +175,13 @@ namespace SistemaGdC.InformeResultados {
         protected global::System.Web.UI.WebControls.Button btnGuardarCausa;
         
         /// <summary>
-        /// Control lblPlan.
+        /// Control UpdatePanel2.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPlan;
+        protected global::System.Web.UI.UpdatePanel UpdatePanel2;
         
         /// <summary>
         /// Control txtAccionRealizar.
@@ -130,6 +193,15 @@ namespace SistemaGdC.InformeResultados {
         protected global::System.Web.UI.WebControls.TextBox txtAccionRealizar;
         
         /// <summary>
+        /// Control RFVtxtAccionRealizar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVtxtAccionRealizar;
+        
+        /// <summary>
         /// Control ddlResponsable.
         /// </summary>
         /// <remarks>
@@ -137,6 +209,15 @@ namespace SistemaGdC.InformeResultados {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlResponsable;
+        
+        /// <summary>
+        /// Control RFVddlResponsable.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVddlResponsable;
         
         /// <summary>
         /// Control txtFechaInicio.
@@ -148,6 +229,15 @@ namespace SistemaGdC.InformeResultados {
         protected global::System.Web.UI.WebControls.TextBox txtFechaInicio;
         
         /// <summary>
+        /// Control RFVtxtFechaInicio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVtxtFechaInicio;
+        
+        /// <summary>
         /// Control txtFechaFin.
         /// </summary>
         /// <remarks>
@@ -155,6 +245,15 @@ namespace SistemaGdC.InformeResultados {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFechaFin;
+        
+        /// <summary>
+        /// Control RFVtxtFechaFin.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVtxtFechaFin;
         
         /// <summary>
         /// Control txtObservaciones.
@@ -191,5 +290,14 @@ namespace SistemaGdC.InformeResultados {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvListado;
+        
+        /// <summary>
+        /// Control btnFinalizar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnFinalizar;
     }
 }

@@ -10,49 +10,52 @@ namespace SistemaGdC.Usuarios
 {
     public partial class IngresoUsuarios : System.Web.UI.Page
     {
-        cGeneral cgDatos;
-        cUsuarios objUsuarios;
+        cGeneral cgDatos = new cGeneral();
+        cUsuarios cUsuarios = new cUsuarios();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                txtNombre.Text = "";
+                //txtNombre.Text = "";
                 txtUsuario.Text = "";
                 ddlEmpleado.ClearSelection();
                 ddlEmpleado.Items.Clear();
                 ddlEmpleado.AppendDataBoundItems = true;
                 ddlEmpleado.Items.Add("<< Elija Empleado >>");
                 ddlEmpleado.Items[0].Value = "0";
-                cgDatos = new  cGeneral();
                 ddlEmpleado.DataSource = cgDatos.dropEmpleados();
                 ddlEmpleado.DataTextField = "texto";
                 ddlEmpleado.DataValueField = "id";
                 ddlEmpleado.DataBind();
+
+                ddlTipoUsuario.ClearSelection();
+                ddlTipoUsuario.Items.Clear();
+                ddlTipoUsuario.AppendDataBoundItems = true;
+                ddlTipoUsuario.Items.Add("<< Elita Tipo de Usuario >>");
+                ddlTipoUsuario.Items[0].Value = "0";
+                ddlTipoUsuario.DataSource = cUsuarios.dropTipoUsuario();
+                ddlTipoUsuario.DataTextField = "nombre";
+                ddlTipoUsuario.DataValueField = "id";
+                ddlTipoUsuario.DataBind();
             }
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            objUsuarios = new cUsuarios();
-            if (txtNombre.Text !="")
+            //cUsuarios = new cUsuarios();
+            if (ddlEmpleado.SelectedValue !="0")
             {
                 if (txtUsuario.Text !="")
                 {
-                    objUsuarios = new cUsuarios();
-                   if( objUsuarios.IngresoNuevoUsuario(txtUsuario.Text, txtcontra.Text, ddlEmpleado.SelectedValue))
+                   // objUsuarios = new cUsuarios();
+                   if(cUsuarios.IngresoNuevoUsuario(txtUsuario.Text, txtcontra.Text, ddlEmpleado.SelectedValue, ddlTipoUsuario.SelectedValue))
                     {
-                        lblResultado.Visible = true;
-                        lblResultado.Text = "Ingresado Correctamente";
-                        txtNombre.Text = "";
-                        txtUsuario.Text = "";
-                        ddlEmpleado.Items[0].Value = "0";
+                        ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Usuario ingresado exitosamente!', '', 'success');", true);
                     }
                     else
                     {
-                        lblResultado.Visible = true;
-                        lblResultado.Text = "Error al inseretar";
-                    }
-                    
+                        ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Ya existe usuario', 'Por favor intente con otro nombre de usuario', 'warning');", true);
+                    }                    
                 }
             }
         }

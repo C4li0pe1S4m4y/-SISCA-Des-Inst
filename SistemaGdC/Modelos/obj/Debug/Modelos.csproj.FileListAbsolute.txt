@@ -10,3 +10,9 @@ C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Modelos\bin\Debug\Modelos
 C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Modelos\obj\Debug\Modelos.dll
 C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Modelos\obj\Debug\Modelos.pdb
 C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Modelos\obj\Debug\Modelos.csprojResolveAssemblyReference.cache
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\Modelos\bin\Debug\Modelos.dll.config
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\Modelos\bin\Debug\Modelos.dll
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\Modelos\bin\Debug\Modelos.pdb
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\Modelos\obj\Debug\Modelos.csprojResolveAssemblyReference.cache
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\Modelos\obj\Debug\Modelos.dll
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\Modelos\obj\Debug\Modelos.pdb

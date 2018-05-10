@@ -1,10 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Controladores
 {
@@ -17,7 +12,7 @@ namespace Controladores
             DataTable tabla = new DataTable();
             conectar.AbrirConexion();
             string query = "SELECT se.id_empleado id,COALESCE(CONCAT(se.id_empleado, ' - ', se.nombre, ' '), 'S/D') texto "+
-                "FROM dbcdagsgc.sgc_empleados se WHERE estado = 1  ORDER BY se.nombre;";
+                "FROM dbcdagsgc2.sgc_empleados se ORDER BY se.id_empleado;";
             MySqlDataAdapter consulta = new MySqlDataAdapter(query, conectar.conectar);
             consulta.Fill(tabla);
             conectar.CerrarConexion();

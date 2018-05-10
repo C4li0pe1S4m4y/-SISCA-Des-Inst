@@ -13,7 +13,9 @@ namespace Modelos
         public string tecnica_analisis { get; set; }
         public string causa_raiz { get; set; }
         public int id_lider { get; set; }
-        public string usuario_ing { get; set; }
-        public string fecha { get; set; }
+        public string usuario_ingreso { get; set; }
+        public string fecha_ingreso { get; set; }
+        public int id_accion_generada { get; set; }
+        public int id_status { get; set; }
     }
 }

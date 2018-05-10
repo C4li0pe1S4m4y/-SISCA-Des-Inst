@@ -12,9 +12,10 @@ namespace Modelos
         public int id_plan { get; set; }
         public string accion { get; set; }
         public string responsable { get; set; }
-        public string fechaInicio { get; set; }
-        public string fechaFinal { get; set; }
+        public string fecha_inicio { get; set; }
+        public string fecha_fin { get; set; }
         public string observaciones { get; set; }
+        public int id_status { get; set; }
 
     }
 }

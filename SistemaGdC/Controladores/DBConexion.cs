@@ -10,7 +10,8 @@ namespace Controladores
 {
     public class DBConexion
     {
-        private String contenido = "server=localhost; database =dbcdagsgc;user=usr_cdag_sipa; password =5sr_cd1g_s3pa";
+        //private String contenido = "server=localhost; database =dbcdagsgc;user=usr_cdag_sipa; password =5sr_cd1g_s3pa";
+        private String contenido = "server=localhost; database =dbcdagsgc2;user=root; password =123456; Allow User Variables=True";
         //private String contenido = "server=localhost; database =dbcdagsgc;user=root; password =1234";
         public MySqlConnection conectar = new MySqlConnection();
         public MySqlDataAdapter adaptador = new MySqlDataAdapter();
@@ -30,7 +31,7 @@ namespace Controladores
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex + "Fallo en la Conexión");
+                Console.WriteLine(ex + "Falló en la Conexión");
                 throw;
             }
         }

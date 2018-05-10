@@ -63,9 +63,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="cAcciones.cs" />
+    <Compile Include="cActividades.cs" />
+    <Compile Include="cCorreo.cs" />
+    <Compile Include="cDashboard.cs" />
     <Compile Include="cGeneral.cs" />
-    <Compile Include="cInformeCorrecion.cs" />
-    <Compile Include="cInformeResultados.cs" />
+    <Compile Include="cInformeOM.cs" />
+    <Compile Include="cInformeCO.cs" />
+    <Compile Include="cInformeEI.cs" />
     <Compile Include="cMenu.cs" />
     <Compile Include="cPlanAcion.cs" />
     <Compile Include="cUsuarios.cs" />

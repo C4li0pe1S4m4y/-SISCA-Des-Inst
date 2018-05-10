@@ -13,6 +13,15 @@ namespace SistemaGdC.InformeResultados {
     public partial class InformeCorrecion {
         
         /// <summary>
+        /// Control UpdatePanelResponsable.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanelResponsable;
+        
+        /// <summary>
         /// Control txtanio.
         /// </summary>
         /// <remarks>
@@ -40,22 +49,22 @@ namespace SistemaGdC.InformeResultados {
         protected global::System.Web.UI.WebControls.DropDownList ddldependencia;
         
         /// <summary>
-        /// Control ddlEvaluacion.
+        /// Control txtEvaluacion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlEvaluacion;
+        protected global::System.Web.UI.WebControls.TextBox txtEvaluacion;
         
         /// <summary>
-        /// Control ddlHallazgo.
+        /// Control txtHallazgo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlHallazgo;
+        protected global::System.Web.UI.WebControls.TextBox txtHallazgo;
         
         /// <summary>
         /// Control ddlTipoAccionInforme.
@@ -85,13 +94,31 @@ namespace SistemaGdC.InformeResultados {
         protected global::System.Web.UI.WebControls.DropDownList ddlEstado;
         
         /// <summary>
-        /// Control txtOportunidades.
+        /// Control ddlLider.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtOportunidades;
+        protected global::System.Web.UI.WebControls.DropDownList ddlLider;
+        
+        /// <summary>
+        /// Control FileEvidencia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload FileEvidencia;
+        
+        /// <summary>
+        /// Control txtAccionRealizada.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtAccionRealizada;
         
         /// <summary>
         /// Control txtDesEvidencia.
@@ -103,31 +130,13 @@ namespace SistemaGdC.InformeResultados {
         protected global::System.Web.UI.WebControls.TextBox txtDesEvidencia;
         
         /// <summary>
-        /// Control cbxEvidencia.
+        /// Control btnCancelar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox cbxEvidencia;
-        
-        /// <summary>
-        /// Control txtRutaEvidencia.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtRutaEvidencia;
-        
-        /// <summary>
-        /// Control ddlLider.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlLider;
+        protected global::System.Web.UI.WebControls.Button btnCancelar;
         
         /// <summary>
         /// Control btnGuardar.
@@ -137,14 +146,5 @@ namespace SistemaGdC.InformeResultados {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnGuardar;
-        
-        /// <summary>
-        /// Control btnNuevo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnNuevo;
     }
 }

@@ -9,19 +9,21 @@ namespace Modelos
     public class mAccionesGeneradas
     {
         public int id_accion_generada { get; set; }
-        public int id_informe { get; set; }
-        public int id_accion { get; set; }
-        public int no_correlativo_accion { get; set; }
+        public int correlativo_hallazgo { get; set; }
         public string norma { get; set; }
-        public int id_unidad { get; set; }
-        public int id_dependecia { get; set; }
         public string descripcion { get; set; }
-        public int id_enlace { get; set; }
+        public string fecha { get; set; }
+        public string fecha_inicio { get; set; }
+        public string fecha_fin { get; set; }
+        public int id_status { get; set; }
+        public int anio_informe_ei { get; set; }
+        public int no_informe_ei { get; set; }
         public int id_analista { get; set; }
-        public string fecha_accion { get; set; }
-        public int id_tipo_accion { get; set; }
-        public string fecha_recepcion { get; set; }
+        public int id_enlace { get; set; }
+        public int id_unidad { get; set; }
+        public int id_dependencia { get; set; }
+        public int id_ccl_accion_generada { get; set; }
         public int id_proceso { get; set; }
-
+        public int id_tipo_accion { get; set; }
     }
 }

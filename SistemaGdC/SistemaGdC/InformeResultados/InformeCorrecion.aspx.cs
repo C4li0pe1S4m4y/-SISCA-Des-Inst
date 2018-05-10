@@ -7,24 +7,39 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.IO;
 
 namespace SistemaGdC.InformeResultados
 {
     public partial class InformeCorrecion : System.Web.UI.Page
     {
-        cInformeResultados cResultados;
+        cInformeEI cResultados = new cInformeEI();
         cGeneral cGen;
-        cInformeCorrecion cInfoCorrec;
+        cInformeCO cInfoCorrec;
+        mAccionesGeneradas mAccionG = new mAccionesGeneradas();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                cResultados = new cInformeResultados();
-                txtanio.Text = "2017";
+                mAccionG = cResultados.Obtner_AccionGenerada(int.Parse(Session["noAccion"].ToString()));
+
+                txtanio.Text = mAccionG.anio_informe_ei.ToString();
                 cResultados.dropUnidad(ddlunidad);
-                cInfoCorrec = new cInformeCorrecion();
+                ddlunidad.SelectedValue = mAccionG.id_unidad.ToString();
+                cResultados.dllDependencia(ddldependencia, mAccionG.id_unidad);
+                ddldependencia.SelectedValue = mAccionG.id_dependencia.ToString();
+                txtDescripcion.Text = mAccionG.descripcion.ToString();
+                txtEvaluacion.Text = Session["noAccion"].ToString();
+                txtHallazgo.Text = mAccionG.correlativo_hallazgo.ToString();
+
+                cResultados = new cInformeEI();
+                txtanio.Text = "2018";
+                cResultados.dropUnidad(ddlunidad);
+                cInfoCorrec = new cInformeCO();
                 cInfoCorrec.ddlEstadoInforme(ddlEstado);
                 cResultados.dropTipoAccion(ddlTipoAccionInforme);
+                ddlTipoAccionInforme.SelectedValue = mAccionG.id_tipo_accion.ToString();
                 cGen = new cGeneral();
                 ddlLider.ClearSelection();
                 ddlLider.Items.Clear();
@@ -46,10 +61,8 @@ namespace SistemaGdC.InformeResultados
             int.TryParse(ddlunidad.SelectedValue, out idUnidad);
             if (idUnidad > 0)
             {
-                cResultados = new cInformeResultados();
+                cResultados = new cInformeEI();
                 cResultados.dllDependencia(ddldependencia, idUnidad);
-                cInfoCorrec = new cInformeCorrecion();
-                cInfoCorrec.ddlInformeResultados(ddlEvaluacion);
             }
         }
 
@@ -57,46 +70,61 @@ namespace SistemaGdC.InformeResultados
         {
             string id_unidad = ddlunidad.SelectedValue;
             string id_dependecia = ddldependencia.SelectedValue;
-            string id_informe = ddlEvaluacion.SelectedValue;
-            cInfoCorrec = new cInformeCorrecion();
-            cInfoCorrec.ddlHallazgo(ddlHallazgo, id_unidad, id_dependecia, id_informe);
+            cInfoCorrec = new cInformeCO();
         }
 
         protected void ddlHallazgo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cInfoCorrec = new cInformeCorrecion();
-            DataSet tabla = cInfoCorrec.InformacionInformeResultados(ddlHallazgo.SelectedValue);
+            cInfoCorrec = new cInformeCO();
+            DataSet tabla = cInfoCorrec.InformacionInformeResultados(txtHallazgo.Text);
             ddlTipoAccionInforme.SelectedIndex = int.Parse(tabla.Tables[0].Rows[0]["id_tipo_accion"].ToString());
             txtDescripcion.Text = tabla.Tables[0].Rows[0]["descripcion"].ToString();
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            mInformeResult obj = new mInformeResult();
-            obj.id_accion_generada = int.Parse(ddlHallazgo.SelectedValue);
-            obj.observacion = txtOportunidades.Text;
-            obj.Descripcion_evidencia = txtDesEvidencia.Text;
-            obj.evidencia = txtRutaEvidencia.Text;
-            obj.id_lider = int.Parse(ddlLider.SelectedValue);
-            obj.usuario_ingresa = Session["usuario"].ToString(); 
-            cInfoCorrec = new cInformeCorrecion();
-            if (cInfoCorrec.IngresraInforme(obj) == 1)
-            {
-                ScriptManager.RegisterClientScriptBlock(this, typeof(string), "Mensaje", "alert('ALMACENADO exitosamente!');", true);
-            }
-        }
+            cAcciones cAcciones = new cAcciones();
+            cInformeCO cInfoCorrec = new cInformeCO();
+            mInformeCO informeCO = new mInformeCO();
+            informeCO.id_accion_generada = int.Parse(Session["noAccion"].ToString());
+            informeCO.id_enlace = int.Parse(Session["id_empleado"].ToString());
+            informeCO.id_lider = int.Parse(ddlLider.SelectedValue);
+            informeCO.descripcion_evidencia = txtDesEvidencia.Text;
+            informeCO.descripcion_accion = txtAccionRealizada.Text;
+            informeCO.estado = ddlEstado.SelectedValue;
 
-        protected void btnNuevo_Click(object sender, EventArgs e)
+            //////////////////////////////////////////////////////////////////
+
+            if (FileEvidencia.HasFile)
+            {
+                int tam = FileEvidencia.FileBytes.Length;
+                string ext = Path.GetExtension(FileEvidencia.FileName);
+                if (ext == ".pdf")
+                {
+                    if (tam <= 1048576)
+                    {
+                        int informe = cInfoCorrec.IngresraInforme(informeCO);
+                        if (informe > 0)
+                        {
+                            ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Informe de Correción ingresado exitosamente!', '', 'success');", true);
+                            cAcciones.actualizarStatus_Accion(int.Parse(Session["noAccion"].ToString()), 2);
+
+                            FileEvidencia.PostedFile.SaveAs(Server.MapPath("~/Archivos/InformeCorreccion/") + informe.ToString() + ".pdf");                            
+
+                            Response.Redirect("~/Acciones/ListadoAcciones.aspx");
+                        }
+                        ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No ha sido posible ingresar Informe!', 'Intente de nuevo!', 'warning');", true);                        
+                    }
+                    else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No fue posible cargar el archivo', 'El tamaño de archivo debe ser menor a 1MB', 'info');", true);
+                }
+                else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No fue posible cargar el archivo', 'El archivo debe ser extensión PDF', 'info');", true);
+            }
+            else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No fue posible cargar el archivo', 'Por favor seleccione un archivo PDF', 'info');", true);
+        }
+                
+        protected void btnCancelar_Click(object sender, EventArgs e)
         {
-            ddlEvaluacion.SelectedIndex = 0;
-            ddlHallazgo.SelectedIndex = 0;
-            ddlTipoAccionInforme.SelectedIndex = 0;
-            txtDescripcion.Text = "";
-            ddlEstado.SelectedIndex = 0;
-            txtOportunidades.Text = "";
-            txtDesEvidencia.Text = "";
-            txtRutaEvidencia.Text = "";
-            ddlLider.SelectedIndex = 0;
+            Response.Redirect("~/Acciones/ListadoAcciones.aspx");
         }
     }
 }
