@@ -20,6 +20,7 @@ namespace SistemaGdC.Acciones
 
             if (!IsPostBack)
             {
+                this.Session["pagina"] = 0;
                 panel1.Visible = false;
 
                 

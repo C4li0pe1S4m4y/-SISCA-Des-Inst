@@ -16,3 +16,12 @@ C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Controladores\bin\Release
 C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Controladores\obj\Release\Controladores.csprojResolveAssemblyReference.cache
 C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Controladores\obj\Release\Controladores.dll
 C:\Users\user Dell\Documents\GitHub\SGC\SGC\SistemaGdC\Controladores\obj\Release\Controladores.pdb
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\Controladores\bin\Release\Controladores.dll.config
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\Controladores\bin\Release\Controladores.dll
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\Controladores\bin\Release\Controladores.pdb
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\Controladores\bin\Release\Modelos.dll
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\Controladores\bin\Release\MySql.Data.dll
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\Controladores\bin\Release\Modelos.pdb
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\Controladores\obj\Release\Controladores.csprojResolveAssemblyReference.cache
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\Controladores\obj\Release\Controladores.dll
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\Controladores\obj\Release\Controladores.pdb

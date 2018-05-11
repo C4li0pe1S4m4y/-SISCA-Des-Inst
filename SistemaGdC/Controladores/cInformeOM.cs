@@ -120,7 +120,7 @@ namespace Controladores
             MySqlDataReader dr = cmd.ExecuteReader();
             while (dr.Read())
             {
-                mInformeOM.id_informe_correccion = int.Parse(dr.GetString("id_informe_correcion"));
+                mInformeOM.id_informe_om = int.Parse(dr.GetString("id_informe_om"));
                 mInformeOM.estado = dr.GetString("estado");
                 mInformeOM.id_accion_generada = int.Parse(dr.GetString("id_accion_generada"));
                 mInformeOM.descripcion_accion = dr.GetString("descripcion_accion");
@@ -133,5 +133,27 @@ namespace Controladores
             conectar.CerrarConexion();
             return mInformeOM;
         }
+
+        public DataSet ListadoInformesOM(string status)
+        {
+            //public DataSet ListadoAccionesRealizar(int id_plan, string status)
+            //string status = "";
+            if (status == "todos")
+            {
+                status = "";
+            }
+            else status = "AND id_status=" + status;
+
+            DataSet result = new DataSet();
+            conectar = new DBConexion();
+            conectar.AbrirConexion();
+            string query = string.Format("SELECT iom.id_informe_om ID, iom.descripcion_accion Descripción, TRUNCATE((((ag.id_status-30)*100)/5),0) Progreso " +
+                "FROM sgc_informe_om iom INNER JOIN sgc_accion_generada ag ON iom.id_accion_generada = ag.id_accion_generada;");
+            MySqlDataAdapter consulta = new MySqlDataAdapter(query, conectar.conectar);
+            consulta.Fill(result);
+            conectar.CerrarConexion();
+            return result;
+        }
     }
 }
+

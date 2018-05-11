@@ -8,7 +8,7 @@ namespace Modelos
 {
     public class mInformeOM
     {
-        public int id_informe_correccion { get; set; }
+        public int id_informe_om { get; set; }
         public string estado { get; set; }
         public string descripcion_accion { get; set; }
         public string descripcion_evidencia { get; set; }

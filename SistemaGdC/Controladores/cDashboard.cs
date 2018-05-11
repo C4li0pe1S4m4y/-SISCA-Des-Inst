@@ -47,7 +47,8 @@ namespace Controladores
             conectar.AbrirConexion();
             string query = string.Format("SELECT ta.abreviacion AS 'Tipo', COUNT(ag.id_tipo_accion) AS 'Total' " +
                 "FROM sgc_accion_generada ag LEFT JOIN sgc_tipo_accion ta ON ag.id_tipo_accion = ta.id_tipo_accion "+
-                "GROUP BY ag.id_tipo_accion; ");
+                "WHERE ag.id_status != 0 "+
+                "GROUP BY ag.id_tipo_accion;");
             MySqlDataAdapter consulta = new MySqlDataAdapter(query, conectar.conectar);
             consulta.Fill(result);
             conectar.CerrarConexion();
@@ -55,6 +56,29 @@ namespace Controladores
         }
 
         public DataTable graficaPlanesAccion()
+        {
+            DataTable result = new DataTable();
+            conectar.AbrirConexion();
+            string query = string.Format("SELECT u.unidad Unidad, a.abiertas Abierta, c.cerradas Cerrada " +
+                "FROM sgc_unidad u " +
+                "LEFT JOIN(SELECT u.id_unidad, pa.id_status, COUNT(pa.id_status) abiertas " +
+                    "FROM sgc_plan_accion pa INNER JOIN sgc_accion_generada ag ON pa.id_accion_generada = ag.id_accion_generada " +
+                        "INNER JOIN sgc_unidad u ON u.id_unidad = ag.id_unidad " +
+                    "WHERE pa.id_status != 5 " +
+                    "GROUP BY u.unidad) a ON u.id_unidad = a.id_unidad " +
+                "LEFT JOIN(SELECT u.id_unidad, pa.id_status, COUNT(pa.id_status) cerradas " +
+                    "FROM sgc_plan_accion pa INNER JOIN sgc_accion_generada ag ON pa.id_accion_generada = ag.id_accion_generada " +
+                        "INNER JOIN sgc_unidad u ON u.id_unidad = ag.id_unidad " +
+                    "WHERE pa.id_status = 5 " +
+                    "GROUP BY u.unidad) c ON u.id_unidad = c.id_unidad " +
+                "WHERE a.abiertas > 0 OR c.cerradas > 0; ");
+            MySqlDataAdapter consulta = new MySqlDataAdapter(query, conectar.conectar);
+            consulta.Fill(result);
+            conectar.CerrarConexion();
+            return result;
+        }
+
+        public DataTable graficaPlanesAccionOld()
         {
             DataTable Datos = new DataTable();
             Datos.Columns.Add(new DataColumn("Unidad", typeof(string)));

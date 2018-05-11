@@ -22,6 +22,36 @@
             overflow: hidden;
             border: solid 1px #000000;
         }
+
+        .GridPager a,
+        .GridPager span {
+            display: inline-block;
+            padding: 0px 9px;
+            margin-right: 4px;
+            border-radius: 3px;
+            border: solid 1px #c0c0c0;
+            background: #e9e9e9;
+            box-shadow: inset 0px 1px 0px rgba(255,255,255, .8), 0px 1px 3px rgba(0,0,0, .1);
+            font-size: .875em;
+            font-weight: bold;
+            text-decoration: none;
+            color: #717171;
+            text-shadow: 0px 1px 0px rgba(255,255,255, 1);
+        }
+
+        .GridPager a {
+            background-color: #f5f5f5;
+            color: #969696;
+            border: 1px solid #969696;
+        }
+
+        .GridPager span {
+            background: #616161;
+            box-shadow: inset 0px 0px 8px rgba(0,0,0, .5), 0px 1px 0px rgba(255,255,255, .8);
+            color: #f0f0f0;
+            text-shadow: 0px 0px 3px rgba(0,0,0, .5);
+            border: 1px solid #3AC0F2;
+        }
     </style>
 
     <script type="text/javascript">
@@ -229,19 +259,21 @@
                                     BackColor="#FDFFE6" CssClass="table table-hover table-bordered" AutoGenerateColumns="False"
                                     OnRowDataBound="gvListadoPlanes_RowDataBound"
                                     OnSelectedIndexChanged="gvListadoPlanes_SelectedIndexChanged">
-
+                                    <PagerStyle CssClass = "GridPager"/>
                                     <AlternatingRowStyle BackColor="#f2fffc" />
                                     <Columns>
-                                        <asp:BoundField DataField="ID" HeaderText="ID" />
-                                        <asp:CommandField ButtonType="Button" HeaderText="" ControlStyle-CssClass="btn btn-info" ShowSelectButton="True" SelectText="Ver">
-                                        <ControlStyle CssClass="btn btn-info" />
-                                        <ItemStyle Width="25px" />
-                                        </asp:CommandField>
-                                        <asp:BoundField DataField="Informe" HeaderText="Informe" >
-                                        <ItemStyle Width="10%" />
+                                        <asp:BoundField DataField="ID" HeaderText="ID">
+                                            <ItemStyle Width="5%" />
                                         </asp:BoundField>
-                                        <asp:BoundField DataField="id_plan" HeaderText="No. Plan" >
-                                        <ItemStyle Width="10%" />
+                                        <asp:CommandField ButtonType="Button" HeaderText="" ControlStyle-CssClass="btn btn-info" ShowSelectButton="True" SelectText="Ver">
+                                            <ControlStyle CssClass="btn btn-info" />
+                                            <ItemStyle Width="1%" />
+                                        </asp:CommandField>
+                                        <asp:BoundField DataField="Informe" HeaderText="Informe">
+                                            <ItemStyle Width="10%" />
+                                        </asp:BoundField>
+                                        <asp:BoundField DataField="id_plan" HeaderText="No. Plan">
+                                            <ItemStyle Width="10%" />
                                         </asp:BoundField>
                                         <asp:BoundField DataField="causa_raiz" HeaderText="Causa Raíz" />
                                         <asp:TemplateField ShowHeader="true" HeaderText="Progreso" ItemStyle-Width="25%">
@@ -265,6 +297,102 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default" data-toggle="collapse" data-target=".navbar-collapse">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse">Informes de Corrección</a>
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                        <ContentTemplate>
+                            <div class="col-md-12">
+                                <asp:GridView ID="gvListadoInformesCO" runat="server" DataKeyNames="ID"
+                                    AllowPaging="True" OnPageIndexChanging="gvListadoInformesCO_PageIndexChanging" PageSize="3"
+                                    BackColor="#FDFFE6" CssClass="table table-hover table-bordered" AutoGenerateColumns="False"
+                                    OnRowDataBound="gvListadoInformesCO_RowDataBound"
+                                    OnSelectedIndexChanged="gvListadoInformesCO_SelectedIndexChanged">
+                                    <PagerStyle CssClass = "GridPager"/>
+                                    <AlternatingRowStyle BackColor="#f2fffc" />
+                                    <Columns>
+                                        <asp:BoundField DataField="ID" HeaderText="ID">
+                                            <ItemStyle Width="5%" />
+                                        </asp:BoundField>
+                                        <asp:CommandField ButtonType="Button" HeaderText="" ControlStyle-CssClass="btn btn-info" ShowSelectButton="True" SelectText="Ver">
+                                            <ControlStyle CssClass="btn btn-info" />
+                                            <ItemStyle Width="1%" />
+                                        </asp:CommandField>
+                                        <asp:BoundField DataField="Descripción" HeaderText="Descripción">
+                                            <ItemStyle Width="30%" />
+                                        </asp:BoundField>
+                                        <asp:TemplateField ShowHeader="true" HeaderText="Progreso" ItemStyle-Width="25%">
+                                            <ItemTemplate>
+                                                <div class="progress" style="margin-bottom: 0">
+                                                    <div id="progbarICO" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" runat="server">
+                                                    </div>
+                                                </div>
+                                            </ItemTemplate>
+                                            <ItemStyle Width="20%" />
+                                        </asp:TemplateField>
+                                    </Columns>
+                                    <HeaderStyle BackColor="#33CCFF" />
+                                </asp:GridView>
+                            </div>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default" data-toggle="collapse" data-target=".navbar-collapse">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse">Informes de Oportunidad de Mejora</a>
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+                        <ContentTemplate>
+                            <div class="col-md-12">
+                                <asp:GridView ID="gvListadoInformesOM" runat="server" DataKeyNames="ID"
+                                    AllowPaging="True" OnPageIndexChanging="gvListadoInformesOM_PageIndexChanging" PageSize="3"
+                                    BackColor="#FDFFE6" CssClass="table table-hover table-bordered" AutoGenerateColumns="False"
+                                    OnRowDataBound="gvListadoInformesOM_RowDataBound"
+                                    OnSelectedIndexChanged="gvListadoInformesOM_SelectedIndexChanged">
+                                    <PagerStyle CssClass = "GridPager"/>
+                                    <AlternatingRowStyle BackColor="#f2fffc" />
+                                    <Columns>
+                                        <asp:BoundField DataField="ID" HeaderText="ID">
+                                            <ItemStyle Width="5%" />
+                                        </asp:BoundField>
+                                        <asp:CommandField ButtonType="Button" HeaderText="" ControlStyle-CssClass="btn btn-info" ShowSelectButton="True" SelectText="Ver">
+                                            <ControlStyle CssClass="btn btn-info" />
+                                            <ItemStyle Width="1%" />
+                                        </asp:CommandField>
+                                        <asp:BoundField DataField="Descripción" HeaderText="Descripción">
+                                            <ItemStyle Width="30%" />
+                                        </asp:BoundField>
+                                        <asp:TemplateField ShowHeader="true" HeaderText="Progreso" ItemStyle-Width="25%">
+                                            <ItemTemplate>
+                                                <div class="progress" style="margin-bottom: 0">
+                                                    <div id="progbarIOM" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" runat="server">
+                                                    </div>
+                                                </div>
+                                            </ItemTemplate>
+                                            <ItemStyle Width="20%" />
+                                        </asp:TemplateField>
+                                    </Columns>
+                                    <HeaderStyle BackColor="#33CCFF" />
+                                </asp:GridView>
+                            </div>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-6">
             <div class="panel panel-default" data-toggle="collapse" data-target=".navbar-collapse">

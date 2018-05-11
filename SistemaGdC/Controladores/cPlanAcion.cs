@@ -215,6 +215,22 @@ namespace Controladores
                     //condicion = "AND ag.id_status = 2";
                     break;
 
+//////////// VALIDAR INFORME DE OPORTUNIDAD DE MEJORA /////////////////////////////////////////////////////////////////
+
+                case "validarInformeOMDirector": //Informe de Corrección                    
+                    condicion = "AND ag.id_status = 32";
+                    break;
+
+                case "validarInformeOMAnalista": //Informe de Corrección
+                    condicion = "AND ag.id_status = 31";
+                    break;
+
+                case "validarInformeOMLider": //Informe de Corrección
+                    join = "inner join sgc_informe_om ic on ic.id_accion_generada = ag.id_accion_generada ";
+                    condicion = "AND ic.id_lider = " + id + " AND ag.id_status = 3";
+                    //condicion = "AND ag.id_status = 2";
+                    break;
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 default:
                     condicion = "AND ag.id_status = " + statusAG;
