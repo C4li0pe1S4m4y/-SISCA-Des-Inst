@@ -127,6 +127,7 @@
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\fondo.jpg" />
     <Content Include="Content\Site.css" />
     <Content Include="css\chosen.css" />
     <Content Include="css\Control.css" />

@@ -199,8 +199,8 @@
         }
     </script>
 
-    <h2>&nbsp;</h2>
-
+    <h2>&nbsp;</h2>    
+    <h2 style="color:white"><b>Panel Principal</b></h2>
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default" data-toggle="collapse" data-target=".navbar-collapse">
@@ -259,7 +259,7 @@
                                     BackColor="#FDFFE6" CssClass="table table-hover table-bordered" AutoGenerateColumns="False"
                                     OnRowDataBound="gvListadoPlanes_RowDataBound"
                                     OnSelectedIndexChanged="gvListadoPlanes_SelectedIndexChanged">
-                                    <PagerStyle CssClass = "GridPager"/>
+                                    <PagerStyle CssClass="GridPager" />
                                     <AlternatingRowStyle BackColor="#f2fffc" />
                                     <Columns>
                                         <asp:BoundField DataField="ID" HeaderText="ID">
@@ -286,7 +286,7 @@
                                             <ItemStyle Width="20%" />
                                         </asp:TemplateField>
                                     </Columns>
-                                    <HeaderStyle BackColor="#33CCFF" />
+                                    <HeaderStyle BackColor="#00b4b4" />
                                 </asp:GridView>
                             </div>
                         </ContentTemplate>
@@ -314,7 +314,7 @@
                                     BackColor="#FDFFE6" CssClass="table table-hover table-bordered" AutoGenerateColumns="False"
                                     OnRowDataBound="gvListadoInformesCO_RowDataBound"
                                     OnSelectedIndexChanged="gvListadoInformesCO_SelectedIndexChanged">
-                                    <PagerStyle CssClass = "GridPager"/>
+                                    <PagerStyle CssClass="GridPager" />
                                     <AlternatingRowStyle BackColor="#f2fffc" />
                                     <Columns>
                                         <asp:BoundField DataField="ID" HeaderText="ID">
@@ -337,7 +337,7 @@
                                             <ItemStyle Width="20%" />
                                         </asp:TemplateField>
                                     </Columns>
-                                    <HeaderStyle BackColor="#33CCFF" />
+                                    <HeaderStyle BackColor="#00b4b4" />
                                 </asp:GridView>
                             </div>
                         </ContentTemplate>
@@ -361,7 +361,7 @@
                                     BackColor="#FDFFE6" CssClass="table table-hover table-bordered" AutoGenerateColumns="False"
                                     OnRowDataBound="gvListadoInformesOM_RowDataBound"
                                     OnSelectedIndexChanged="gvListadoInformesOM_SelectedIndexChanged">
-                                    <PagerStyle CssClass = "GridPager"/>
+                                    <PagerStyle CssClass="GridPager" />
                                     <AlternatingRowStyle BackColor="#f2fffc" />
                                     <Columns>
                                         <asp:BoundField DataField="ID" HeaderText="ID">
@@ -384,7 +384,7 @@
                                             <ItemStyle Width="20%" />
                                         </asp:TemplateField>
                                     </Columns>
-                                    <HeaderStyle BackColor="#33CCFF" />
+                                    <HeaderStyle BackColor="#00b4b4" />
                                 </asp:GridView>
                             </div>
                         </ContentTemplate>
@@ -393,6 +393,8 @@
             </div>
         </div>
     </div>
+
+
     <div class="row">
         <div class="col-md-6">
             <div class="panel panel-default" data-toggle="collapse" data-target=".navbar-collapse">
@@ -429,16 +431,13 @@
                     </h4>
                 </div>
                 <div class="panel-body" style="height: 350px">
-
                     <div id="graficaPlanesAccion" class="chart"></div>
                 </div>
             </div>
         </div>
-
         <!-- Modal-->
         <div id="modalGraficaPlanesAccion" class="modal fade" role="dialog">
             <div class="modal-dialog">
-
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
@@ -446,16 +445,16 @@
                         <h4 class="modal-title">Unidades</h4>
                     </div>
                     <div class="modal-body">
-
                         <asp:CheckBoxList ID="checkboxPAccion" runat="server">
                         </asp:CheckBoxList>
-
+                    </div>
+                    <div class="modal-footer">
+                        <asp:Button ID="btnActualizarSGC" Text="Actualizar" UseSubmitBehavior="false" class="btn btn-info" data-dismiss="modal" OnClick="actualizarCkeckbox_Click" runat="server" />
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="row">
 
         <div class="col-md-12">
@@ -482,10 +481,11 @@
                         <h4 class="modal-title">Unidades</h4>
                     </div>
                     <div class="modal-body">
-
                         <asp:CheckBoxList ID="checkboxPAccionAbiertos" RepeatColumns="2" CellPadding="5" CellSpacing="8" runat="server">
                         </asp:CheckBoxList>
-
+                    </div>
+                    <div class="modal-footer">
+                        <asp:Button ID="btnActualizarPlanesAbiertos" Text="Actualizar" UseSubmitBehavior="false" class="btn btn-info" data-dismiss="modal" OnClick="actualizarCkeckbox_Click" runat="server" />
                     </div>
                 </div>
             </div>
@@ -509,7 +509,7 @@
     <%}
         else
         {%>
-    <h2>&nbsp;</h2>
-    <h2>Bienvenido al Sistema de Gestión de Calidad</h2>
+    <h2>&nbsp;</h2>    
+    <h2 style="color:white"><b>Bienvenido al Sistema de Gestión de Calidad</b></h2>
     <%} %>
 </asp:Content>

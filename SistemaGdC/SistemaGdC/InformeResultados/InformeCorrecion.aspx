@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <link href="~/Content/bootstrap.css" rel="stylesheet" media="screen" />
     <h2>&nbsp;</h2>
-    <h2>Ingreso de Informe de Corrección</h2>
+    <h2 style="color: white"><b>Ingreso de Informe de Corrección</b></h2>
     <div class="row">
         <div class="col-xs-12">
             <asp:UpdatePanel ID="UpdatePanelResponsable" runat="server">
@@ -103,8 +103,8 @@
                         <asp:Button ID="btnCancelar" OnClick="btnCancelar_Click" Text="Cancelar" CssClass="btn" runat="server" Width="100%" />
                     </div>
                     <div class="col-sm-3">
-                        <asp:Button ID="btnGuardar" OnClick="btnGuardar_Click" Text="Finalizar" CssClass="btn btn-success" runat="server" Width="100%" 
-                        OnClientClick="return confirm('¿Desea finalizar el Informe?');"/>
+                        <asp:Button ID="btnGuardar" OnClick="btnGuardar_Click" Text="Finalizar" CssClass="btn btn-success" runat="server" Width="100%"
+                            OnClientClick="return confirm('¿Desea finalizar el Informe?');" />
                     </div>
                 </div>
             </div>

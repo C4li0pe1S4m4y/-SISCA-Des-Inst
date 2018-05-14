@@ -4,7 +4,7 @@
 
     <link href="~/Content/bootstrap.css" rel="stylesheet" media="screen" />
     <h2>&nbsp;</h2>
-    <h2>Plan de Acción</h2>
+    <h2 style="color:white"><b>Plan de Acción</b></h2>
     <asp:UpdatePanel ID="updatepanel1" runat="server">
         <ContentTemplate>
             <div class="row">
@@ -81,7 +81,7 @@
                                 <div class="col-md-12">
                                     <label>Causa Raíz:</label>
                                     <asp:TextBox ID="txtCausa" TextMode="MultiLine" runat="server" CssClass="form-control input" Style="height: 100px"></asp:TextBox>
-                                    <asp:RequiredFieldValidator ID="RFVtxtCausa" ValidationGroup="validarCausa" Style="color: red;" SetFocusOnError="true" ControlToValidate="txtCausa" InitialValue="" runat="server" ErrorMessage="Ingrese Causa." Display="Dynamic" />                                    
+                                    <asp:RequiredFieldValidator ID="RFVtxtCausa" ValidationGroup="validarCausa" Style="color: red;" SetFocusOnError="true" ControlToValidate="txtCausa" InitialValue="" runat="server" ErrorMessage="Ingrese Causa." Display="Dynamic" />
                                 </div>
                             </div>
                             <div class="row">
@@ -100,8 +100,7 @@
                             </div>
                             <div class="col-md-4">
                                 <br />
-                                <asp:Button ID="btnGuardarCausa" ValidationGroup="validarCausa" Text="Guardar" OnClick="btnGuardarCausa_Click" CssClass="btn btn-success" runat="server" Width="100%" 
-                                />
+                                <asp:Button ID="btnGuardarCausa" ValidationGroup="validarCausa" Text="Guardar" OnClick="btnGuardarCausa_Click" CssClass="btn btn-success" runat="server" Width="100%" />
                             </div>
                         </div>
                     </div>
@@ -116,7 +115,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Actividad a Realizar:</label>
-                                                <asp:TextBox ID="txtAccionRealizar" runat="server" CssClass="form-control"></asp:TextBox>
+                                                <input id="txtAccionRealizar" type="text" class="form-control" name="option" runat="server" onkeypress="return prueba(event);"/>
                                                 <asp:RequiredFieldValidator ID="RFVtxtAccionRealizar" ValidationGroup="validarActividad" Style="color: red;" SetFocusOnError="true" ControlToValidate="txtAccionRealizar" InitialValue="" runat="server" ErrorMessage="Ingrese Acción a Realizar." Display="Dynamic" />
                                             </div>
                                         </div>
@@ -186,20 +185,18 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
-                                        <HeaderStyle BackColor="#33CCFF" />
+                                        <HeaderStyle BackColor="#00b4b4" />
                                     </asp:GridView>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group">
-                    <div class="col-sm-3">
-                        <asp:Button Visible="true" ID="btnFinalizar" Text="Finalizar" OnClick="btnFinalizar_Click" CssClass="btn btn-success" runat="server" Width="100%" 
-                            OnClientClick="return confirm('¿Desea finalizar el Plan de Acción?');"/>
-
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-sm-3">
+                                        <asp:Button Visible="true" ID="btnFinalizar" Text="Finalizar" OnClick="btnFinalizar_Click" CssClass="btn btn-success" runat="server" Width="100%"
+                                            OnClientClick="return confirm('¿Desea finalizar el Plan de Acción?');" />
+                                    </div>
+                                </div>
+                            </div>
                     </div>
                 </div>
             </div>

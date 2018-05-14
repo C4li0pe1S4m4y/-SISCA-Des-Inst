@@ -112,6 +112,15 @@ namespace SistemaGdC.Verificaciones {
         protected global::System.Web.UI.WebControls.Button btnValidar;
         
         /// <summary>
+        /// Control txtRechazo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtRechazo;
+        
+        /// <summary>
         /// Control btnRechazar.
         /// </summary>
         /// <remarks>
@@ -227,15 +236,6 @@ namespace SistemaGdC.Verificaciones {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFechaRecepcion;
-        
-        /// <summary>
-        /// Control txtNoPlanAccion.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNoPlanAccion;
         
         /// <summary>
         /// Control txtDescripcion.

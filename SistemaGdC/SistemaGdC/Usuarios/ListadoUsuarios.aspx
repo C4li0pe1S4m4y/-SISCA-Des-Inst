@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ListadoUsuarios.aspx.cs" Inherits="SistemaGdC.Usuarios.ListadoUsuarios" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>Listado Usuarios</h2>
+    <h2 style="color: white"><b>Listado de Usuarios</b></h2>
     <asp:GridView ID="gvListado" runat="server"  AllowPaging="True" DataKeyNames="numero" CssClass="table table-hover table-responsive">
         <AlternatingRowStyle BackColor="#F0F0F0" />
         <Columns>

@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h2>&nbsp;</h2>
-    <h2>Verificación Informe de Oportunidad de Mejora</h2>
+    <h2 style="color: white"><b>Verificación de Informe de Oportuniad de Mejora</b></h2>
 
     <style>
         .chart {

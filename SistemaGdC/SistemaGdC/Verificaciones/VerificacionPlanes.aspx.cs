@@ -211,8 +211,8 @@ namespace SistemaGdC.Verificaciones
                 Response.ClearContent();
                 Response.ClearHeaders();
 
-                //Response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}", file.Name));
-                //Response.AddHeader("Content-Length", file.Length.ToString());
+                Response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}", file.Name));
+                Response.AddHeader("Content-Length", file.Length.ToString());
 
                 Response.ContentType = "application/pdf";
                 //Response.Write("<script>window.open('" + file.FullName + "','_newtab');</script>");

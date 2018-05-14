@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <link href="~/Content/bootstrap.css" rel="stylesheet" media="screen" />
     <h2>&nbsp;</h2>
-    <h2>Fuentes de entradas</h2>
+    <h2 style="color: white"><b>Fuentes de Entrada</b></h2>
     <div class="row">
         <div class="col-xs-3">
             <div class="panel panel-default">

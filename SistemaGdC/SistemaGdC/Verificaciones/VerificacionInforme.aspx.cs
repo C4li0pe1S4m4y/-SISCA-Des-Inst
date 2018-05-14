@@ -207,16 +207,20 @@ namespace SistemaGdC.Verificaciones
         {
             if (int.Parse(Session["id_tipo_usuario"].ToString()) == 1)
             {
+                string rechazado = txtRechazo.Text;
+
                 panel1.Visible = true;
                 panel2.Visible = false;
-                panel3.Visible = false;
+                panel3.Visible = false;                
 
                 cResultados.actualizarInforme(int.Parse(txtanio.Text), int.Parse(txtInforme.Text), -2);
                 gvListadoInformes.Columns[0].Visible = true;
                 gvListadoInformes.DataSource = cResultados.ListadoInformes(1);
                 gvListadoInformes.DataBind();
                 gvListadoInformes.Columns[0].Visible = false;
-            }
+
+                Response.Redirect("~/Verificaciones/VerificacionInforme.aspx");            
+        }
 
             else
             {

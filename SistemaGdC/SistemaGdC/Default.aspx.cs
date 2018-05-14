@@ -261,6 +261,20 @@ namespace SistemaGdC
         {
             int i = int.Parse(gvListadoInformesOM.SelectedValue.ToString());
         }
+
+        protected void actualizarCkeckbox_Click(object sender, EventArgs e)
+        {
+            checkboxPAccion.DataBind();
+            checkboxPAccionAbiertos.DataBind(); 
+            
+            
+            /*string script = @"<script type='text/javascript'>
+                            drawChart3();
+                            </script>";*/
+
+            ScriptManager.RegisterStartupScript(this, typeof(string), "grafica", "drawChart3();", true);
+            //ScriptManager.RegisterStartupScript(this, typeof(Page), "grafica", script, true);
+        }
     }
 }
 

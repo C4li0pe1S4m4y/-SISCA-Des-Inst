@@ -59,7 +59,7 @@ namespace Controladores
         {
             DataTable result = new DataTable();
             conectar.AbrirConexion();
-            string query = string.Format("SELECT u.unidad Unidad, a.abiertas Abierta, c.cerradas Cerrada " +
+            string query = string.Format("SELECT u.unidad Unidad, IFNULL(a.abiertas,0) Abierta, IFNULL(c.cerradas,0) Cerrada " +
                 "FROM sgc_unidad u " +
                 "LEFT JOIN(SELECT u.id_unidad, pa.id_status, COUNT(pa.id_status) abiertas " +
                     "FROM sgc_plan_accion pa INNER JOIN sgc_accion_generada ag ON pa.id_accion_generada = ag.id_accion_generada " +

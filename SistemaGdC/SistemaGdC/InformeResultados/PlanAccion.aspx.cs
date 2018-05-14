@@ -182,7 +182,7 @@ namespace SistemaGdC.InformeResultados
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
             mAccionRealizar.id_plan = int.Parse(Session["noPlanAccion"].ToString());
-            mAccionRealizar.accion = txtAccionRealizar.Text;
+            mAccionRealizar.accion = txtAccionRealizar.Value;
             mAccionRealizar.responsable = ddlResponsable.SelectedItem.ToString();
             mAccionRealizar.fecha_inicio = txtFechaInicio.Text;
             mAccionRealizar.fecha_fin = txtFechaFin.Text;
@@ -199,7 +199,7 @@ namespace SistemaGdC.InformeResultados
 
         protected void btnNuevo_Click(object sender, EventArgs e)
         {
-            txtAccionRealizar.Text = "";
+            txtAccionRealizar.Value = "";
             ddlResponsable.SelectedIndex = 0;
             txtFechaInicio.Text = "";
             txtFechaFin.Text = "";
@@ -259,7 +259,7 @@ namespace SistemaGdC.InformeResultados
 
         void enabledPlan(bool en)
         {
-            txtAccionRealizar.Enabled = en;
+            //txtAccionRealizar.Enabled = en;
             ddlResponsable.Enabled = en;
             txtFechaInicio.Enabled = en;
             txtFechaFin.Enabled = en;

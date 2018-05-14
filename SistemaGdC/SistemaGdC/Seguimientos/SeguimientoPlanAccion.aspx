@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h2>&nbsp;</h2>
-    <h2>Seguimiento Plan de Acción</h2>
+    <h2 style="color: white"><b>Seguimiento Plan de Acción</b></h2>
 
     <style>
         .chart {

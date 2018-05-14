@@ -202,9 +202,7 @@ namespace SistemaGdC.Seguimientos
 
                     int finPlan = int.Parse(gvListadoActividadesPendientes.Rows.Count.ToString());
                     finPlan += int.Parse(gvListadoActividadesTerminadas.Rows.Count.ToString());
-                    finPlan += int.Parse(gvListadoActividadesRechazadas.Rows.Count.ToString());
-
-                    ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Actividad validada correctamente', '', 'success');", true);
+                    finPlan += int.Parse(gvListadoActividadesRechazadas.Rows.Count.ToString());                    
 
                     if (finPlan==0)
                     {
@@ -215,7 +213,8 @@ namespace SistemaGdC.Seguimientos
                         cPlanAccion.actualizar_statusPlan(int.Parse(Session["noPlanAccion"].ToString()), 2);
                         ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Plan terminado correctamente', 'Puede presentar Eficacia del Plan de Acción', 'success');", true);
                         //ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Plan terminado');", true);
-                    }                        
+                    }
+                    else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Actividad validada correctamente', '', 'success');", true);
                     break;
 
                 default:

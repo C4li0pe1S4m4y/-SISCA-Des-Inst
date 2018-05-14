@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h2>&nbsp;</h2>
-    <h2>Ingreso de Informe De Evaluación Interna</h2>
+    <h2 style="color: white"><b>Ingreso de Informe De Evaluación Interna</b></h2>
 
     <style>
         .chart {
@@ -162,7 +162,6 @@
                                 </div>
                             </div>
                             <div class="row">
-
                                 <div class="col-md-12" style="overflow: auto; height: 100%">
                                     <asp:GridView ID="gvListadoAcciones" runat="server" DataKeyNames="Correlativo"
                                         AllowPaging="true" OnPageIndexChanging="gvListadoAcciones_PageIndexChanging" PageSize="10"
@@ -194,16 +193,18 @@
                                     </asp:GridView>
                                 </div>
                                 <asp:Label runat="server" ID="lblCorr"></asp:Label>
-
+                            </div>
+                            <br />
+                            
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-sm-3">
+                                        <asp:Button Visible="false" ID="btnFinalizar" OnClick="btnFinalizar_Click" Text="Finalizar" CssClass="btn btn-success" runat="server" Width="100%"
+                                            OnClientClick="return confirm('¿Desea finalizar el Informe?');" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-3">
-                        <asp:Button Visible="false" ID="btnFinalizar" OnClick="btnFinalizar_Click" Text="Finalizar" CssClass="btn btn-success" runat="server" Width="100%"
-                            OnClientClick="return confirm('¿Desea finalizar el Informe?');" />
-
                     </div>
                 </div>
             </div>

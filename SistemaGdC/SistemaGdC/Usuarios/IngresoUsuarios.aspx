@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <br />
     <br />
-    <h2>Ingreso de Usuario</h2>
+    <h2 style="color: white"><b>Ingreso de Usuario</b></h2>
     <div class="jumbotron">
         <div class="row">
             <div class="row col-md-8 col-md-offset-2">
