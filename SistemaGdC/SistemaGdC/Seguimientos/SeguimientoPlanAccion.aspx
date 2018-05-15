@@ -20,9 +20,17 @@
             overflow: hidden;
             border: solid 1px #000000;
         }
-    </style>
+    </style>    
+    <script type="text/javascript">
+        function closeMactividad() {
+            $('#myModalActividad').modal('hide');
+        }
 
-    
+        function closeMeficacia() {
+            $('#myModalEficacia').modal('hide');
+        }
+    </script>
+
 
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
@@ -160,12 +168,35 @@
                             </div>
                             <div class="col-md-1">
                                 <br />
-                                <asp:LinkButton ID="btnRechazarEficacia" OnClick="btnRechazarEficacia_Click" CssClass="btn btn-danger" runat="server"
-                                    OnClientClick="return confirm('¿Desea rechazar la Eficacia del Plan de Acción?');"><span class="glyphicon glyphicon-remove"/></asp:LinkButton>
+                                <asp:LinkButton ID="btnRechazarEficacia" CssClass="btn btn-danger" runat="server"
+                                    data-toggle="modal" data-target="#myModalEficacia"><span class="glyphicon glyphicon-remove"/></asp:LinkButton>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="myModalEficacia" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">¿Desea rechazar la Eficacia del Plan de Acción?</h4>
+                            </div>
+                            <div class="modal-body">
+                                <label>Observaciones: </label>
+                                <asp:TextBox ID="txtRechazOEficacia" Enabled="true" Width="100%" CssClass="form-control" TextMode="MultiLine" Style="height: 205px" runat="server"></asp:TextBox>
+                                <asp:RequiredFieldValidator ID="RFVtxtRechazarEficacia" ValidationGroup="rechazarActividad" Style="color: red;" SetFocusOnError="true" ControlToValidate="txtRechazOEficacia" InitialValue="" runat="server" ErrorMessage="Por favor agregue una observación." Display="Dynamic" />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                <asp:Button ID="btnRechazoEficacia" ValidationGroup="rechazarActividad" Text="Rechazar" runat="server" CssClass="btn btn-danger" OnClientClick="return closeMeficacia();" OnClick="btnRechazarEficacia_Click" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="col-md-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">Actividad</div>
@@ -221,8 +252,8 @@
                                             <div class="col-md-12">
                                                 <div class="col-md-4">
                                                     <br />
-                                                    <asp:Button ID="btnFinalizar" Text="Finalizar" CssClass="btn btn-success" OnClick="btnFinalizar_Click" runat="server" Width="100%" 
-                                                        OnClientClick="return confirm('¿Desea finalizar la Actividad?');"/>
+                                                    <asp:Button ID="btnFinalizar" Text="Finalizar" CssClass="btn btn-success" OnClick="btnFinalizar_Click" runat="server" Width="100%"
+                                                        OnClientClick="return confirm('¿Desea finalizar la Actividad?');" />
                                                 </div>
                                             </div>
                                         </div>
@@ -240,10 +271,33 @@
                                         </div>
                                         <div class="col-md-1">
                                             <br />
-                                            <asp:LinkButton ID="btnRechazar" OnClick="btnRechazar_Click" CssClass="btn btn-danger" runat="server"
-                                                OnClientClick="return confirm('¿Desea rechazar la Actividad?');"><span class="glyphicon glyphicon-remove"/></asp:LinkButton>                                                
+                                            <asp:LinkButton ID="btnRechazar" CssClass="btn btn-danger" runat="server"
+                                                data-toggle="modal" data-target="#myModalActividad"><span class="glyphicon glyphicon-remove"/></asp:LinkButton>
                                         </div>
                                     </div>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="myModalActividad" role="dialog">
+                                        <div class="modal-dialog">
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">¿Desea rechazar la Actividad?</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <label>Observaciones: </label>
+                                                    <asp:TextBox ID="txtRechazo" Enabled="true" Width="100%" CssClass="form-control" TextMode="MultiLine" Style="height: 205px" runat="server"></asp:TextBox>
+                                                    <asp:RequiredFieldValidator ID="RFVtxtRechazo" ValidationGroup="rechazarActividad" Style="color: red;" SetFocusOnError="true" ControlToValidate="txtRechazo" InitialValue="" runat="server" ErrorMessage="Por favor agregue una observación." Display="Dynamic" />
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                                    <asp:Button ID="btnModalRechazar" ValidationGroup="rechazarActividad" Text="Rechazar" runat="server" CssClass="btn btn-danger" OnClientClick="return closeMactividad();" OnClick="btnRechazar_Click" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -388,7 +442,7 @@
             <asp:PostBackTrigger ControlID="btnFinalizar" />
         </Triggers>
         <Triggers>
-            <asp:PostBackTrigger ControlID="btnAdjuntarEficacia" /> 
+            <asp:PostBackTrigger ControlID="btnAdjuntarEficacia" />
         </Triggers>
         <Triggers>
             <asp:PostBackTrigger ControlID="btnDescargarEficacia" />

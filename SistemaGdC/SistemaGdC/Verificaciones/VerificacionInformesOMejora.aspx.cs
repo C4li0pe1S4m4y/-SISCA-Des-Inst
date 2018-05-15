@@ -14,10 +14,13 @@ namespace SistemaGdC.Verificaciones
 
         cInformeEI cResultados = new cInformeEI();
         mInformeOM mInformeOM = new mInformeOM();
+        cEmpleado cEmpleado = new cEmpleado();
+        cCorreo cCorreo = new cCorreo();
         
         cGeneral cGen = new cGeneral();
         cInformeOM cInformeOM = new cInformeOM();
         mAccionesGeneradas mAccionG = new mAccionesGeneradas();
+        mEmpleado mEmpleado = new mEmpleado();
         int id_enlace;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -161,12 +164,17 @@ namespace SistemaGdC.Verificaciones
 
         protected void btnRechazar_Click(object sender, EventArgs e)
         {
+            mAccionG = cResultados.Obtner_AccionGenerada(int.Parse(Session["noAccion"].ToString()));
+            mEmpleado = cEmpleado.Obtner_Empleado(mAccionG.id_enlace);
+
             switch (int.Parse(Session["id_tipo_usuario"].ToString()))
             {
                 case 4: //Líder
                 case 3: //Analista
                 case 1: //Director
-                    cAcciones.actualizarStatus_Accion(int.Parse(Session["noAccion"].ToString()), -3);                    
+                    cAcciones.actualizarStatus_Accion(int.Parse(Session["noAccion"].ToString()), -3);
+                    cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Informe de Oportunidad de Mejora", txtRechazo.Text);
+                    Response.Redirect("~/Verificaciones/VerificacionInformesOMejora.aspx");
                     break;                    
 
                 default:

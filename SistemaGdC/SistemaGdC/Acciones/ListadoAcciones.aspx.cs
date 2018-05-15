@@ -129,7 +129,7 @@ namespace SistemaGdC.Acciones
 
                 int statusA = mAccionG.id_status;
 
-                if (mAccionG.id_status == 1) dllTipoAccion.Enabled = false;
+                if (mAccionG.id_status == 1|| mAccionG.id_status == -1) dllTipoAccion.Enabled = false;
                 else dllTipoAccion.Enabled = true;
 
                 switch (int.Parse(mAccionG.id_tipo_accion.ToString()))

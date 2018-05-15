@@ -67,6 +67,7 @@
     <Compile Include="cActividades.cs" />
     <Compile Include="cCorreo.cs" />
     <Compile Include="cDashboard.cs" />
+    <Compile Include="cEmpleado.cs" />
     <Compile Include="cGeneral.cs" />
     <Compile Include="cInformeOM.cs" />
     <Compile Include="cInformeCO.cs" />

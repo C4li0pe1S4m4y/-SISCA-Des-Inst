@@ -211,6 +211,33 @@ namespace SistemaGdC.Seguimientos {
         protected global::System.Web.UI.WebControls.LinkButton btnRechazarEficacia;
         
         /// <summary>
+        /// Control txtRechazOEficacia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtRechazOEficacia;
+        
+        /// <summary>
+        /// Control RFVtxtRechazarEficacia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVtxtRechazarEficacia;
+        
+        /// <summary>
+        /// Control btnRechazoEficacia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnRechazoEficacia;
+        
+        /// <summary>
         /// Control txtIdActividad.
         /// </summary>
         /// <remarks>
@@ -326,6 +353,33 @@ namespace SistemaGdC.Seguimientos {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnRechazar;
+        
+        /// <summary>
+        /// Control txtRechazo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtRechazo;
+        
+        /// <summary>
+        /// Control RFVtxtRechazo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVtxtRechazo;
+        
+        /// <summary>
+        /// Control btnModalRechazar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnModalRechazar;
         
         /// <summary>
         /// Control panel4.

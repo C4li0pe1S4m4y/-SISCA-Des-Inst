@@ -11,12 +11,14 @@ namespace SistemaGdC.Verificaciones
     {
         cPlanAcion cPlanAccion = new cPlanAcion();
         cAcciones cAcciones = new cAcciones();
-
+        cCorreo cCorreo = new cCorreo();
+        cEmpleado cEmpleado = new cEmpleado();
         cInformeEI cResultados = new cInformeEI();
 
         cGeneral cGen = new cGeneral();
         cInformeCO cInfoCorrec = new cInformeCO();
         mAccionesGeneradas mAccionG = new mAccionesGeneradas();
+        mEmpleado mEmpleado = new mEmpleado();
         int id_enlace;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -161,16 +163,21 @@ namespace SistemaGdC.Verificaciones
 
         protected void btnRechazar_Click(object sender, EventArgs e)
         {
+            mAccionG = cResultados.Obtner_AccionGenerada(int.Parse(Session["noAccion"].ToString()));
+            mEmpleado = cEmpleado.Obtner_Empleado(mAccionG.id_enlace);
+
             switch (int.Parse(Session["id_tipo_usuario"].ToString()))
             {
                 case 4: //Líder
                 case 3: //Analista
                 case 1: //Director
-                    cAcciones.actualizarStatus_Accion(int.Parse(Session["noAccion"].ToString()), -2);                    
+                    cAcciones.actualizarStatus_Accion(int.Parse(Session["noAccion"].ToString()), -2);
+                    cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Informe de Corrección", txtRechazo.Text);
+                    Response.Redirect("~/Verificaciones/VerificacionInformesCorreccion.aspx");
                     break;                    
 
                 default:
-                    ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No tiene permisos para rechazar Plan de Acción', '', 'warning');", true);
+                    ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No tiene permisos para rechazar Informe de Corrección', '', 'warning');", true);
                     break;
             }
             gvListadoAcciones.DataSource = cPlanAccion.ListadoAcciones(int.Parse(Session["id_empleado"].ToString()), "2", tipoConsulta());

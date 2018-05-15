@@ -10,7 +10,7 @@ namespace Controladores
 {
     public class cCorreo
     {
-        public bool enviarCorreo(string direccion, string asunto, string mensaje)
+        public void enviarCorreo(string direccion, string asunto, string mensaje)
         {
             var origen = new MailAddress("cdag.soporte@gmail.com", "Prueba SISCA");
             var destino = new MailAddress(direccion, "To Name");
@@ -36,11 +36,11 @@ namespace Controladores
                 {
                     smtp.Send(message);
                 }
-                return true;
+                //return true;
             }
             catch
             {
-                return false;
+                //return false;
             }
             
         }

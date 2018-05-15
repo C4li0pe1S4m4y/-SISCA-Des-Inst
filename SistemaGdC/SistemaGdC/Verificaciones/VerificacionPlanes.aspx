@@ -27,8 +27,6 @@
             <div class="row">
                 <div class="col-md-12" id="pn1" runat="server">
 
-
-
                     <div class="panel panel-default">
                         <div class="panel-heading">Encabezado</div>
                         <div class="panel-body">
@@ -93,11 +91,9 @@
                                                 <asp:BoundField DataField="Status" HeaderText="Status" />
                                                 <asp:BoundField DataField="Punto de Norma" HeaderText="Punto de Norma" />
                                                 <asp:BoundField DataField="Proceso" HeaderText="Proceso" />
-
                                                 <asp:BoundField DataField="Dependencia" HeaderText="Dependencia" />
                                                 <asp:BoundField DataField="Descripción" HeaderText="Descripción" />
                                                 <asp:BoundField DataField="Enlace" HeaderText="Enlace" />
-
                                                 <asp:BoundField DataField="Tipo Acción" HeaderText="Tipo Acción" />
                                             </Columns>
                                             <HeaderStyle BackColor="#33CCFF" />
@@ -141,7 +137,6 @@
                                         <br />
                                         <asp:Button ID="btnCancelar" OnClick="btnCancelar_Click" Text="Cancelar" CssClass="btn" runat="server" Width="100%" />
                                     </div>
-
                                     <div class="col-md-4">
                                         <br />
                                         <asp:Button ID="btnEvidencia" Text="Evidencia" CssClass="btn btn-primary" OnClick="btnDescargar_Click" runat="server" Width="100%" />

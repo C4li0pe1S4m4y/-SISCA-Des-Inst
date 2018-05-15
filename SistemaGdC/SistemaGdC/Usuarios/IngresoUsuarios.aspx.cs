@@ -48,7 +48,7 @@ namespace SistemaGdC.Usuarios
                 if (txtUsuario.Text !="")
                 {
                    // objUsuarios = new cUsuarios();
-                   if(cUsuarios.IngresoNuevoUsuario(txtUsuario.Text, txtcontra.Text, ddlEmpleado.SelectedValue, ddlTipoUsuario.SelectedValue))
+                   if(cUsuarios.IngresoNuevoUsuario(txtUsuario.Text, txtcontra.Text, ddlEmpleado.SelectedValue, ddlTipoUsuario.SelectedValue, txtCorreo.Text))
                     {
                         ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Usuario ingresado exitosamente!', '', 'success');", true);
                     }

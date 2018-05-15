@@ -15,14 +15,16 @@ namespace SistemaGdC.Verificaciones
     {
         cPlanAcion cPlanAccion = new cPlanAcion();
         cAcciones cAcciones = new cAcciones();
-
-
+        cCorreo cCorreo = new cCorreo();
         cInformeEI cResultados = new cInformeEI();
-        
+        cUsuarios cUsuario = new cUsuarios();
         cGeneral cGen = new cGeneral();
         cInformeCO cInfoCorrec = new cInformeCO();
+        cEmpleado cEmpleado = new cEmpleado();
         mPlanAccion mPlanAccion = new mPlanAccion();
         mAccionesGeneradas mAccionG = new mAccionesGeneradas();
+        mUsuario mUsuario = new mUsuario();
+        mEmpleado mEmpleado = new mEmpleado();
         int id_enlace;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -169,22 +171,29 @@ namespace SistemaGdC.Verificaciones
 
         protected void btnRechazar_Click(object sender, EventArgs e)
         {
-            string rechazo = txtRechazo.Text;
+            //string rechazo = txtRechazo.Text;
+
+            mAccionG = cResultados.Obtner_AccionGenerada(int.Parse(Session["noAccion"].ToString()));
+            mEmpleado = cEmpleado.Obtner_Empleado(mAccionG.id_enlace);
+            
 
             switch (int.Parse(Session["id_tipo_usuario"].ToString()))
             {
                 case 4: //Líder
                     cAcciones.actualizarStatus_Accion(int.Parse(Session["noAccion"].ToString()), -1);
+                    cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Plan de Acción", txtRechazo.Text);
                     Response.Redirect("~/Verificaciones/VerificacionPlanes.aspx");
                     break;
 
                 case 3: //Analista
                     cAcciones.actualizarStatus_Accion(int.Parse(Session["noAccion"].ToString()), -1);
+                    cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Plan de Acción", txtRechazo.Text);
                     Response.Redirect("~/Verificaciones/VerificacionPlanes.aspx");
                     break;
 
                 case 1: //Director
                     cAcciones.actualizarStatus_Accion(int.Parse(Session["noAccion"].ToString()), -1);
+                    cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Plan de Acción", txtRechazo.Text);
                     Response.Redirect("~/Verificaciones/VerificacionPlanes.aspx");
                     break;
 

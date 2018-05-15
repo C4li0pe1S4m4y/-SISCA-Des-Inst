@@ -19,10 +19,13 @@ namespace SistemaGdC.Seguimientos
         cGeneral cGen = new cGeneral();
         cInformeCO cInfoCorrec = new cInformeCO();
         cInformeEI cResultados = new cInformeEI();
+        cEmpleado cEmpleado = new cEmpleado();
+        cCorreo cCorreo = new cCorreo();
 
         mPlanAccion mPlanAccion = new mPlanAccion();
         mAccionesGeneradas mAccionG = new mAccionesGeneradas();
         mAccionesRealizar mAccionesRealizar = new mAccionesRealizar();
+        mEmpleado mEmpleado = new mEmpleado();
         int id_enlace;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -228,17 +231,22 @@ namespace SistemaGdC.Seguimientos
 
         protected void btnRechazar_Click(object sender, EventArgs e)
         {
+            mPlanAccion = cPlanAccion.Obtner_PlanAccion(int.Parse(Session["noAccion"].ToString()));
+            mAccionG = cResultados.Obtner_AccionGenerada(mPlanAccion.id_accion_generada);
+            mEmpleado = cEmpleado.Obtner_Empleado(mAccionG.id_enlace);            
+
             switch (int.Parse(Session["id_tipo_usuario"].ToString()))
             {
                 case 3: //Analista
                     cActividades.actualizarActividad(int.Parse(Session["idActividad"].ToString()), -2);
                     actualizarListadosActiviades();
+                    cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Actividad", txtRechazo.Text);
+                    txtRechazo.Text = "";
                     ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Actividad rechazada correctamente', '', 'error');", true);
                     break;
 
                 default:
                     ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No tiene permisos para rechazar Actividad', '', 'warning');", true);
-                    //ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('No tiene permisos para rechazar Actividad');", true);
                     break;
             }
             btnValidar.Visible = false;
@@ -443,11 +451,17 @@ namespace SistemaGdC.Seguimientos
 
         protected void btnRechazarEficacia_Click(object sender, EventArgs e)
         {
+            mPlanAccion = cPlanAccion.Obtner_PlanAccion(int.Parse(Session["noAccion"].ToString()));
+            mAccionG = cResultados.Obtner_AccionGenerada(mPlanAccion.id_accion_generada);
+            mEmpleado = cEmpleado.Obtner_Empleado(mAccionG.id_analista);
+
+
             switch (int.Parse(Session["id_tipo_usuario"].ToString()))
             {
                 case 1: //Director
                 case 4: //Lider
                     cPlanAccion.actualizar_statusPlan(int.Parse(Session["noPlanAccion"].ToString()), -3);
+                    cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Eficacia", txtRechazOEficacia.Text);
                     Response.Redirect("~/Seguimientos/SeguimientoPlanAccion.aspx");
                     break;
 
