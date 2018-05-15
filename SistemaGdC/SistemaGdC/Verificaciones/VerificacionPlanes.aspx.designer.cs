@@ -193,6 +193,33 @@ namespace SistemaGdC.Verificaciones {
         protected global::System.Web.UI.WebControls.LinkButton btnRechazar;
         
         /// <summary>
+        /// Control txtRechazo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtRechazo;
+        
+        /// <summary>
+        /// Control RFVtxtRechazo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVtxtRechazo;
+        
+        /// <summary>
+        /// Control btnModalRechazar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnModalRechazar;
+        
+        /// <summary>
         /// Control gvListadoActividades.
         /// </summary>
         /// <remarks>

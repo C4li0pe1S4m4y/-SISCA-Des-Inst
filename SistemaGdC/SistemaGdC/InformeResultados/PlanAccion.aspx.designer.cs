@@ -127,7 +127,7 @@ namespace SistemaGdC.InformeResultados {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCausa;
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea txtCausa;
         
         /// <summary>
         /// Control RFVtxtCausa.
@@ -262,7 +262,7 @@ namespace SistemaGdC.InformeResultados {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtObservaciones;
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea txtObservaciones;
         
         /// <summary>
         /// Control btnGuardar.

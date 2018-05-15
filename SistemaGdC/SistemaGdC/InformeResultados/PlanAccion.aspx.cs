@@ -68,7 +68,7 @@ namespace SistemaGdC.InformeResultados
                         mPlanAccion = cPlanAccion.Obtner_PlanAccion(mAccionG.id_accion_generada);
                         ddlTecnicaAnalisis.SelectedValue = mPlanAccion.tecnica_analisis;
                         ddlLider.SelectedValue = mPlanAccion.id_lider.ToString();
-                        txtCausa.Text = mPlanAccion.causa_raiz;
+                        txtCausa.Value = mPlanAccion.causa_raiz;
 
                         enabledCausaRaiz(false);
                         enabledPlan(true);
@@ -127,7 +127,7 @@ namespace SistemaGdC.InformeResultados
         {
 
             mPlanAccion.tecnica_analisis = ddlTecnicaAnalisis.SelectedValue;
-            mPlanAccion.causa_raiz = txtCausa.Text;
+            mPlanAccion.causa_raiz = txtCausa.Value;
             mPlanAccion.id_lider = int.Parse(ddlLider.SelectedValue);
             mPlanAccion.usuario_ingreso = Session["usuario"].ToString();
             mPlanAccion.id_accion_generada = int.Parse(Session["noAccion"].ToString());
@@ -186,7 +186,7 @@ namespace SistemaGdC.InformeResultados
             mAccionRealizar.responsable = ddlResponsable.SelectedItem.ToString();
             mAccionRealizar.fecha_inicio = txtFechaInicio.Text;
             mAccionRealizar.fecha_fin = txtFechaFin.Text;
-            mAccionRealizar.observaciones = txtObservaciones.Text;
+            mAccionRealizar.observaciones = txtObservaciones.Value;
 
             int result = cPlanAccion.IngresarAccionRealizar(mAccionRealizar);
             if (result == 1)
@@ -203,7 +203,7 @@ namespace SistemaGdC.InformeResultados
             ddlResponsable.SelectedIndex = 0;
             txtFechaInicio.Text = "";
             txtFechaFin.Text = "";
-            txtObservaciones.Text = "";
+            txtObservaciones.Value = "";
         }
 
         protected void gvListado_SelectedIndexChanged(object sender, EventArgs e)
@@ -259,11 +259,12 @@ namespace SistemaGdC.InformeResultados
 
         void enabledPlan(bool en)
         {
+            txtAccionRealizar.Disabled = !en;
             //txtAccionRealizar.Enabled = en;
             ddlResponsable.Enabled = en;
             txtFechaInicio.Enabled = en;
             txtFechaFin.Enabled = en;
-            txtObservaciones.Enabled = en;
+            txtObservaciones.Disabled = !en;
             btnGuardar.Enabled = en;
             btnNuevo.Enabled = en;
         }
@@ -272,7 +273,7 @@ namespace SistemaGdC.InformeResultados
         {
             ddlTecnicaAnalisis.Enabled = en;
             ddlLider.Enabled = en;
-            txtCausa.Enabled = en;
+            txtCausa.Disabled = !en;
             btnGuardarCausa.Enabled = en;
         }
 

@@ -113,7 +113,7 @@
                                     </div>
                                     <div>
                                         
-                                        <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#myModal">Rechazar</button>
+                                        <button id="btnRechazar" type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#myModal">Rechazar</button>
                                     </div>
                                 </div>
                             </div>
@@ -130,7 +130,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Modal Header</h4>
+                            <h4 class="modal-title">¿Desea rechazar el Informe de Evaluación Interna?</h4>
                         </div>
                         <div class="modal-body">
                             <label>Observaciones: </label>
@@ -138,7 +138,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>                            
-                            <asp:Button ID="btnRechazar" Text="Rechazar" runat="server" CssClass="btn btn-danger" OnClick="btnRechazar_Click" />
+                            <asp:Button ID="btnModalRechazar" Text="Rechazar" runat="server" CssClass="btn btn-danger" OnClick="btnRechazar_Click" />
                         </div>
                     </div>
                 </div>

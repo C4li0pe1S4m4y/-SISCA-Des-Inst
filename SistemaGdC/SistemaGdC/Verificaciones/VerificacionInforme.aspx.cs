@@ -112,7 +112,7 @@ namespace SistemaGdC.Verificaciones
                 ddlAnalista.SelectedValue = mAccionG.id_analista.ToString();
                 dllTipoAccion.SelectedValue = mAccionG.id_tipo_accion.ToString();
                 txtFechaRecepcion.Text = mAccionG.fecha.ToString();
-                txtNoPlanAccion.Text = "";
+                //txtNoPlanAccion.Text = "";
             }
         }
 

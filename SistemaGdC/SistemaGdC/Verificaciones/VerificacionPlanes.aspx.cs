@@ -132,8 +132,6 @@ namespace SistemaGdC.Verificaciones
 
                 gvListadoActividades.DataSource = cPlanAccion.ListadoAccionesRealizar(int.Parse(Session["noPlanAccion"].ToString()));
                 gvListadoActividades.DataBind();
-
-
             }
         }
 
@@ -171,6 +169,8 @@ namespace SistemaGdC.Verificaciones
 
         protected void btnRechazar_Click(object sender, EventArgs e)
         {
+            string rechazo = txtRechazo.Text;
+
             switch (int.Parse(Session["id_tipo_usuario"].ToString()))
             {
                 case 4: //Líder

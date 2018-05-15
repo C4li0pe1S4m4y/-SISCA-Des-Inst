@@ -103,17 +103,6 @@
         }
     </script>
 
-
-    <script>
-        function prueba(e) {
-            tecla = (document.all) ? e.keyCode : e.which;
-            if (tecla == 8) return true;
-            patron = /[A-Z][0-9][0-9]-[A-z]{,4}[0-9]/;
-            te = String.fromCharCode(tecla);
-            return patron.test(te);
-        }
-    </script>
-
     <script>
         function letrasycomapunto(e) {
             tecla = (document.all) ? e.keyCode : e.which;
@@ -158,7 +147,7 @@
         function descripcion(e) {
             tecla = (document.all) ? e.keyCode : e.which;
             if (tecla == 8) return true;
-            patron = /[.,;:0-9-A-Za-záéíóúñÑ ]/;
+            patron = /[.,;:0-9-A-Za-záéíóúñÑ\n ]/;
             te = String.fromCharCode(tecla);
             return patron.test(te);
         }

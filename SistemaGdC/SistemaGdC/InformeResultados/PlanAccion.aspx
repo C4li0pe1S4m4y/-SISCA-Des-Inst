@@ -80,7 +80,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <label>Causa Raíz:</label>
-                                    <asp:TextBox ID="txtCausa" TextMode="MultiLine" runat="server" CssClass="form-control input" Style="height: 100px"></asp:TextBox>
+                                    <textarea id="txtCausa" type="text" TextMode="MultiLine" class="form-control" name="option" runat="server" Style="height: 100px" onkeypress="return descripcion(event);"/>                                    
                                     <asp:RequiredFieldValidator ID="RFVtxtCausa" ValidationGroup="validarCausa" Style="color: red;" SetFocusOnError="true" ControlToValidate="txtCausa" InitialValue="" runat="server" ErrorMessage="Ingrese Causa." Display="Dynamic" />
                                 </div>
                             </div>
@@ -115,7 +115,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Actividad a Realizar:</label>
-                                                <input id="txtAccionRealizar" type="text" class="form-control" name="option" runat="server" onkeypress="return prueba(event);"/>
+                                                <input id="txtAccionRealizar" type="text" class="form-control" name="option" runat="server" onkeypress="return descripcion(event);"/>
                                                 <asp:RequiredFieldValidator ID="RFVtxtAccionRealizar" ValidationGroup="validarActividad" Style="color: red;" SetFocusOnError="true" ControlToValidate="txtAccionRealizar" InitialValue="" runat="server" ErrorMessage="Ingrese Acción a Realizar." Display="Dynamic" />
                                             </div>
                                         </div>
@@ -148,7 +148,7 @@
                                     <div class="row">
                                         <div class="col-md-9">
                                             <label>Observaciones:</label>
-                                            <asp:TextBox ID="txtObservaciones" TextMode="MultiLine" runat="server" CssClass="form-control" Style="height: 120px"></asp:TextBox>
+                                            <textarea id="txtObservaciones" type="text" TextMode="MultiLine" class="form-control" name="option" runat="server" Style="height: 120px" onkeypress="return descripcion(event);"/>
                                         </div>
                                         <div class="col-md-3">
                                             <br />
