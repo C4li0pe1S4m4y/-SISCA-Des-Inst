@@ -14,9 +14,13 @@ namespace SistemaGdC.InformeResultados
     public partial class InformeCorrecion : System.Web.UI.Page
     {
         cInformeEI cResultados = new cInformeEI();
-        cGeneral cGen;
-        cInformeCO cInfoCorrec;
+        cGeneral cGen = new cGeneral();
+        
         mAccionesGeneradas mAccionG = new mAccionesGeneradas();
+
+        cAcciones cAcciones = new cAcciones();
+        cInformeCO cInfoCorrec = new cInformeCO();
+        mInformeCO informeCO = new mInformeCO();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -83,15 +87,17 @@ namespace SistemaGdC.InformeResultados
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            cAcciones cAcciones = new cAcciones();
-            cInformeCO cInfoCorrec = new cInformeCO();
-            mInformeCO informeCO = new mInformeCO();
+            informeCO = cInfoCorrec.Obtner_InformeCorreccion(int.Parse(Session["noAccion"].ToString()));
+            bool actualizar = false;
+            int informe = 0;
+            if (informeCO.id_status == -1) actualizar = true;
+
             informeCO.id_accion_generada = int.Parse(Session["noAccion"].ToString());
             informeCO.id_enlace = int.Parse(Session["id_empleado"].ToString());
             informeCO.id_lider = int.Parse(ddlLider.SelectedValue);
             informeCO.descripcion_evidencia = txtDesEvidencia.Text;
             informeCO.descripcion_accion = txtAccionRealizada.Text;
-            informeCO.estado = ddlEstado.SelectedValue;
+            informeCO.estado = ddlEstado.SelectedValue;            
 
             //////////////////////////////////////////////////////////////////
 
@@ -103,7 +109,9 @@ namespace SistemaGdC.InformeResultados
                 {
                     if (tam <= 1048576)
                     {
-                        int informe = cInfoCorrec.IngresraInforme(informeCO);
+                        if (actualizar) informe = cInfoCorrec.actualizarInforme(informeCO);
+                        else informe = cInfoCorrec.IngresraInforme(informeCO);
+
                         if (informe > 0)
                         {
                             ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Informe de Correción ingresado exitosamente!', '', 'success');", true);

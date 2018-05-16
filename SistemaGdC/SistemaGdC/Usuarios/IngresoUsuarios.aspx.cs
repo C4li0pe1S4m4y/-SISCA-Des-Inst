@@ -17,27 +17,32 @@ namespace SistemaGdC.Usuarios
             if (!IsPostBack)
             {
                 //txtNombre.Text = "";
-                txtUsuario.Text = "";
-                ddlEmpleado.ClearSelection();
-                ddlEmpleado.Items.Clear();
-                ddlEmpleado.AppendDataBoundItems = true;
-                ddlEmpleado.Items.Add("<< Elija Empleado >>");
-                ddlEmpleado.Items[0].Value = "0";
-                ddlEmpleado.DataSource = cgDatos.dropEmpleados();
-                ddlEmpleado.DataTextField = "texto";
-                ddlEmpleado.DataValueField = "id";
-                ddlEmpleado.DataBind();
-
-                ddlTipoUsuario.ClearSelection();
-                ddlTipoUsuario.Items.Clear();
-                ddlTipoUsuario.AppendDataBoundItems = true;
-                ddlTipoUsuario.Items.Add("<< Elita Tipo de Usuario >>");
-                ddlTipoUsuario.Items[0].Value = "0";
-                ddlTipoUsuario.DataSource = cUsuarios.dropTipoUsuario();
-                ddlTipoUsuario.DataTextField = "nombre";
-                ddlTipoUsuario.DataValueField = "id";
-                ddlTipoUsuario.DataBind();
+                limpiarCampos();
             }
+        }
+
+        void limpiarCampos()
+        {
+            txtUsuario.Text = "";
+            ddlEmpleado.ClearSelection();
+            ddlEmpleado.Items.Clear();
+            ddlEmpleado.AppendDataBoundItems = true;
+            ddlEmpleado.Items.Add("<< Elija Empleado >>");
+            ddlEmpleado.Items[0].Value = "0";
+            ddlEmpleado.DataSource = cgDatos.dropEmpleados();
+            ddlEmpleado.DataTextField = "texto";
+            ddlEmpleado.DataValueField = "id";
+            ddlEmpleado.DataBind();
+
+            ddlTipoUsuario.ClearSelection();
+            ddlTipoUsuario.Items.Clear();
+            ddlTipoUsuario.AppendDataBoundItems = true;
+            ddlTipoUsuario.Items.Add("<< Elita Tipo de Usuario >>");
+            ddlTipoUsuario.Items[0].Value = "0";
+            ddlTipoUsuario.DataSource = cUsuarios.dropTipoUsuario();
+            ddlTipoUsuario.DataTextField = "nombre";
+            ddlTipoUsuario.DataValueField = "id";
+            ddlTipoUsuario.DataBind();
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
@@ -50,6 +55,7 @@ namespace SistemaGdC.Usuarios
                    // objUsuarios = new cUsuarios();
                    if(cUsuarios.IngresoNuevoUsuario(txtUsuario.Text, txtcontra.Text, ddlEmpleado.SelectedValue, ddlTipoUsuario.SelectedValue, txtCorreo.Text))
                     {
+                        limpiarCampos();
                         ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Usuario ingresado exitosamente!', '', 'success');", true);
                     }
                     else

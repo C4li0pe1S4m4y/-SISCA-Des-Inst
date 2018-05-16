@@ -27,7 +27,9 @@ namespace Controladores
             {
                 mEmpleado.id_empleado = int.Parse(dr.GetString("id_empleado"));
                 mEmpleado.Nombre = dr.GetString("Nombre");
-                mEmpleado.email = dr.GetString("email");
+
+                if (!dr.IsDBNull(dr.GetOrdinal("email")))
+                    mEmpleado.email = dr.GetString("email");
             }
             return mEmpleado;
         }

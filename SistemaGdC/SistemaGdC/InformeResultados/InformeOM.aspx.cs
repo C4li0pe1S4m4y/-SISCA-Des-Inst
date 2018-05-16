@@ -14,9 +14,11 @@ namespace SistemaGdC.InformeResultados
     public partial class InformeOM : System.Web.UI.Page
     {
         cInformeEI cResultados = new cInformeEI();
-        cGeneral cGen;
+        cGeneral cGen = new cGeneral();
         cInformeOM cInformeOM = new cInformeOM();
         mAccionesGeneradas mAccionG = new mAccionesGeneradas();
+        cAcciones cAcciones = new cAcciones();
+        mInformeOM mInformeOM = new mInformeOM();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -83,9 +85,12 @@ namespace SistemaGdC.InformeResultados
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            cAcciones cAcciones = new cAcciones();
-            cInformeOM cInformeOM = new cInformeOM();
-            mInformeOM mInformeOM = new mInformeOM();
+
+            mInformeOM = cInformeOM.Obtner_InformeOM(int.Parse(Session["noAccion"].ToString()));
+            bool actualizar = false;
+            int informe = 0;
+            if (mInformeOM.id_status == -1) actualizar = true;
+
             mInformeOM.id_accion_generada = int.Parse(Session["noAccion"].ToString());
             mInformeOM.id_enlace = int.Parse(Session["id_empleado"].ToString());
             mInformeOM.id_lider = int.Parse(ddlLider.SelectedValue);
@@ -103,7 +108,9 @@ namespace SistemaGdC.InformeResultados
                 {
                     if (tam <= 1048576)
                     {
-                        int informe = cInformeOM.IngresraInforme(mInformeOM);
+                        if (actualizar) informe = cInformeOM.actualizarInforme(mInformeOM);
+                        else informe = cInformeOM.IngresraInforme(mInformeOM);
+
                         if (informe > 0)
                         {
                             ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Informe de Oportunidad de Mejora ingresado exitosamente', '', 'success');", true);                            

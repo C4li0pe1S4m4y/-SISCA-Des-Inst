@@ -173,7 +173,8 @@ namespace SistemaGdC.Verificaciones
                 case 3: //Analista
                 case 1: //Director
                     cAcciones.actualizarStatus_Accion(int.Parse(Session["noAccion"].ToString()), -3);
-                    cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Informe de Oportunidad de Mejora", txtRechazo.Text);
+                    cInformeOM.actualizarStatus_InformeOM(int.Parse(Session["noAccion"].ToString()), -1);
+                    if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Informe de Oportunidad de Mejora", txtRechazo.Text);
                     Response.Redirect("~/Verificaciones/VerificacionInformesOMejora.aspx");
                     break;                    
 

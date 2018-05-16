@@ -43,20 +43,46 @@ namespace Controladores
                 conectar = new DBConexion();
 
                 conectar.AbrirConexion();
-                string query = string.Format("INSERT INTO sgc_usuario (usuario, contrasena,  Habilitado, id_empleado, id_tipo_usuario, correo)" +
-                    "VALUES ('{0}', AES_ENCRYPT('{1}', 'SCOGA'), 1, '{2}', '{3}', '{4}'); ", usuario, contra, id_empleado, tipo_usuario, correo);
+                string query = string.Format("INSERT INTO sgc_usuario (usuario, contrasena,  Habilitado, id_empleado, id_tipo_usuario)" +
+                    "VALUES ('{0}', AES_ENCRYPT('{1}', 'SCOGA'), 1, '{2}', '{3}'); ", usuario, contra, id_empleado, tipo_usuario);
                 MySqlCommand cmd = new MySqlCommand(query, conectar.conectar);
                 cmd.ExecuteNonQuery();
+
+                /////////////////////////////////////////////////////
+
+                MySqlTransaction transaccion = conectar.conectar.BeginTransaction();
+                MySqlCommand command = conectar.conectar.CreateCommand();
+                command.Transaction = transaccion;
+                try
+                {
+                    command.CommandText = string.Format("UPDATE sgc_empleados SET email = '{1}' WHERE id_empleado = '{0}'; ",
+                    id_empleado, correo);
+                    command.ExecuteNonQuery();
+                    transaccion.Commit();
+                    conectar.CerrarConexion();
+                }
+                catch (Exception ex)
+                {
+                    try
+                    {
+                        transaccion.Rollback();
+                    }
+                    catch
+                    { };
+                    
+                    conectar.CerrarConexion();
+                    return false;
+                };
+
+                /////////////////////////////////////////////////////
+
                 conectar.CerrarConexion();
                 return true;
             }
             catch (Exception ex)
             {
-                return false;
-              
-            }
-            
-
+                return false;              
+            }            
         }
 
         public mUsuario Obtner_Usuario(string usuario)
@@ -78,7 +104,7 @@ namespace Controladores
                 objUsuario.id_empleado = int.Parse(dr.GetString("id_empleado"));
                 objUsuario.id_tipo_usuario = int.Parse(dr.GetString("id_tipo_usuario"));
                 objUsuario.nombre = dr.GetString("Nombre");
-                objUsuario.correo = dr.GetString("email");
+                //objUsuario.correo = dr.GetString("email");
             }
             return objUsuario;
         }

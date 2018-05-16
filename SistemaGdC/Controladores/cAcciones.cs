@@ -23,7 +23,7 @@ namespace Controladores
                     break;
 
                 case "accionesEnlace":
-                    statusAG = "AND (ag.id_status = 0 OR ag.id_status = 1 OR ag.id_status = -1 OR ag.id_status = -2)";
+                    statusAG = "AND (ag.id_status = 0 OR ag.id_status = 1 OR ag.id_status = -1 OR ag.id_status = -2 OR ag.id_status = -3)";
                     break;
 
                 default:

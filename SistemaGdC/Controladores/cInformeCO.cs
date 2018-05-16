@@ -109,8 +109,8 @@ namespace Controladores
                 int resultado = 0;
                 conectar = new DBConexion();
                 conectar.AbrirConexion();
-                string query = string.Format("Insert Into sgc_informe_correcion(id_accion_generada,descripcion_accion,descripcion_evidencia,id_lider,id_enlace,fecha,estado) "+
-                    "Values('{0}','{1}','{2}','{3}',{4},now(),'{5}')",obj.id_accion_generada,obj.descripcion_accion,obj.descripcion_evidencia,obj.id_lider,obj.id_enlace,obj.estado);
+                string query = string.Format("Insert Into sgc_informe_correcion(id_accion_generada,descripcion_accion,descripcion_evidencia,id_lider,id_enlace,fecha,estado,id_status) "+
+                    "Values('{0}','{1}','{2}','{3}',{4},now(),'{5}', 1)",obj.id_accion_generada,obj.descripcion_accion,obj.descripcion_evidencia,obj.id_lider,obj.id_enlace,obj.estado);
                 MySqlCommand cmd = new MySqlCommand(query, conectar.conectar);
                 resultado = cmd.ExecuteNonQuery();
                 query = "select @@IDENTITY;";
@@ -127,6 +127,63 @@ namespace Controladores
             {
                 return 0;
             }
+        }
+
+        public int actualizarInforme(mInformeCO obj)
+        {
+            conectar.AbrirConexion();
+            MySqlTransaction transaccion = conectar.conectar.BeginTransaction();
+            MySqlCommand command = conectar.conectar.CreateCommand();
+            command.Transaction = transaccion;
+            try
+            {
+                command.CommandText = string.Format("UPDATE sgc_informe_correcion SET descripcion_accion = '{0}', descripcion_evidencia = '{1}', " +
+                    "id_lider = '{2}', estado = '{3}', id_status = 1 WHERE id_accion_generada = '{4}'; "
+                    , obj.descripcion_accion, obj.descripcion_evidencia, obj.id_lider, obj.estado, obj.id_accion_generada);
+                command.ExecuteNonQuery();
+                transaccion.Commit();
+                conectar.CerrarConexion();
+                return obj.id_informe_correccion;
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    transaccion.Rollback();
+                }
+                catch
+                {
+                    
+                };                
+                conectar.CerrarConexion();
+                return 0;
+            };
+        }
+
+        public void actualizarStatus_InformeCO(int id, int status)
+        {
+            conectar.AbrirConexion();
+            MySqlTransaction transaccion = conectar.conectar.BeginTransaction();
+            MySqlCommand command = conectar.conectar.CreateCommand();
+            command.Transaction = transaccion;
+            try
+            {
+                command.CommandText = string.Format("UPDATE sgc_informe_correcion SET id_status = '{1}' WHERE id_accion_generada = '{0}'; ",
+                id, status);
+                command.ExecuteNonQuery();
+                transaccion.Commit();
+                conectar.CerrarConexion();
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    transaccion.Rollback();
+                }
+                catch
+                { };
+                conectar.CerrarConexion();
+            };
         }
 
         public mInformeCO Obtner_InformeCorreccion(int id)
@@ -148,7 +205,8 @@ namespace Controladores
                 DateTime fecha = DateTime.Parse(dr.GetString("fecha"));
                     mInformeCo.fecha = fecha.ToString("yyyy-MM-dd");
                 mInformeCo.id_enlace = int.Parse(dr.GetString("id_enlace"));
-                mInformeCo.id_lider = int.Parse(dr.GetString("id_lider"));                
+                mInformeCo.id_lider = int.Parse(dr.GetString("id_lider"));
+                mInformeCo.id_status = int.Parse(dr.GetString("id_status"));
             }
             conectar.CerrarConexion();
             return mInformeCo;

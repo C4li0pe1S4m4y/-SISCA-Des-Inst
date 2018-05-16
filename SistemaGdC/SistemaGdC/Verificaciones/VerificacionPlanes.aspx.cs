@@ -181,19 +181,19 @@ namespace SistemaGdC.Verificaciones
             {
                 case 4: //Líder
                     cAcciones.actualizarStatus_Accion(int.Parse(Session["noAccion"].ToString()), -1);
-                    cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Plan de Acción", txtRechazo.Text);
+                    if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Plan de Acción", txtRechazo.Text);
                     Response.Redirect("~/Verificaciones/VerificacionPlanes.aspx");
                     break;
 
                 case 3: //Analista
                     cAcciones.actualizarStatus_Accion(int.Parse(Session["noAccion"].ToString()), -1);
-                    cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Plan de Acción", txtRechazo.Text);
+                    if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Plan de Acción", txtRechazo.Text);
                     Response.Redirect("~/Verificaciones/VerificacionPlanes.aspx");
                     break;
 
                 case 1: //Director
                     cAcciones.actualizarStatus_Accion(int.Parse(Session["noAccion"].ToString()), -1);
-                    cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Plan de Acción", txtRechazo.Text);
+                    if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Plan de Acción", txtRechazo.Text);
                     Response.Redirect("~/Verificaciones/VerificacionPlanes.aspx");
                     break;
 

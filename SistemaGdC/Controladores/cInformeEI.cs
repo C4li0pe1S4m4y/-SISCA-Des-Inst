@@ -209,8 +209,8 @@ namespace Controladores
             DataSet result = new DataSet();
             conectar.AbrirConexion();
             string query2 = string.Format("select ag.id_accion_generada as 'id',ca.Accion as 'Acción',ag.correlativo_hallazgo as 'Correlativo',ag.norma as 'Punto de Norma',  sag.nombre as 'Status', " +
-                "p.Proceso,u.Unidad,d.Unidad Dependencia,ag.descripcion as 'Descripción', concat(ee.Nombre, ' ', ee.Apellido) Enlace, " +
-                "concat(ea.Nombre, ' ', ea.Apellido) Analista, Date_format(ag.fecha,'%d/%m/%Y') as 'Fecha', ta.accion as 'Tipo Acción' " +
+                "p.Proceso,u.Unidad,d.Unidad Dependencia,ag.descripcion as 'Descripción', ee.Nombre Enlace, " +
+                "ea.Nombre Analista, Date_format(ag.fecha,'%d/%m/%Y') as 'Fecha', ta.accion as 'Tipo Acción' " +
 
                         "from sgc_accion_generada ag inner join sgc_ccl_accion_generada ca on ca.id_acciones = ag.id_ccl_accion_generada " +
                         "inner join sgc_proceso p on p.id_proceso = ag.id_proceso " +

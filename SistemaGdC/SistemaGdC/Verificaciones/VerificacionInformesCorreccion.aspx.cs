@@ -172,7 +172,8 @@ namespace SistemaGdC.Verificaciones
                 case 3: //Analista
                 case 1: //Director
                     cAcciones.actualizarStatus_Accion(int.Parse(Session["noAccion"].ToString()), -2);
-                    cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Informe de Corrección", txtRechazo.Text);
+                    cInfoCorrec.actualizarStatus_InformeCO(int.Parse(Session["noAccion"].ToString()), -1);
+                    if (mEmpleado.email != null)  cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Informe de Corrección", txtRechazo.Text);
                     Response.Redirect("~/Verificaciones/VerificacionInformesCorreccion.aspx");
                     break;                    
 

@@ -16,5 +16,6 @@ namespace Modelos
         public int id_enlace { get; set; }
         public string fecha { get; set; }
         public int id_accion_generada { get; set; }
+        public int id_status { get; set; }
     }
 }

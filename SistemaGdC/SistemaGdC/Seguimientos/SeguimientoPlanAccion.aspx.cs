@@ -240,7 +240,7 @@ namespace SistemaGdC.Seguimientos
                 case 3: //Analista
                     cActividades.actualizarActividad(int.Parse(Session["idActividad"].ToString()), -2);
                     actualizarListadosActiviades();
-                    cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Actividad", txtRechazo.Text);
+                    if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Actividad", txtRechazo.Text);
                     txtRechazo.Text = "";
                     ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Actividad rechazada correctamente', '', 'error');", true);
                     break;
@@ -461,7 +461,7 @@ namespace SistemaGdC.Seguimientos
                 case 1: //Director
                 case 4: //Lider
                     cPlanAccion.actualizar_statusPlan(int.Parse(Session["noPlanAccion"].ToString()), -3);
-                    cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Eficacia", txtRechazOEficacia.Text);
+                    if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Eficacia", txtRechazOEficacia.Text);
                     Response.Redirect("~/Seguimientos/SeguimientoPlanAccion.aspx");
                     break;
 
