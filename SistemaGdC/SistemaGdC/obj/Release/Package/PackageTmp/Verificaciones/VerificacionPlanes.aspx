@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h2>&nbsp;</h2>
-    <h2>Verificación Planes de Acción</h2>
+    <h2 style="color: white"><b>Verificación de Planes de Acción</b></h2>
 
     <style>
         .chart {
@@ -26,8 +26,6 @@
         <ContentTemplate>
             <div class="row">
                 <div class="col-md-12" id="pn1" runat="server">
-
-
 
                     <div class="panel panel-default">
                         <div class="panel-heading">Encabezado</div>
@@ -58,7 +56,7 @@
                                         <div class="col-md-4">
                                             <label>No. de Hallazgo:</label>
                                             <asp:TextBox ID="txtHallazgo" Enabled="false" AutoPostBack="true" runat="server" CssClass="form-control"></asp:TextBox>
-                                        </div>                                        
+                                        </div>
                                         <div class="col-md-4">
                                             <label>Tipo de Acción/Informe:</label>
                                             <asp:DropDownList ID="ddlTipoAccionInforme" Enabled="false" runat="server" CssClass="form-control"></asp:DropDownList>
@@ -93,11 +91,9 @@
                                                 <asp:BoundField DataField="Status" HeaderText="Status" />
                                                 <asp:BoundField DataField="Punto de Norma" HeaderText="Punto de Norma" />
                                                 <asp:BoundField DataField="Proceso" HeaderText="Proceso" />
-
                                                 <asp:BoundField DataField="Dependencia" HeaderText="Dependencia" />
                                                 <asp:BoundField DataField="Descripción" HeaderText="Descripción" />
                                                 <asp:BoundField DataField="Enlace" HeaderText="Enlace" />
-
                                                 <asp:BoundField DataField="Tipo Acción" HeaderText="Tipo Acción" />
                                             </Columns>
                                             <HeaderStyle BackColor="#33CCFF" />
@@ -141,7 +137,6 @@
                                         <br />
                                         <asp:Button ID="btnCancelar" OnClick="btnCancelar_Click" Text="Cancelar" CssClass="btn" runat="server" Width="100%" />
                                     </div>
-
                                     <div class="col-md-4">
                                         <br />
                                         <asp:Button ID="btnEvidencia" Text="Evidencia" CssClass="btn btn-primary" OnClick="btnDescargar_Click" runat="server" Width="100%" />
@@ -154,8 +149,30 @@
                                     </div>
                                     <div class="col-md-1">
                                         <br />
-                                        <asp:LinkButton ID="btnRechazar" OnClick="btnRechazar_Click" CssClass="btn btn-danger" runat="server"
-                                            OnClientClick="return confirm('¿Desea rechazar el Plan de Acción?');"><span class="glyphicon glyphicon-remove"/></asp:LinkButton>
+                                        <asp:LinkButton ID="btnRechazar" CssClass="btn btn-danger" runat="server"
+                                            data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-remove"/></asp:LinkButton>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">¿Desea rechazar el Plan de Acción?</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <label>Observaciones: </label>
+                                            <asp:TextBox ID="txtRechazo" Enabled="true" Width="100%" CssClass="form-control" TextMode="MultiLine" Style="height: 205px" runat="server"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RFVtxtRechazo" ValidationGroup="rechazar" Style="color: red;" SetFocusOnError="true" ControlToValidate="txtRechazo" InitialValue="" runat="server" ErrorMessage="Por favor agregue una observación." Display="Dynamic" />
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                            <asp:Button ID="btnModalRechazar" ValidationGroup="rechazar" Text="Rechazar" runat="server" CssClass="btn btn-danger" OnClick="btnRechazar_Click" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>

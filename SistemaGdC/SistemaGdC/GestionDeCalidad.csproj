@@ -50,6 +50,23 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.Common, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.Runtime.Common.12.0.2402.15\lib\Microsoft.ReportViewer.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.Runtime.Common.12.0.2402.15\lib\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.Runtime.Common.12.0.2402.15\lib\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SqlServer.Types, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.11.0.1\lib\net20\Microsoft.SqlServer.Types.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -123,11 +140,27 @@
     <Folder Include="Planes\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\packages\Microsoft.SqlServer.Types.11.0.1\nativeBinaries\x64\msvcr100.dll">
+      <Link>SqlServerTypes\x64\msvcr100.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Microsoft.SqlServer.Types.11.0.1\nativeBinaries\x64\SqlServerSpatial110.dll">
+      <Link>SqlServerTypes\x64\SqlServerSpatial110.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Microsoft.SqlServer.Types.11.0.1\nativeBinaries\x86\msvcr100.dll">
+      <Link>SqlServerTypes\x86\msvcr100.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Microsoft.SqlServer.Types.11.0.1\nativeBinaries\x86\SqlServerSpatial110.dll">
+      <Link>SqlServerTypes\x86\SqlServerSpatial110.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="About.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\fondo.jpg" />
+    <Content Include="Content\fondo7.jpg" />
     <Content Include="Content\Site.css" />
     <Content Include="css\chosen.css" />
     <Content Include="css\Control.css" />
@@ -140,6 +173,7 @@
     <Content Include="css\screen.css" />
     <Content Include="css\style.css" />
     <Content Include="css\utilities.css" />
+    <Content Include="Default.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -157,7 +191,9 @@
     <Content Include="InformeResultados\PlanAccion.aspx" />
     <Content Include="InformeResultados\VoBoDirector.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="Reportes\reporte1.aspx" />
     <Content Include="Seguimientos\SeguimientoPlanAccion.aspx" />
+    <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="Verificaciones\VerificacionInformesOMejora.aspx" />
     <Content Include="Verificaciones\VerificacionInformesCorreccion.aspx" />
     <Content Include="Verificaciones\VerificacionPlanes.aspx" />
@@ -191,7 +227,7 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Default.aspx" />
+    <Content Include="Dashboard\Dashboard.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Site.Master" />
@@ -200,6 +236,9 @@
     <Content Include="Usuarios\ListadoUsuarios.aspx" />
     <Content Include="Verificaciones\VerificacionInforme.aspx" />
     <Content Include="ViewSwitcher.ascx" />
+    <Content Include="Visualizar\VerInformeOM.aspx" />
+    <Content Include="Visualizar\VerInformeCorrecion.aspx" />
+    <Content Include="Visualizar\VerPlanAccion.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -231,6 +270,13 @@
     </Compile>
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Dashboard\Dashboard.aspx.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Dashboard\Dashboard.aspx.designer.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -305,6 +351,13 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\reporte1.aspx.cs">
+      <DependentUpon>reporte1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reportes\reporte1.aspx.designer.cs">
+      <DependentUpon>reporte1.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Seguimientos\SeguimientoPlanAccion.aspx.cs">
       <DependentUpon>SeguimientoPlanAccion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -312,6 +365,7 @@
     <Compile Include="Seguimientos\SeguimientoPlanAccion.aspx.designer.cs">
       <DependentUpon>SeguimientoPlanAccion.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Verificaciones\VerificacionInformesOMejora.aspx.cs">
       <DependentUpon>VerificacionInformesOMejora.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -382,6 +436,27 @@
     </Compile>
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Visualizar\VerInformeOM.aspx.cs">
+      <DependentUpon>VerInformeOM.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Visualizar\VerInformeOM.aspx.designer.cs">
+      <DependentUpon>VerInformeOM.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Visualizar\VerInformeCorrecion.aspx.cs">
+      <DependentUpon>VerInformeCorrecion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Visualizar\VerInformeCorrecion.aspx.designer.cs">
+      <DependentUpon>VerInformeCorrecion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Visualizar\VerPlanAccion.aspx.cs">
+      <DependentUpon>VerPlanAccion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Visualizar\VerPlanAccion.aspx.designer.cs">
+      <DependentUpon>VerPlanAccion.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

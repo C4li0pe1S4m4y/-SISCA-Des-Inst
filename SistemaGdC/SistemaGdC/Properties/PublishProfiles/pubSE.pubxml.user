@@ -13,7 +13,10 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>02/16/2018 09:42:16</publishTime>
     </File>
     <File Include="Acciones/ListadoAcciones.aspx">
-      <publishTime>05/10/2018 12:01:49</publishTime>
+      <publishTime>05/14/2018 13:14:59</publishTime>
+    </File>
+    <File Include="Archivos/InformeOM/1.pdf">
+      <publishTime>05/17/2018 14:12:10</publishTime>
     </File>
     <File Include="bin/Antlr3.Runtime.dll">
       <publishTime>02/16/2018 09:42:17</publishTime>
@@ -28,7 +31,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>02/16/2018 09:42:17</publishTime>
     </File>
     <File Include="bin/Controladores.dll">
-      <publishTime>05/10/2018 15:50:31</publishTime>
+      <publishTime>05/17/2018 14:28:12</publishTime>
     </File>
     <File Include="bin/Controladores.exe">
       <publishTime>10/11/2017 23:43:19</publishTime>
@@ -51,17 +54,29 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>02/16/2018 09:42:17</publishTime>
     </File>
+    <File Include="bin/Microsoft.ReportViewer.Common.dll">
+      <publishTime>02/06/2016 17:42:26</publishTime>
+    </File>
+    <File Include="bin/Microsoft.ReportViewer.DataVisualization.dll">
+      <publishTime>02/06/2016 17:42:26</publishTime>
+    </File>
+    <File Include="bin/Microsoft.ReportViewer.ProcessingObjectModel.dll">
+      <publishTime>02/06/2016 17:42:26</publishTime>
+    </File>
     <File Include="bin/Microsoft.ScriptManager.MSAjax.dll">
       <publishTime>02/16/2018 09:42:17</publishTime>
     </File>
     <File Include="bin/Microsoft.ScriptManager.WebForms.dll">
       <publishTime>02/16/2018 09:42:17</publishTime>
     </File>
+    <File Include="bin/Microsoft.SqlServer.Types.dll">
+      <publishTime>02/13/2014 09:53:40</publishTime>
+    </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
       <publishTime>02/16/2018 09:42:17</publishTime>
     </File>
     <File Include="bin/Modelos.dll">
-      <publishTime>05/10/2018 15:50:31</publishTime>
+      <publishTime>05/17/2018 14:28:12</publishTime>
     </File>
     <File Include="bin/Modelos.exe">
       <publishTime>10/11/2017 23:42:43</publishTime>
@@ -112,10 +127,22 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>02/16/2018 09:42:17</publishTime>
     </File>
     <File Include="bin/SistemaGdC.dll">
-      <publishTime>05/10/2018 15:59:02</publishTime>
+      <publishTime>05/17/2018 14:28:17</publishTime>
     </File>
     <File Include="bin/SistemaGdC.pdb">
       <publishTime>12/18/2017 11:31:52</publishTime>
+    </File>
+    <File Include="bin/SqlServerTypes/x64/msvcr100.dll">
+      <publishTime>02/13/2014 09:53:40</publishTime>
+    </File>
+    <File Include="bin/SqlServerTypes/x64/SqlServerSpatial110.dll">
+      <publishTime>02/13/2014 09:53:40</publishTime>
+    </File>
+    <File Include="bin/SqlServerTypes/x86/msvcr100.dll">
+      <publishTime>02/13/2014 09:53:40</publishTime>
+    </File>
+    <File Include="bin/SqlServerTypes/x86/SqlServerSpatial110.dll">
+      <publishTime>02/13/2014 09:53:40</publishTime>
     </File>
     <File Include="bin/System.Web.Optimization.dll">
       <publishTime>02/16/2018 09:42:17</publishTime>
@@ -134,6 +161,12 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
     </File>
     <File Include="Content/bootstrap.min.css">
       <publishTime>02/16/2018 09:42:16</publishTime>
+    </File>
+    <File Include="Content/fondo.jpg">
+      <publishTime>02/21/2018 15:16:51</publishTime>
+    </File>
+    <File Include="Content/fondo7.jpg">
+      <publishTime>09/02/2018 12:10:38</publishTime>
     </File>
     <File Include="Content/Site.css">
       <publishTime>02/16/2018 09:42:16</publishTime>
@@ -171,8 +204,11 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
     <File Include="css/utilities.css">
       <publishTime>02/16/2018 09:42:16</publishTime>
     </File>
+    <File Include="Dashboard/Dashboard.aspx">
+      <publishTime>05/16/2018 16:30:04</publishTime>
+    </File>
     <File Include="Default.aspx">
-      <publishTime>05/10/2018 15:50:24</publishTime>
+      <publishTime>05/17/2018 09:17:27</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>02/16/2018 09:42:16</publishTime>
@@ -199,25 +235,25 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>02/16/2018 09:42:16</publishTime>
     </File>
     <File Include="InformeResultados/InformeCorrecion.aspx">
-      <publishTime>05/10/2018 09:07:27</publishTime>
+      <publishTime>05/14/2018 14:18:33</publishTime>
     </File>
     <File Include="InformeResultados/InformeOM.aspx">
-      <publishTime>05/08/2018 15:02:45</publishTime>
+      <publishTime>05/14/2018 14:21:01</publishTime>
     </File>
     <File Include="InformeResultados/IngresoFuente.aspx">
-      <publishTime>04/18/2018 11:46:24</publishTime>
+      <publishTime>05/14/2018 14:19:26</publishTime>
     </File>
     <File Include="InformeResultados/IngresoFuenteEntrada.aspx">
       <publishTime>02/16/2018 09:42:16</publishTime>
     </File>
     <File Include="InformeResultados/IngresoInforme.aspx">
-      <publishTime>05/09/2018 11:07:49</publishTime>
+      <publishTime>05/14/2018 14:52:54</publishTime>
     </File>
     <File Include="InformeResultados/ListadoAcciones.aspx">
       <publishTime>02/16/2018 09:42:16</publishTime>
     </File>
     <File Include="InformeResultados/PlanAccion.aspx">
-      <publishTime>05/10/2018 10:18:28</publishTime>
+      <publishTime>05/14/2018 22:56:50</publishTime>
     </File>
     <File Include="InformeResultados/VoBoDirector.aspx">
       <publishTime>02/16/2018 09:42:16</publishTime>
@@ -226,7 +262,10 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>03/23/2018 12:00:14</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>02/16/2018 09:42:17</publishTime>
+      <publishTime>05/16/2018 14:16:57</publishTime>
+    </File>
+    <File Include="Reportes/reporte1.aspx">
+      <publishTime>05/16/2018 14:37:50</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
       <publishTime>02/16/2018 09:42:16</publishTime>
@@ -322,34 +361,61 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>05/10/2018 15:52:48</publishTime>
     </File>
     <File Include="Seguimientos/SeguimientoPlanAccion.aspx">
-      <publishTime>05/08/2018 15:35:44</publishTime>
+      <publishTime>05/15/2018 11:55:41</publishTime>
     </File>
     <File Include="Site.Master">
-      <publishTime>05/08/2018 23:29:37</publishTime>
+      <publishTime>05/17/2018 14:39:30</publishTime>
     </File>
     <File Include="Site.Mobile.Master">
       <publishTime>02/16/2018 09:42:16</publishTime>
     </File>
+    <File Include="SqlServerTypes/readme.htm">
+      <publishTime>05/16/2018 11:57:10</publishTime>
+    </File>
+    <File Include="SqlServerTypes/x64/msvcr100.dll">
+      <publishTime>02/13/2014 09:53:40</publishTime>
+    </File>
+    <File Include="SqlServerTypes/x64/SqlServerSpatial110.dll">
+      <publishTime>02/13/2014 09:53:40</publishTime>
+    </File>
+    <File Include="SqlServerTypes/x86/msvcr100.dll">
+      <publishTime>02/13/2014 09:53:40</publishTime>
+    </File>
+    <File Include="SqlServerTypes/x86/SqlServerSpatial110.dll">
+      <publishTime>02/13/2014 09:53:40</publishTime>
+    </File>
     <File Include="Usuarios/IngresoUsuarios.aspx">
-      <publishTime>05/08/2018 15:05:34</publishTime>
+      <publishTime>05/14/2018 14:21:22</publishTime>
     </File>
     <File Include="Usuarios/ListadoUsuarios.aspx">
-      <publishTime>02/16/2018 09:42:16</publishTime>
+      <publishTime>05/14/2018 14:21:57</publishTime>
     </File>
     <File Include="Verificaciones/VerificacionInforme.aspx">
-      <publishTime>05/08/2018 15:06:25</publishTime>
+      <publishTime>05/14/2018 23:14:31</publishTime>
     </File>
     <File Include="Verificaciones/VerificacionInformesCorreccion.aspx">
-      <publishTime>05/10/2018 10:23:02</publishTime>
+      <publishTime>05/15/2018 13:48:38</publishTime>
+    </File>
+    <File Include="Verificaciones/VerificacionInformesOMejora.aspx">
+      <publishTime>05/15/2018 13:45:13</publishTime>
     </File>
     <File Include="Verificaciones/VerificacionPlanes.aspx">
-      <publishTime>05/09/2018 13:22:46</publishTime>
+      <publishTime>05/15/2018 09:25:05</publishTime>
     </File>
     <File Include="ViewSwitcher.ascx">
       <publishTime>02/16/2018 09:42:16</publishTime>
     </File>
+    <File Include="Visualizar/VerInformeCorrecion.aspx">
+      <publishTime>05/17/2018 14:13:42</publishTime>
+    </File>
+    <File Include="Visualizar/VerInformeOM.aspx">
+      <publishTime>01/01/0001 00:00:00</publishTime>
+    </File>
+    <File Include="Visualizar/VerPlanAccion.aspx">
+      <publishTime>05/17/2018 14:17:30</publishTime>
+    </File>
     <File Include="Web.config">
-      <publishTime>05/10/2018 15:52:06</publishTime>
+      <publishTime>05/17/2018 08:46:01</publishTime>
     </File>
   </ItemGroup>
 </Project>

@@ -8,7 +8,7 @@ namespace Modelos
 {
     public class mAccionesRealizar
     {
-        public int id_accion_reallizar { get; set; }
+        public int id_accion_realizar { get; set; }
         public int id_plan { get; set; }
         public string accion { get; set; }
         public string responsable { get; set; }

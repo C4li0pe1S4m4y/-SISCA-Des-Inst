@@ -23,7 +23,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </head>
-<body>
+<body style="background-image: url(../Content/fondo7.jpg); background-repeat: no-repeat; background-attachment: fixed">
     <form runat="server">
         <asp:ScriptManager runat="server" EnablePageMethods="true">
             <Scripts>
@@ -89,9 +89,89 @@
             </asp:ContentPlaceHolder>
             <hr />
             <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - Ssistema de Gestión de Calidad</p>
+                <p>&copy; <%: DateTime.Now.Year %> - Sistema de Gestión de Calidad</p>
             </footer>
         </div>
     </form>
+    <script>
+        function letras(e) {
+            tecla = (document.all) ? e.keyCode : e.which;
+            if (tecla == 8) return true;
+            patron = /[A-Za-záéíóúñÑ ]+/;
+            te = String.fromCharCode(tecla);
+            return patron.test(te);
+        }
+    </script>
+
+    <script>
+        function letrasycomapunto(e) {
+            tecla = (document.all) ? e.keyCode : e.which;
+            if (tecla == 8) return true;
+            patron = /[,.-A-Za-záéíóúñÑ ]+/;
+            te = String.fromCharCode(tecla);
+            return patron.test(te);
+        }
+    </script>
+
+    <script>
+        function numeros(e) {
+            tecla = (document.all) ? e.keyCode : e.which;
+            if (tecla == 8) return true;
+            patron = /[0-9]+/;
+            te = String.fromCharCode(tecla);
+            return patron.test(te);
+        }
+    </script>
+
+    <script>
+        function numerospositivos(e) {
+            tecla = (document.all) ? e.keyCode : e.which;
+            if (tecla == 8) return true;
+            patron = /[.0123456789]+/;
+            te = String.fromCharCode(tecla);
+            return patron.test(te);
+        }
+    </script>
+
+    <script>
+        function letrasynumeros(e) {
+            tecla = (document.all) ? e.keyCode : e.which;
+            if (tecla == 8) return true;
+            patron = /[0-9-A-Za-záéíóúñÑ ]/;
+            te = String.fromCharCode(tecla);
+            return patron.test(te);
+        }
+    </script>
+
+    <script>
+        function descripcion(e) {
+            tecla = (document.all) ? e.keyCode : e.which;
+            if (tecla == 8) return true;
+            patron = /[.,;:0-9-A-Za-záéíóúñÑ\n ]/;
+            te = String.fromCharCode(tecla);
+            return patron.test(te);
+        }
+    </script>
+
+    <script>
+        function numerosypunto(e) {
+            tecla = (document.all) ? e.keyCode : e.which;
+            if (tecla == 8) return true;
+            patron = /[.0-9]+/;
+            te = String.fromCharCode(tecla);
+            return patron.test(te);
+        }
+    </script>
+
+    <script>
+        function numerosypuntomenos(e) {
+            tecla = (document.all) ? e.keyCode : e.which;
+            if (tecla == 8) return true;
+            patron = /[-.0-9]+/;
+            te = String.fromCharCode(tecla);
+            return patron.test(te);
+        }
+    </script>
+
 </body>
 </html>

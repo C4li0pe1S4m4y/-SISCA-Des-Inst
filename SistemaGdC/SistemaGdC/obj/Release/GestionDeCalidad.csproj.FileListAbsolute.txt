@@ -40,3 +40,11 @@ D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\bin\es\Microsoft.
 D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\obj\Release\GestionDeCalidad.csprojResolveAssemblyReference.cache
 D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\obj\Release\SistemaGdC.dll
 D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\obj\Release\SistemaGdC.pdb
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\bin\SqlServerTypes\x64\msvcr100.dll
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\bin\SqlServerTypes\x64\SqlServerSpatial110.dll
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\bin\SqlServerTypes\x86\msvcr100.dll
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\bin\SqlServerTypes\x86\SqlServerSpatial110.dll
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\bin\Microsoft.ReportViewer.Common.dll
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\bin\Microsoft.ReportViewer.DataVisualization.dll
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\bin\Microsoft.ReportViewer.ProcessingObjectModel.dll
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\bin\Microsoft.SqlServer.Types.dll

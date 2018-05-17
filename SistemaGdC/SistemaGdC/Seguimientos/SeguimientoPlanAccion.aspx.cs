@@ -303,14 +303,14 @@ namespace SistemaGdC.Seguimientos
                     btnRechazar.Visible = false;
                     break;
             }
-                txtIdActividad.Text = mAccionesRealizar.id_accion_reallizar.ToString();
+                txtIdActividad.Text = mAccionesRealizar.id_accion_realizar.ToString();
                 txtResponsableAct.Text = mAccionesRealizar.responsable.ToString();
                 txtActividad.Text = mAccionesRealizar.accion.ToString();
                 txtFechaInicioActividad.Text = mAccionesRealizar.fecha_inicio.ToString();
                 txtFechaFinActividad.Text = mAccionesRealizar.fecha_fin.ToString();
                 txtObservacionAct.Text = mAccionesRealizar.observaciones.ToString();
 
-                this.Session["idActividad"]=mAccionesRealizar.id_accion_reallizar;            
+                this.Session["idActividad"]=mAccionesRealizar.id_accion_realizar;            
         }
 
         protected void btnFinalizar_Click(object sender, EventArgs e)

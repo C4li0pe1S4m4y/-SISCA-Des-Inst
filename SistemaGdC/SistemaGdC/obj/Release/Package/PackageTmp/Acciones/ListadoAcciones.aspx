@@ -1,8 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ListadoAcciones.aspx.cs" Inherits="SistemaGdC.Acciones.ListadoAcciones" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>&nbsp;</h2>
-    <h2>Listado de Acciones</h2>
+    <h2>&nbsp;</h2>    
+    <h2 style="color:white"><b>Lista de Acciones</b></h2>
 
     <style>
         .chart {

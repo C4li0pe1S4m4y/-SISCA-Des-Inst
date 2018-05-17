@@ -225,7 +225,7 @@ namespace Controladores
             DataSet result = new DataSet();
             conectar = new DBConexion();
             conectar.AbrirConexion();
-            string query = string.Format("SELECT ico.id_informe_correcion ID, ico.descripcion_accion Descripción, TRUNCATE((((ag.id_status-20)*100)/3),0) Progreso " +
+            string query = string.Format("SELECT ico.id_accion_generada ID, ico.descripcion_accion Descripción, TRUNCATE((((ag.id_status-20)*100)/3),0) Progreso " +
                 "FROM sgc_informe_correcion ico INNER JOIN sgc_accion_generada ag ON ico.id_accion_generada = ag.id_accion_generada;");
             MySqlDataAdapter consulta = new MySqlDataAdapter(query, conectar.conectar);
             consulta.Fill(result);

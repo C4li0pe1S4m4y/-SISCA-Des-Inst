@@ -4,6 +4,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using Controladores;
+using Modelos;
 
 namespace SistemaGdC
 {
@@ -13,6 +14,9 @@ namespace SistemaGdC
         cPlanAcion cPlanAccion = new cPlanAcion();
         cInformeCO cInformeCO = new cInformeCO();
         cInformeOM cInformeOM = new cInformeOM();
+
+        mInformeCO mInformeCO = new mInformeCO();
+        mInformeOM mInformeOM = new mInformeOM();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -170,7 +174,8 @@ namespace SistemaGdC
 
         protected void gvListadoPlanes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int i = int.Parse(gvListadoPlanes.SelectedValue.ToString());
+            this.Session["noAccion"] = int.Parse(gvListadoPlanes.SelectedValue.ToString());
+            Response.Redirect("~/Visualizar/VerPlanAccion.aspx");
         }
 
         protected void gvListadoPlanes_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -223,7 +228,8 @@ namespace SistemaGdC
 
         protected void gvListadoInformesCO_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int i = int.Parse(gvListadoInformesCO.SelectedValue.ToString());
+            this.Session["noAccion"] = int.Parse(gvListadoInformesCO.SelectedValue.ToString()); 
+            Response.Redirect("~/Visualizar/VerInformeCorrecion.aspx");            
         }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -259,7 +265,8 @@ namespace SistemaGdC
 
         protected void gvListadoInformesOM_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int i = int.Parse(gvListadoInformesOM.SelectedValue.ToString());
+            this.Session["noAccion"] = int.Parse(gvListadoInformesOM.SelectedValue.ToString());
+            Response.Redirect("~/Visualizar/VerInformeOM.aspx");
         }
 
         protected void actualizarCkeckbox_Click(object sender, EventArgs e)

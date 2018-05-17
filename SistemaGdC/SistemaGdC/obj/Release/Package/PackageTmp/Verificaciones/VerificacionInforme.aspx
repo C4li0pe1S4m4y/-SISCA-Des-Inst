@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <link href="~/Content/bootstrap.css" rel="stylesheet" media="screen" />
     <h2>&nbsp;</h2>
-    <h2>Verificación de Informe</h2>
+    <h2 style="color: white"><b>Verificación de Informe de Evaluación Interna</b></h2>
 
     <style>
         .chart {
@@ -103,8 +103,8 @@
                                         <label>&nbsp;</label>
                                     </div>
                                     <div>
-                                        <asp:Button ID="btnValidar" Text="Validar" runat="server" CssClass="btn btn-success btn-block" OnClick="btnValidar_Click" 
-                                        OnClientClick="return confirm('¿Desea validar el Informe?');"/>
+                                        <asp:Button ID="btnValidar" Text="Validar" runat="server" CssClass="btn btn-success btn-block" OnClick="btnValidar_Click"
+                                            OnClientClick="return confirm('¿Desea validar el Informe?');" />
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -112,17 +112,38 @@
                                         <label>&nbsp;</label>
                                     </div>
                                     <div>
-                                        <asp:Button ID="btnRechazar" Text="Rechazar" runat="server" CssClass="btn btn-danger btn-block" OnClick="btnRechazar_Click" 
-                                        OnClientClick="return confirm('¿Desea rechazar el Informe?');"/>
+                                        
+                                        <button id="btnRechazar" type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#myModal">Rechazar</button>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
 
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">¿Desea rechazar el Informe de Evaluación Interna?</h4>
+                        </div>
+                        <div class="modal-body">
+                            <label>Observaciones: </label>
+                            <asp:TextBox ID="txtRechazo" Enabled="true" Width="100%" CssClass="form-control" TextMode="MultiLine" Style="height: 205px" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>                            
+                            <asp:Button ID="btnModalRechazar" Text="Rechazar" runat="server" CssClass="btn btn-danger" OnClick="btnRechazar_Click" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <div class="row" id="panel3" runat="server">
                 <div class="col-md-12" id="pn1" runat="server">
                     <div class="panel panel-default">
@@ -178,11 +199,6 @@
                                         <label>Fecha Recepción: </label>
                                         <asp:TextBox ID="txtFechaRecepcion" Enabled="false" CssClass="form-control input" TextMode="Date" runat="server"></asp:TextBox>
                                     </div>
-                                    <!--
-                                    <div class="form-group">
-                                        <label>No. Plan de Acción/Informe: </label>
-                                        <asp:TextBox ID="txtNoPlanAccion" CssClass="form-control input" runat="server"></asp:TextBox>
-                                    </div>-->
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
@@ -192,40 +208,37 @@
                                 </div>
                             </div>
                             <div class="row">
-                                
-                                    <div class="col-md-12" style="overflow: auto; height: 100%">
-                                        <asp:GridView ID="gvListadoAcciones" runat="server" DataKeyNames="Correlativo"
-                                            AllowPaging="true" OnPageIndexChanging="gvListadoAcciones_PageIndexChanging" PageSize="3"
-                                            BackColor="#fdffe6" CssClass="table table-hover table-bordered" AutoGenerateColumns="false" Width="1500px"
-                                            OnRowCommand="gvListadoAcciones_RowCommand">
-                                            <AlternatingRowStyle BackColor="#f2fffc" />
-                                            <Columns>
-                                                <asp:BoundField DataField="id" HeaderText="ID"/>
-                                                <asp:TemplateField ItemStyle-Width="30px" HeaderText="">
-                                                    <ItemTemplate>
-                                                        <asp:Button ID="btIngresar" runat="server" ControlStyle-CssClass="btn btn-info"
-                                                            CommandName="Ver" CommandArgument="<%# Container.DataItemIndex %>"
-                                                            Text="Ver" />
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                                <asp:BoundField DataField="Acción" HeaderText="Acción" />
-                                                <asp:BoundField DataField="Correlativo" HeaderText="Correlativo" />
-                                                <asp:BoundField DataField="Status" HeaderText="Status" />
-                                                <asp:BoundField DataField="Punto de Norma" HeaderText="Punto de Norma" />
-                                                <asp:BoundField DataField="Proceso" HeaderText="Proceso" />
-                                                
-                                                <asp:BoundField DataField="Dependencia" HeaderText="Dependencia" />
-                                                <asp:BoundField DataField="Descripción" HeaderText="Descripción" />
-                                                <asp:BoundField DataField="Enlace" HeaderText="Enlace" />
-                                                
-                                                
-                                                <asp:BoundField DataField="Tipo Acción" HeaderText="Tipo Acción" />
-                                            </Columns>
-                                            <HeaderStyle BackColor="#33CCFF" />
-                                        </asp:GridView>
-                                    </div>
-                                    <asp:Label runat="server" ID="lblCorr"></asp:Label>
-                                
+
+                                <div class="col-md-12" style="overflow: auto; height: 100%">
+                                    <asp:GridView ID="gvListadoAcciones" runat="server" DataKeyNames="Correlativo"
+                                        AllowPaging="true" OnPageIndexChanging="gvListadoAcciones_PageIndexChanging" PageSize="3"
+                                        BackColor="#fdffe6" CssClass="table table-hover table-bordered" AutoGenerateColumns="false" Width="1500px"
+                                        OnRowCommand="gvListadoAcciones_RowCommand">
+                                        <AlternatingRowStyle BackColor="#f2fffc" />
+                                        <Columns>
+                                            <asp:BoundField DataField="id" HeaderText="ID" />
+                                            <asp:TemplateField ItemStyle-Width="30px" HeaderText="">
+                                                <ItemTemplate>
+                                                    <asp:Button ID="btIngresar" runat="server" ControlStyle-CssClass="btn btn-info"
+                                                        CommandName="Ver" CommandArgument="<%# Container.DataItemIndex %>"
+                                                        Text="Ver" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:BoundField DataField="Acción" HeaderText="Acción" />
+                                            <asp:BoundField DataField="Correlativo" HeaderText="Correlativo" />
+                                            <asp:BoundField DataField="Status" HeaderText="Status" />
+                                            <asp:BoundField DataField="Punto de Norma" HeaderText="Punto de Norma" />
+                                            <asp:BoundField DataField="Proceso" HeaderText="Proceso" />
+                                            <asp:BoundField DataField="Dependencia" HeaderText="Dependencia" />
+                                            <asp:BoundField DataField="Descripción" HeaderText="Descripción" />
+                                            <asp:BoundField DataField="Enlace" HeaderText="Enlace" />
+                                            <asp:BoundField DataField="Tipo Acción" HeaderText="Tipo Acción" />
+                                        </Columns>
+                                        <HeaderStyle BackColor="#33CCFF" />
+                                    </asp:GridView>
+                                </div>
+                                <asp:Label runat="server" ID="lblCorr"></asp:Label>
+
                             </div>
                         </div>
                     </div>

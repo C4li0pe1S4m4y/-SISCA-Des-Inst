@@ -72,7 +72,7 @@ namespace Controladores
             MySqlDataReader dr = cmd.ExecuteReader();
             while (dr.Read())
             {
-                objActividad.id_accion_reallizar = int.Parse(dr.GetString("id_accion_realizar"));
+                objActividad.id_accion_realizar = int.Parse(dr.GetString("id_accion_realizar"));
                 objActividad.id_plan = int.Parse(dr.GetString("id_plan"));
                 objActividad.accion = dr.GetString("accion");
                 objActividad.responsable = dr.GetString("responsable");
