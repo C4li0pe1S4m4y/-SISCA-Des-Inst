@@ -5,6 +5,8 @@ using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using Controladores;
 using Modelos;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SistemaGdC
 {
@@ -23,19 +25,21 @@ namespace SistemaGdC
             {
                 try
                 {
-                    //lblUser.Text = Session["Usuario"].ToString().ToLower();
+                    Thread informesVencidos = new Thread(cInformeOM.buscarIOMvencidos);
+                    informesVencidos.Start();
+
+                    /*
                     gvListadoPlanes.DataSource = cPlanAccion.ListadoPlanesAccion("todos");
                     gvListadoInformesCO.DataSource = cInformeCO.ListadoInformesCO("todos");
                     gvListadoInformesOM.DataSource = cInformeOM.ListadoInformesOM("todos");
                     gvListadoPlanes.DataBind();
                     gvListadoInformesCO.DataBind();
-                    gvListadoInformesOM.DataBind();
+                    gvListadoInformesOM.DataBind();*/
                     gvListadoPlanes.Columns[0].Visible = false;
                     gvListadoInformesCO.Columns[0].Visible = false;
                     gvListadoInformesOM.Columns[0].Visible = false;
 
                     lblUser.Text = Session["Usuario"].ToString().ToLower();
-                    //lblId.Text = Session["idUsuario"].ToString();
 
                     foreach (DataRow dr in dasboard.graficaPlanesAccionAbiertos().Rows)
                         checkboxPAccionAbiertos.Items.Add(new ListItem(dr[0].ToString()));
@@ -58,6 +62,11 @@ namespace SistemaGdC
                 }
                 
             }
+        }
+        
+        protected void buscarInformesVencidos()
+        {
+            cInformeOM.buscarIOMvencidos();
         }                     
 
         protected string graficaAcciones()

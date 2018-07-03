@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="IngresoInforme.aspx.cs" Inherits="SistemaGdC.Informe.IngresoInforme" %>
 
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h2>&nbsp;</h2>
     <h2 style="color: white"><b>Ingreso de Informe De Evaluación Interna</b></h2>
@@ -43,7 +45,7 @@
                                 </div>
                                 <div class="col-md-1">
                                     <label>Año:</label>
-                                    <asp:TextBox ID="txtanio" CssClass="form-control input" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtanio" CssClass="form-control input" runat="server" OnTextChanged="txtanio_TextChanged" AutoPostBack="true"></asp:TextBox>
                                 </div>
                                 <div class="col-md-3">
                                     <label>No. de Evaluación:</label>
@@ -113,30 +115,29 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Dependencia: </label>
-                                        <asp:DropDownList ID="ddlDependencia" CssClass="form-control input" Width="100%" runat="server" Enabled="true"></asp:DropDownList>
+                                        <asp:DropDownList ID="ddlDependencia" OnSelectedIndexChanged="ddlDependencia_SelectedIndexChanged" AutoPostBack="true" CssClass="form-control input" Width="100%" runat="server" Enabled="true"></asp:DropDownList>
                                         <asp:RequiredFieldValidator ValidationGroup="validar" ID="RFVddlDependencia" Style="color: red;" SetFocusOnError="true" ControlToValidate="ddlDependencia" InitialValue="0" runat="server" ErrorMessage="Seleccione Dependencia." Display="Dynamic" />
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Responsable: </label>
-                                        <asp:DropDownList ID="ddlResponsable" CssClass="form-control input" Width="100%" runat="server" Enabled="true"></asp:DropDownList>
-                                        <asp:RequiredFieldValidator ValidationGroup="validar" ID="RFVddlResponsable" Style="color: red;" SetFocusOnError="true" ControlToValidate="ddlResponsable" InitialValue="0" runat="server" ErrorMessage="Seleccione Responsable." Display="Dynamic" />
+                                        <label>Enlace: </label>
+                                        <asp:DropDownList ID="ddlEnlace" CssClass="form-control input" Width="100%" runat="server" Enabled="true"></asp:DropDownList>
+                                        <asp:RequiredFieldValidator ValidationGroup="validar" ID="RFVddlEnlace" Style="color: red;" SetFocusOnError="true" ControlToValidate="ddlEnlace" InitialValue="0" runat="server" ErrorMessage="Seleccione Enlace." Display="Dynamic" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Líder de Unidad: </label>
+                                        <asp:DropDownList ID="ddlLider" CssClass="form-control input" Width="100%" runat="server" Enabled="true"></asp:DropDownList>
+                                        <asp:RequiredFieldValidator ValidationGroup="validar" ID="RFVddlLider" Style="color: red;" SetFocusOnError="true" ControlToValidate="ddlLider" InitialValue="0" runat="server" ErrorMessage="Seleccione Líder." Display="Dynamic" />
                                     </div>
                                     <div class="form-group">
                                         <label>Analista: </label>
-                                        <asp:DropDownList ID="ddlAnalista" CssClass="form-control input" Width="100%" runat="server" Enabled="true"></asp:DropDownList>
-                                        <asp:RequiredFieldValidator ValidationGroup="validar" ID="RFVddlAnalista" Style="color: red;" SetFocusOnError="true" ControlToValidate="ddlAnalista" InitialValue="0" runat="server" ErrorMessage="Seleccione Analista." Display="Dynamic" />
+                                        <asp:TextBox ID="txtAnalista" Enabled="false" CssClass="form-control input" runat="server"></asp:TextBox>
                                     </div>
                                     <div class="form-group">
                                         <label>Tipo Acción/Informe: </label>
                                         <asp:DropDownList ID="dllTipoAccion" CssClass="form-control input" Width="100%" runat="server" Enabled="true"></asp:DropDownList>
                                         <asp:RequiredFieldValidator ValidationGroup="validar" ID="RFVdllTipoAccion" Style="color: red;" SetFocusOnError="true" ControlToValidate="dllTipoAccion" InitialValue="0" runat="server" ErrorMessage="Seleccione Tipo de Acción." Display="Dynamic" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Fecha Recepción: </label>
-                                        <asp:TextBox ID="txtFechaRecepcion" CssClass="form-control input" TextMode="Date" runat="server"></asp:TextBox>
-                                        <asp:RequiredFieldValidator ValidationGroup="validar" ID="RFVtxtFechaRecepcion" Style="color: red;" SetFocusOnError="true" ControlToValidate="txtFechaRecepcion" InitialValue="" runat="server" ErrorMessage="Ingrese una fecha." Display="Dynamic" />
                                     </div>
                                     <!--
                                     <div class="form-group">
@@ -151,7 +152,8 @@
                                         <asp:RequiredFieldValidator ValidationGroup="validar" ID="RFVtxtDescripcion" Style="color: red;" SetFocusOnError="true" ControlToValidate="txtDescripcion" InitialValue="" runat="server" ErrorMessage="Ingrese una Descripción." Display="Dynamic" />
                                     </div>
                                     <div class="col-md-8 col-md-offset-2">
-                                        <asp:Button ID="btnGuardar" Text="Guardar" ValidationGroup="validar" OnClick="btnGuardar_Click1" CssClass="btn btn-success btn-block" runat="server" Width="100%" />
+                                        <asp:Button ID="btnGuardar" Text="Guardar" ValidationGroup="validar" OnClick="btnGuardar_Click" CssClass="btn btn-success btn-block" runat="server" Width="100%" />
+                                        <asp:Button ID="btnEditar" Text="Editar" ValidationGroup="validar" OnClick="btnEditar_Click" CssClass="btn btn-info btn-block" runat="server" Width="100%" />
                                         <br />
                                         <asp:Button ID="btNuevo" Text="Nuevo" OnClick="btNuevo_Click" CssClass="btn btn-warning btn-block" runat="server" Width="100%" />
                                         <br />
@@ -166,7 +168,7 @@
                                     <asp:GridView ID="gvListadoAcciones" runat="server" DataKeyNames="Correlativo"
                                         AllowPaging="true" OnPageIndexChanging="gvListadoAcciones_PageIndexChanging" PageSize="10"
                                         BackColor="#fdffe6" CssClass="table table-hover table-bordered" AutoGenerateColumns="false" Width="1500px"
-                                        OnRowCommand="gvListadoAcciones_RowCommand">
+                                        OnRowCommand="gvListadoAcciones_RowCommand" OnRowDataBound="gvListado_RowDataBound">
                                         <AlternatingRowStyle BackColor="#f2fffc" />
                                         <Columns>
                                             <asp:BoundField DataField="id" HeaderText="ID" />
@@ -182,12 +184,11 @@
                                             <asp:BoundField DataField="Status" HeaderText="Status" />
                                             <asp:BoundField DataField="Punto de Norma" HeaderText="Punto de Norma" />
                                             <asp:BoundField DataField="Proceso" HeaderText="Proceso" />
-
                                             <asp:BoundField DataField="Dependencia" HeaderText="Dependencia" />
                                             <asp:BoundField DataField="Descripción" HeaderText="Descripción" />
                                             <asp:BoundField DataField="Enlace" HeaderText="Enlace" />
-
                                             <asp:BoundField DataField="Tipo Acción" HeaderText="Tipo Acción" />
+                                            <asp:BoundField DataField="aprobado" HeaderText="Aprobado" />
                                         </Columns>
                                         <HeaderStyle BackColor="#33CCFF" />
                                     </asp:GridView>
@@ -195,7 +196,7 @@
                                 <asp:Label runat="server" ID="lblCorr"></asp:Label>
                             </div>
                             <br />
-                            
+
                             <div class="row">
                                 <div class="form-group">
                                     <div class="col-sm-3">

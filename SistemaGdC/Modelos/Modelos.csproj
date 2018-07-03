@@ -52,8 +52,8 @@
     <Compile Include="mEmpleado.cs" />
     <Compile Include="mInformeOM.cs" />
     <Compile Include="mInformeCO.cs" />
-    <Compile Include="mInformeEI.cs" />
-    <Compile Include="mInformeResult.cs" />
+    <Compile Include="mFuente.cs" />
+    <Compile Include="mInformeResultNO.cs" />
     <Compile Include="mPlanAccion.cs" />
     <Compile Include="mUsuario.cs" />
     <Compile Include="Program.cs" />

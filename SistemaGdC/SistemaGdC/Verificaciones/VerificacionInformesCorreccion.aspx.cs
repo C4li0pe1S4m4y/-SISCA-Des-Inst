@@ -13,7 +13,7 @@ namespace SistemaGdC.Verificaciones
         cAcciones cAcciones = new cAcciones();
         cCorreo cCorreo = new cCorreo();
         cEmpleado cEmpleado = new cEmpleado();
-        cInformeEI cResultados = new cInformeEI();
+        cFuente cResultados = new cFuente();
 
         cGeneral cGen = new cGeneral();
         cInformeCO cInfoCorrec = new cInformeCO();
@@ -34,7 +34,7 @@ namespace SistemaGdC.Verificaciones
                 panel3.Visible = false;
                 panel4.Visible = false;
 
-                mAccionG = cResultados.Obtner_AccionGenerada(40);
+                mAccionG = cAcciones.Obtner_AccionGenerada(40);
                 id_enlace = mAccionG.id_enlace;
             }
         }
@@ -68,8 +68,8 @@ namespace SistemaGdC.Verificaciones
             int.TryParse(ddlunidad.SelectedValue, out idUnidad);
             if (idUnidad > 0)
             {
-                cResultados = new cInformeEI();
-                cResultados.dllDependencia(ddldependencia, idUnidad);
+                cResultados = new cFuente();
+                cAcciones.dllDependencia(ddldependencia, idUnidad);
             }
         }
 
@@ -87,19 +87,19 @@ namespace SistemaGdC.Verificaciones
                 int index = Convert.ToInt16(e.CommandArgument);
                 GridViewRow selectedRow = gvListadoAcciones.Rows[index];
 
-                mAccionG = cResultados.Obtner_AccionGenerada(int.Parse(selectedRow.Cells[0].Text));
+                mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(selectedRow.Cells[0].Text));
 
                 ///////////////////////////////////////////////////////////////////////
-                txtanio.Text = mAccionG.anio_informe_ei.ToString();
-                cResultados.dropUnidad(ddlunidad);
+                //txtanio.Text = mAccionG.anio_informe_ei.ToString();
+                cAcciones.dropUnidad(ddlunidad);
                 ddlunidad.SelectedValue = mAccionG.id_unidad.ToString();
-                cResultados.dllDependencia(ddldependencia, mAccionG.id_unidad);
+                cAcciones.dllDependencia(ddldependencia, mAccionG.id_unidad);
                 ddldependencia.SelectedValue = mAccionG.id_dependencia.ToString();
                 txtDescripcion.Text = mAccionG.descripcion.ToString();
-                txtEvaluacion.Text = mAccionG.no_informe_ei.ToString();
-                txtHallazgo.Text = mAccionG.correlativo_hallazgo.ToString();                
+                //txtEvaluacion.Text = mAccionG.no_informe_ei.ToString();
+                txtHallazgo.Text = mAccionG.correlativo_hallazgo.ToString();
 
-                cResultados.dropTipoAccion(ddlTipoAccionInforme);
+                cAcciones.dropTipoAccion(ddlTipoAccionInforme);
                 ddlTipoAccionInforme.SelectedValue = mAccionG.id_tipo_accion.ToString();
                 //////////////////////////////////////////////////////////////////////
                 ddlLider.DataSource = cGen.dropEmpleados();
@@ -163,7 +163,7 @@ namespace SistemaGdC.Verificaciones
 
         protected void btnRechazar_Click(object sender, EventArgs e)
         {
-            mAccionG = cResultados.Obtner_AccionGenerada(int.Parse(Session["noAccion"].ToString()));
+            mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(Session["noAccion"].ToString()));
             mEmpleado = cEmpleado.Obtner_Empleado(mAccionG.id_enlace);
 
             switch (int.Parse(Session["id_tipo_usuario"].ToString()))

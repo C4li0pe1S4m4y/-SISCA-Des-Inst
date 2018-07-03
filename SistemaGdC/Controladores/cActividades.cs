@@ -87,7 +87,37 @@ namespace Controladores
             return objActividad;
         }
 
-        public void actualizarActividad(int id, int status)
+        public void actualizarActividad(mActividad act)
+        {
+            conectar.AbrirConexion();
+            MySqlTransaction transaccion = conectar.conectar.BeginTransaction();
+            MySqlCommand command = conectar.conectar.CreateCommand();
+            command.Transaction = transaccion;
+            try
+            {
+                command.CommandText = string.Format("UPDATE sgc_accion_realizar SET accion = '{1}', "+
+                    "resopnsable = '{2}', fecha_inicio = '{3}', fecha_fin = '{4}', observaciones = '{5}' "+
+                    "WHERE id_accion_realizar = '{0}'; ",
+                act.id_accion_realizar,act.accion,act.responsable,act.fecha_inicio,act.fecha_fin,act.observaciones);
+                command.ExecuteNonQuery();
+                transaccion.Commit();
+                conectar.CerrarConexion();
+                //return true;
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    transaccion.Rollback();
+                }
+                catch
+                { };
+                conectar.CerrarConexion();
+                //return false;
+            };
+        }
+
+        public void actualizarStatusActividad(int id, int status)
         {
             conectar.AbrirConexion();
             MySqlTransaction transaccion = conectar.conectar.BeginTransaction();
@@ -101,6 +131,33 @@ namespace Controladores
                 transaccion.Commit();
                 conectar.CerrarConexion();
                 //return true;
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    transaccion.Rollback();
+                }
+                catch
+                { };
+                conectar.CerrarConexion();
+                //return false;
+            };
+        }
+
+        public void actualizarObsActividad(int id, string observaciones)
+        {
+            conectar.AbrirConexion();
+            MySqlTransaction transaccion = conectar.conectar.BeginTransaction();
+            MySqlCommand command = conectar.conectar.CreateCommand();
+            command.Transaction = transaccion;
+            try
+            {
+                command.CommandText = string.Format("UPDATE sgc_accion_realizar SET observaciones = '{1}' WHERE id_accion_realizar = '{0}'; ",
+                id, observaciones);
+                command.ExecuteNonQuery();
+                transaccion.Commit();
+                conectar.CerrarConexion();
             }
             catch (Exception ex)
             {

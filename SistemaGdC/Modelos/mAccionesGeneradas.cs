@@ -16,14 +16,15 @@ namespace Modelos
         public string fecha_inicio { get; set; }
         public string fecha_fin { get; set; }
         public int id_status { get; set; }
-        public int anio_informe_ei { get; set; }
-        public int no_informe_ei { get; set; }
+        public int id_fuente { get; set; }
         public int id_analista { get; set; }
+        public int id_lider { get; set; }
         public int id_enlace { get; set; }
         public int id_unidad { get; set; }
         public int id_dependencia { get; set; }
         public int id_ccl_accion_generada { get; set; }
         public int id_proceso { get; set; }
         public int id_tipo_accion { get; set; }
+        public int aprobado { get; set; }        
     }
 }

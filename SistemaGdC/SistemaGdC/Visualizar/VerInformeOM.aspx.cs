@@ -13,7 +13,7 @@ namespace SistemaGdC.Visualizar
 {
     public partial class VerInformeOM : System.Web.UI.Page
     {
-        cInformeEI cResultados = new cInformeEI();
+        cFuente cResultados = new cFuente();
         cGeneral cGen = new cGeneral();
         
         mAccionesGeneradas mAccionG = new mAccionesGeneradas();
@@ -26,21 +26,21 @@ namespace SistemaGdC.Visualizar
         {
             if (!IsPostBack)
             {
-                mAccionG = cResultados.Obtner_AccionGenerada(int.Parse(Session["noAccion"].ToString()));
+                mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(Session["noAccion"].ToString()));
 
-                txtanio.Text = mAccionG.anio_informe_ei.ToString();
-                cResultados.dropUnidad(ddlunidad);
+                //txtanio.Text = mAccionG.anio_informe_ei.ToString();
+                cAcciones.dropUnidad(ddlunidad);
                 ddlunidad.SelectedValue = mAccionG.id_unidad.ToString();
-                cResultados.dllDependencia(ddldependencia, mAccionG.id_unidad);
+                cAcciones.dllDependencia(ddldependencia, mAccionG.id_unidad);
                 ddldependencia.SelectedValue = mAccionG.id_dependencia.ToString();
                 txtDescripcion.Text = mAccionG.descripcion.ToString();
                 txtEvaluacion.Text = Session["noAccion"].ToString();
                 txtHallazgo.Text = mAccionG.correlativo_hallazgo.ToString();
 
                 txtanio.Text = "2018";
-                cResultados.dropUnidad(ddlunidad);
+                cAcciones.dropUnidad(ddlunidad);
                 cInfoOM.ddlEstadoInforme(ddlEstado);
-                cResultados.dropTipoAccion(ddlTipoAccionInforme);
+                cAcciones.dropTipoAccion(ddlTipoAccionInforme);
                 ddlTipoAccionInforme.SelectedValue = mAccionG.id_tipo_accion.ToString();
                 cGen = new cGeneral();
                 ddlLider.ClearSelection();
@@ -70,8 +70,8 @@ namespace SistemaGdC.Visualizar
             int.TryParse(ddlunidad.SelectedValue, out idUnidad);
             if (idUnidad > 0)
             {
-                cResultados = new cInformeEI();
-                cResultados.dllDependencia(ddldependencia, idUnidad);
+                cResultados = new cFuente();
+                cAcciones.dllDependencia(ddldependencia, idUnidad);
             }
         }
 

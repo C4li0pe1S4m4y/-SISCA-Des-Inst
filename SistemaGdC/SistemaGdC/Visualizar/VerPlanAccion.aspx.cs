@@ -9,7 +9,7 @@ namespace SistemaGdC.Visualizar
 {
     public partial class VerPlanAccion : System.Web.UI.Page
     {
-        cInformeEI cResultados = new cInformeEI();
+        cFuente cResultados = new cFuente();
         cGeneral cGen = new cGeneral();
         cInformeCO cInfoCorrec = new cInformeCO();
         cAcciones cAcciones = new cAcciones();
@@ -28,20 +28,20 @@ namespace SistemaGdC.Visualizar
             {
                 this.Session["noPlanAccion"] = 0;
 
-                mAccionG = cResultados.Obtner_AccionGenerada(int.Parse(Session["noAccion"].ToString()));
+                mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(Session["noAccion"].ToString()));
                 id_enlace = mAccionG.id_enlace;
-                txtanio.Text = mAccionG.anio_informe_ei.ToString();
-                cResultados.dropUnidad(ddlunidad);
+                //txtanio.Text = mAccionG.anio_informe_ei.ToString();
+                cAcciones.dropUnidad(ddlunidad);
                 ddlunidad.SelectedValue = mAccionG.id_unidad.ToString();
-                cResultados.dllDependencia(ddldependencia, mAccionG.id_unidad);
+                cAcciones.dllDependencia(ddldependencia, mAccionG.id_unidad);
                 ddldependencia.SelectedValue = mAccionG.id_dependencia.ToString();
                 txtDescripcion.Text = mAccionG.descripcion.ToString();
-                txtEvaluacion.Text = mAccionG.no_informe_ei.ToString();
+                //txtEvaluacion.Text = mAccionG.no_informe_ei.ToString();
                 txtHallazgo.Text = mAccionG.correlativo_hallazgo.ToString();
                 
                 cInfoCorrec.ddlTecnicaAnalisis(ddlTecnicaAnalisis);
 
-                cResultados.dropTipoAccion(ddlTipoAccionInforme);
+                cAcciones.dropTipoAccion(ddlTipoAccionInforme);
                 ddlTipoAccionInforme.SelectedValue = mAccionG.id_tipo_accion.ToString();
                 
                 ddlLider.ClearSelection();
@@ -55,6 +55,11 @@ namespace SistemaGdC.Visualizar
                 ddlLider.DataBind();
 
                 mPlanAccion = cPlanAccion.Obtner_PlanAccion(mAccionG.id_accion_generada); this.Session["noPlanAccion"] = mPlanAccion.id_plan;
+
+                ddlTecnicaAnalisis.SelectedValue = mPlanAccion.tecnica_analisis;
+                ddlLider.SelectedValue = mPlanAccion.id_lider.ToString();
+                txtCausa.Value = mPlanAccion.causa_raiz;
+
                 gvListado.DataSource = cPlanAccion.ListadoAccionesRealizar(int.Parse(Session["noPlanAccion"].ToString()));
                 gvListado.DataBind();
 
@@ -71,8 +76,8 @@ namespace SistemaGdC.Visualizar
             int idUnidad = 0;
             int.TryParse(ddlunidad.SelectedValue, out idUnidad);
             if (idUnidad > 0)
-            {                
-                cResultados.dllDependencia(ddldependencia, idUnidad);
+            {
+                cAcciones.dllDependencia(ddldependencia, idUnidad);
             }
         }
 

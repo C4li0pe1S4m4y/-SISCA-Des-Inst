@@ -9,7 +9,6 @@ namespace Modelos
     public class mPlanAccion
     {
         public int id_plan { get; set; }
-        public int id_accion { get; set; }
         public string tecnica_analisis { get; set; }
         public string causa_raiz { get; set; }
         public int id_lider { get; set; }

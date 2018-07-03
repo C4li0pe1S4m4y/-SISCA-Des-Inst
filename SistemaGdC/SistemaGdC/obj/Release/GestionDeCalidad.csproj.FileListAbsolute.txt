@@ -48,3 +48,8 @@ D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\bin\Microsoft.Rep
 D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\bin\Microsoft.ReportViewer.DataVisualization.dll
 D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\bin\Microsoft.ReportViewer.ProcessingObjectModel.dll
 D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\bin\Microsoft.SqlServer.Types.dll
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\bin\Microsoft.ReportViewer.WebForms.dll
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\bin\Microsoft.ReportViewer.WinForms.DLL
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\bin\es\Microsoft.ReportViewer.WebForms.resources.dll
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\obj\Release\RdlCompile.cache
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\obj\Release\RdlCompile.compiled

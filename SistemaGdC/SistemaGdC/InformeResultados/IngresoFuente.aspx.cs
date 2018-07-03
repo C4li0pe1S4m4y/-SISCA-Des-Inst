@@ -10,16 +10,16 @@ namespace SistemaGdC.InformeResultados
 {
     public partial class IngresoFuente : System.Web.UI.Page
     {
-        cInformeEI cResultados = new cInformeEI();
+        cFuente cResultados = new cFuente();
+        cAcciones cAcciones = new cAcciones();
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                cResultados = new cInformeEI();
-                cResultados.dropProceso(ddlProceso);
-                cResultados.dropUnidad(ddlUnidad);
-                cResultados.dropOpcionIngreso(ddlOpcion);
+                cAcciones.dropProceso(ddlProceso);
+                cAcciones.dropUnidad(ddlUnidad);
+                cAcciones.dropOpcionIngreso(ddlOpcion);
             }
         }
 

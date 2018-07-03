@@ -154,7 +154,7 @@ namespace Controladores
             return objPlanAccion;
         }
 
-        public DataSet ListadoAcciones(int id, string statusIEI, string statusAG)
+        public DataSet ListadoAcciones(int id, string aprobAG, string statusAG)
         {
             string condicion = "";
             string join = "";
@@ -253,13 +253,42 @@ namespace Controladores
                         "inner join sgc_informe_ei iei on iei.anio = ag.anio_informe_ei and iei.no_informe = ag.no_informe_ei " +
                         "left join sgc_status_accion_generada sag on sag.id_status = ag.id_status " +
                         "{1} " +                        
-                        "where iei.id_status = '{0}' {2}; ", statusIEI, join, condicion);
+                        "where ag.aprobado = '{0}' {2}; ", aprobAG, join, condicion);
 
             MySqlDataAdapter consulta = new MySqlDataAdapter(query2, conectar.conectar);
             consulta.Fill(result);
             conectar.CerrarConexion();
             return result;
         }
+
+        public void actualizar_planAccion(mPlanAccion plan)
+        {
+            conectar.AbrirConexion();
+            MySqlTransaction transaccion = conectar.conectar.BeginTransaction();
+            MySqlCommand command = conectar.conectar.CreateCommand();
+            command.Transaction = transaccion;
+            try
+            {
+                command.CommandText = string.Format("UPDATE sgc_plan_accion SET tecnica_analisis = '{1}', causa_raiz = '{2}', "+
+                    "id_lider = '{3}', usur_ingreso = '{4}', id_accion_generada = '{7}' "+
+                    "WHERE id_plan = '{0}'; ",
+                plan.id_plan,plan.tecnica_analisis,plan.causa_raiz,plan.id_lider,plan.usuario_ingreso,plan.id_accion_generada);
+                command.ExecuteNonQuery();
+                transaccion.Commit();
+                conectar.CerrarConexion();
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    transaccion.Rollback();
+                }
+                catch
+                { };
+                conectar.CerrarConexion();
+            };
+        }
+
 
         public void actualizar_statusPlan(int id, int status)
         {
@@ -271,6 +300,32 @@ namespace Controladores
             {
                 command.CommandText = string.Format("UPDATE sgc_plan_accion SET id_status = '{1}' WHERE id_plan = '{0}'; ",
                 id, status);
+                command.ExecuteNonQuery();
+                transaccion.Commit();
+                conectar.CerrarConexion();
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    transaccion.Rollback();
+                }
+                catch
+                { };
+                conectar.CerrarConexion();
+            };
+        }
+
+        public void fechaRecepcion_plan(int id)
+        {
+            conectar.AbrirConexion();
+            MySqlTransaction transaccion = conectar.conectar.BeginTransaction();
+            MySqlCommand command = conectar.conectar.CreateCommand();
+            command.Transaction = transaccion;
+            try
+            {
+                command.CommandText = string.Format("UPDATE sgc_plan_accion SET fecha_recepcion = now() WHERE id_plan = '{0}'; ",
+                id);
                 command.ExecuteNonQuery();
                 transaccion.Commit();
                 conectar.CerrarConexion();

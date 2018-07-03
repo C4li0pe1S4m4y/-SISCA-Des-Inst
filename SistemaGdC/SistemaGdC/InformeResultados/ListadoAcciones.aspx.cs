@@ -12,7 +12,7 @@ namespace SistemaGdC.InformeResultados
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            cInformeEI informe = new cInformeEI();
+            cFuente informe = new cFuente();
             if (!IsPostBack)
             {
                 string fullname2 = Request["Correlativo"];

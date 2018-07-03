@@ -9,38 +9,6 @@ namespace Controladores
     {
         DBConexion conectar = new DBConexion();
 
-        public DataTable ListadoAcciones()
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add(new DataColumn("Unidad", typeof(string)));
-            dt.Columns.Add(new DataColumn("Progreso", typeof(string)));
-
-            dt.Rows.Add(new Object[] { "Recursos Humanos", 10 });
-            dt.Rows.Add(new Object[] { "Desarrollo Institucional", 25 });
-            dt.Rows.Add(new Object[] { "Infraestructura", 55 });
-            dt.Rows.Add(new Object[] { "Contabilidad", 27 });
-            dt.Rows.Add(new Object[] { "Soporte Técnico", 97 });
-
-            return dt;
-        }
-
-        public DataTable ListadoInformes()
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add(new DataColumn("Unidad", typeof(string)));
-            dt.Columns.Add(new DataColumn("Progreso", typeof(string)));
-
-            dt.Rows.Add(new Object[] { "Recursos Humanos", 30 });
-            dt.Rows.Add(new Object[] { "Desarrollo Institucional", 85 });
-            dt.Rows.Add(new Object[] { "Infraestructura", 90 });
-            dt.Rows.Add(new Object[] { "Contabilidad", 55 });
-            dt.Rows.Add(new Object[] { "Soporte Técnico", 40 });
-
-            return dt;
-        }
-
-        /////////////////////////////////
-
         public DataTable GraficaAcciones()
         {
             DataTable result = new DataTable();
@@ -61,16 +29,19 @@ namespace Controladores
             conectar.AbrirConexion();
             string query = string.Format("SELECT u.unidad Unidad, IFNULL(a.abiertas,0) Abierta, IFNULL(c.cerradas,0) Cerrada " +
                 "FROM sgc_unidad u " +
+                
                 "LEFT JOIN(SELECT u.id_unidad, pa.id_status, COUNT(pa.id_status) abiertas " +
                     "FROM sgc_plan_accion pa INNER JOIN sgc_accion_generada ag ON pa.id_accion_generada = ag.id_accion_generada " +
                         "INNER JOIN sgc_unidad u ON u.id_unidad = ag.id_unidad " +
                     "WHERE pa.id_status != 5 " +
                     "GROUP BY u.unidad) a ON u.id_unidad = a.id_unidad " +
+                
                 "LEFT JOIN(SELECT u.id_unidad, pa.id_status, COUNT(pa.id_status) cerradas " +
                     "FROM sgc_plan_accion pa INNER JOIN sgc_accion_generada ag ON pa.id_accion_generada = ag.id_accion_generada " +
                         "INNER JOIN sgc_unidad u ON u.id_unidad = ag.id_unidad " +
                     "WHERE pa.id_status = 5 " +
                     "GROUP BY u.unidad) c ON u.id_unidad = c.id_unidad " +
+
                 "WHERE a.abiertas > 0 OR c.cerradas > 0; ");
             MySqlDataAdapter consulta = new MySqlDataAdapter(query, conectar.conectar);
             consulta.Fill(result);
@@ -80,6 +51,7 @@ namespace Controladores
 
         public DataTable graficaPlanesAccionOld()
         {
+            //DATOS DE PRUEBA GRAFICA
             DataTable Datos = new DataTable();
             Datos.Columns.Add(new DataColumn("Unidad", typeof(string)));
             Datos.Columns.Add(new DataColumn("Abierta", typeof(string)));
@@ -103,8 +75,9 @@ namespace Controladores
             return Datos;            
         }
 
-        public DataTable graficaPlanesAccionAbiertos()
+        /*public DataTable graficaPlanesAccionAbiertos()
         {
+            //DATOS DE PRUEBA GRAFICA
             DataTable Datos = new DataTable();
             Datos.Columns.Add(new DataColumn("Unidad", typeof(string)));
             Datos.Columns.Add(new DataColumn("FuertaTiempo", typeof(string)));
@@ -122,10 +95,36 @@ namespace Controladores
             Datos.Rows.Add(new Object[] { "Atención a FADN", 0, 1 });
 
             return Datos;
+        }*/
+
+        public DataTable graficaPlanesAccionAbiertos()
+        {
+            DataTable result = new DataTable();
+            conectar.AbrirConexion();
+            string query = string.Format("SELECT u.unidad Unidad, "+
+
+                "IF((SELECT MIN(ar.fecha_fin) "+
+                    "FROM sgc_accion_realizar ar "+
+                    "WHERE ar.id_plan = pa.id_plan) < now(), 1, 0) "+
+                "AS FueraTiempo, "+
+
+                "IF((SELECT MIN(ar.fecha_fin) "+
+                    "FROM sgc_accion_realizar ar "+
+                    "WHERE ar.id_plan = pa.id_plan) < now(), 0, 1) "+
+                "AS EnTiempo "+
+
+                "FROM sgc_plan_accion pa "+
+                    "INNER JOIN sgc_accion_generada ag ON ag.id_accion_generada = pa.id_accion_generada "+
+                    "INNER JOIN sgc_unidad u ON ag.id_unidad = u.id_unidad; ");
+            MySqlDataAdapter consulta = new MySqlDataAdapter(query, conectar.conectar);
+            consulta.Fill(result);
+            conectar.CerrarConexion();
+            return result;
         }
 
         public DataTable graficaAccionesInformes()
         {
+            //DATOS DE PUREBA GRAFICA
             DataTable Datos = new DataTable();
             Datos.Columns.Add(new DataColumn("Fecha", typeof(string)));
             Datos.Columns.Add(new DataColumn("Acciones", typeof(Int16)));

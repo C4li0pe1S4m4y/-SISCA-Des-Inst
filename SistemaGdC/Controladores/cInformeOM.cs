@@ -166,6 +166,37 @@ namespace Controladores
             };
         }
 
+        public void buscarIOMvencidos()
+        {
+            DBConexion conectar2 = new DBConexion();
+            conectar2.AbrirConexion();
+            MySqlTransaction transaccion = conectar2.conectar.BeginTransaction();
+            MySqlCommand command = conectar2.conectar.CreateCommand();
+            command.Transaction = transaccion;
+            try
+            {
+                command.CommandText = string.Format("UPDATE sgc_informe_om SET id_status = '-2' "+
+                    "WHERE fecha < now() AND id_status = 1; "+
+                    "SET SQL_SAFE_UPDATES = 1; ");
+                //command.ExecuteNonQuery();
+                int rowsAffected = command.ExecuteNonQuery();
+                transaccion.Commit();
+                conectar2.CerrarConexion();                
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    transaccion.Rollback();
+                }
+                catch
+                {
+
+                };
+                conectar2.CerrarConexion();
+            };
+        }
+
         public void actualizarStatus_InformeOM(int id, int status)
         {
             conectar.AbrirConexion();

@@ -11,8 +11,8 @@ namespace Controladores
             conectar = new DBConexion();
             DataTable tabla = new DataTable();
             conectar.AbrirConexion();
-            string query = "SELECT se.id_empleado id,COALESCE(CONCAT(se.id_empleado, ' - ', se.nombre, ' '), 'S/D') texto "+
-                "FROM dbcdagsgc2.sgc_empleados se ORDER BY se.id_empleado;";
+            string query = "SELECT se.id_empleado id,COALESCE(CONCAT(se.nombre), 'S/D') texto "+
+                "FROM dbcdagsgc2.sgc_empleados se ORDER BY se.nombre;";
             MySqlDataAdapter consulta = new MySqlDataAdapter(query, conectar.conectar);
             consulta.Fill(tabla);
             conectar.CerrarConexion();

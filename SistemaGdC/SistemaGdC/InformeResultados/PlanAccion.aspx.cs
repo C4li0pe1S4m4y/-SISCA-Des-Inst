@@ -1,10 +1,7 @@
 ﻿using Controladores;
 using Modelos;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.IO;
@@ -13,7 +10,7 @@ namespace SistemaGdC.InformeResultados
 {
     public partial class PlanAccion : System.Web.UI.Page
     {
-        cInformeEI cResultados = new cInformeEI();
+        cFuente cResultados = new cFuente();
         cGeneral cGen = new cGeneral();
         cInformeCO cInfoCorrec = new cInformeCO();
         cAcciones cAcciones = new cAcciones();
@@ -31,22 +28,20 @@ namespace SistemaGdC.InformeResultados
             {
                 this.Session["noPlanAccion"] = 0;
 
-                mAccionG = cResultados.Obtner_AccionGenerada(int.Parse(Session["noAccion"].ToString()));
+                mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(Session["noAccion"].ToString()));
                 id_enlace = mAccionG.id_enlace;
                 visibleAdjuntar(false);
-                //int id_e = int.Parse(Session["id_empleado"].ToString());
-                txtanio.Text = mAccionG.anio_informe_ei.ToString();
-                cResultados.dropUnidad(ddlunidad);
+                cAcciones.dropUnidad(ddlunidad);
                 ddlunidad.SelectedValue = mAccionG.id_unidad.ToString();
-                cResultados.dllDependencia(ddldependencia, mAccionG.id_unidad);
+                cAcciones.dllDependencia(ddldependencia, mAccionG.id_unidad);
                 ddldependencia.SelectedValue = mAccionG.id_dependencia.ToString();
                 txtDescripcion.Text = mAccionG.descripcion.ToString();
-                txtEvaluacion.Text = mAccionG.no_informe_ei.ToString();
-                txtHallazgo.Text = mAccionG.correlativo_hallazgo.ToString();
+                //txtEvaluacion.Text = mAccionG.no_informe_ei.ToString();
+                //txtHallazgo.Text = mAccionG.correlativo_hallazgo.ToString();
                 
                 cInfoCorrec.ddlTecnicaAnalisis(ddlTecnicaAnalisis);
 
-                cResultados.dropTipoAccion(ddlTipoAccionInforme);
+                cAcciones.dropTipoAccion(ddlTipoAccionInforme);
                 ddlTipoAccionInforme.SelectedValue = mAccionG.id_tipo_accion.ToString();
                 
                 ddlLider.ClearSelection();
@@ -68,7 +63,7 @@ namespace SistemaGdC.InformeResultados
                         mPlanAccion = cPlanAccion.Obtner_PlanAccion(mAccionG.id_accion_generada);
                         ddlTecnicaAnalisis.SelectedValue = mPlanAccion.tecnica_analisis;
                         ddlLider.SelectedValue = mPlanAccion.id_lider.ToString();
-                        txtCausa.Value = mPlanAccion.causa_raiz;
+                        txtCausa.Text = mPlanAccion.causa_raiz;
 
                         enabledCausaRaiz(false);
                         enabledPlan(true);
@@ -76,7 +71,7 @@ namespace SistemaGdC.InformeResultados
                         this.Session["noPlanAccion"] = mPlanAccion.id_plan;
                         break;
                 }
-                gvListado.DataSource = cPlanAccion.ListadoAccionesRealizar(int.Parse(Session["noPlanAccion"].ToString()));
+                gvListado.DataSource = cPlanAccion.ListadoAccionesRealizar(int.Parse(Session["noPlanAccion"].ToString()));                
                 gvListado.DataBind();
 
                 ddlResponsable.ClearSelection();
@@ -99,8 +94,8 @@ namespace SistemaGdC.InformeResultados
             int.TryParse(ddlunidad.SelectedValue, out idUnidad);
             if (idUnidad > 0)
             {
-                
-                cResultados.dllDependencia(ddldependencia, idUnidad);
+
+                cAcciones.dllDependencia(ddldependencia, idUnidad);
                 //cInfoCorrec = new cInformeCorrecion();
                 //cInfoCorrec.ddlInformeResultados(ddlEvaluacion);
             }
@@ -124,10 +119,9 @@ namespace SistemaGdC.InformeResultados
         }
 
         protected void btnGuardarCausa_Click(object sender, EventArgs e)
-        {
-
+        {       
             mPlanAccion.tecnica_analisis = ddlTecnicaAnalisis.SelectedValue;
-            mPlanAccion.causa_raiz = txtCausa.Value;
+            mPlanAccion.causa_raiz = txtCausa.Text;
             mPlanAccion.id_lider = int.Parse(ddlLider.SelectedValue);
             mPlanAccion.usuario_ingreso = Session["usuario"].ToString();
             mPlanAccion.id_accion_generada = int.Parse(Session["noAccion"].ToString());
@@ -179,14 +173,13 @@ namespace SistemaGdC.InformeResultados
             else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No tiene permisos para validar Actividad', '', 'warning');", true);
         }
 
-        protected void btnGuardar_Click(object sender, EventArgs e)
+        protected void btnGuardarActividad_Click(object sender, EventArgs e)
         {
             mAccionRealizar.id_plan = int.Parse(Session["noPlanAccion"].ToString());
-            mAccionRealizar.accion = txtAccionRealizar.Value;
-            mAccionRealizar.responsable = ddlResponsable.SelectedItem.ToString();
+            mAccionRealizar.accion = txtAccionRealizar.Text;
+            mAccionRealizar.responsable = txtResponsable.Text;
             mAccionRealizar.fecha_inicio = txtFechaInicio.Text;
             mAccionRealizar.fecha_fin = txtFechaFin.Text;
-            mAccionRealizar.observaciones = txtObservaciones.Value;
 
             int result = cPlanAccion.IngresarAccionRealizar(mAccionRealizar);
             if (result == 1)
@@ -199,11 +192,11 @@ namespace SistemaGdC.InformeResultados
 
         protected void btnNuevo_Click(object sender, EventArgs e)
         {
-            txtAccionRealizar.Value = "";
-            ddlResponsable.SelectedIndex = 0;
+            txtAccionRealizar.Text = "";
+            //ddlResponsable.SelectedIndex = 0;
+            txtResponsable.Text = "";
             txtFechaInicio.Text = "";
             txtFechaFin.Text = "";
-            txtObservaciones.Value = "";
         }
 
         protected void gvListado_SelectedIndexChanged(object sender, EventArgs e)
@@ -213,12 +206,23 @@ namespace SistemaGdC.InformeResultados
 
         protected void btnFinalizar_Click(object sender, EventArgs e)
         {
-            cAcciones.validarCausaRaiz_Accion(int.Parse(Session["noAccion"].ToString()), 11);
-            Response.Redirect("~/Acciones/ListadoAcciones.aspx");
+            try
+            {
+                cPlanAccion.fechaRecepcion_plan(int.Parse(Session["noPlanAccion"].ToString()));
+                cAcciones.validarCausaRaiz_Accion(int.Parse(Session["noAccion"].ToString()), 11);
+                Response.Redirect("~/Acciones/ListadoAcciones.aspx");
+            }
+
+            catch
+            {
+                ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No fue posible finalizar el Plan de Acción', 'Intente de nuevo', 'error');", true);
+            }
+            
         }
 
         protected void btnAdjuntar_Click(object sender, EventArgs e)
         {
+            
             if (FileEvidencia.HasFile)
             {
                 int tam = FileEvidencia.FileBytes.Length;
@@ -259,12 +263,12 @@ namespace SistemaGdC.InformeResultados
 
         void enabledPlan(bool en)
         {
-            txtAccionRealizar.Disabled = !en;
+            txtAccionRealizar.Enabled = en;
             //txtAccionRealizar.Enabled = en;
             ddlResponsable.Enabled = en;
+            txtResponsable.Enabled = en;
             txtFechaInicio.Enabled = en;
             txtFechaFin.Enabled = en;
-            txtObservaciones.Disabled = !en;
             btnGuardar.Enabled = en;
             btnNuevo.Enabled = en;
         }
@@ -273,7 +277,7 @@ namespace SistemaGdC.InformeResultados
         {
             ddlTecnicaAnalisis.Enabled = en;
             ddlLider.Enabled = en;
-            txtCausa.Disabled = !en;
+            txtCausa.Enabled = en;
             btnGuardarCausa.Enabled = en;
         }
 

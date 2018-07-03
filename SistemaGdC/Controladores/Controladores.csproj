@@ -71,7 +71,7 @@
     <Compile Include="cGeneral.cs" />
     <Compile Include="cInformeOM.cs" />
     <Compile Include="cInformeCO.cs" />
-    <Compile Include="cInformeEI.cs" />
+    <Compile Include="cFuente.cs" />
     <Compile Include="cMenu.cs" />
     <Compile Include="cPlanAcion.cs" />
     <Compile Include="cUsuarios.cs" />

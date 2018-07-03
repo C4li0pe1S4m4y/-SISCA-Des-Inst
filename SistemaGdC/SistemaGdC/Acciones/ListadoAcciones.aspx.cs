@@ -10,7 +10,7 @@ namespace SistemaGdC.Acciones
     public partial class ListadoAcciones : System.Web.UI.Page
     {
         //cInformeResultados cResultados;
-        cInformeEI cResultados = new cInformeEI();
+        cFuente cResultados = new cFuente();
         cAcciones cAcciones = new cAcciones();
         //cDashboard dasboard = new cDashboard();
         cGeneral cGen = new cGeneral();
@@ -38,9 +38,9 @@ namespace SistemaGdC.Acciones
                 ddlAccionGenerada.DataTextField = "Accion";
                 ddlAccionGenerada.DataValueField = "id_acciones";
                 ddlAccionGenerada.DataBind();
-                cResultados.dropProceso(ddlProceso);
-                cResultados.dropUnidad(ddlUnidad);
-                cResultados.dropTipoAccion(dllTipoAccion);
+                cAcciones.dropProceso(ddlProceso);
+                cAcciones.dropUnidad(ddlUnidad);
+                cAcciones.dropTipoAccion(dllTipoAccion);
                 //cGen = new cGeneral();
                 ddlResponsable.ClearSelection();
                 ddlResponsable.Items.Clear();
@@ -91,7 +91,7 @@ namespace SistemaGdC.Acciones
             if (idUnidad > 0)
             {
                 //cResultados = new cInformeResultados();
-                cResultados.dllDependencia(ddlDependencia, idUnidad);
+                cAcciones.dllDependencia(ddlDependencia, idUnidad);
             }
         }    
 
@@ -108,7 +108,7 @@ namespace SistemaGdC.Acciones
 
                 GridViewRow selectedRow = gvListadoAcciones.Rows[index - (pag * psize)];
                 mAccionesGeneradas mAccionG = new mAccionesGeneradas();
-                mAccionG = cResultados.Obtner_AccionGenerada(int.Parse(selectedRow.Cells[0].Text));
+                mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(selectedRow.Cells[0].Text));
 
                 Session["noAccion"]= selectedRow.Cells[0].Text;
                 Session["noHallazgo"] = mAccionG.correlativo_hallazgo.ToString();
@@ -118,13 +118,13 @@ namespace SistemaGdC.Acciones
                 txtPuntoNorma.Text = mAccionG.norma.ToString();
                 ddlProceso.SelectedValue = mAccionG.id_proceso.ToString();
                 ddlUnidad.SelectedValue = mAccionG.id_unidad.ToString();
-                    cResultados.dllDependencia(ddlDependencia, mAccionG.id_unidad);
+                cAcciones.dllDependencia(ddlDependencia, mAccionG.id_unidad);
                 ddlDependencia.SelectedValue = mAccionG.id_dependencia.ToString();
                 txtDescripcion.Text = mAccionG.descripcion.ToString();
                 ddlResponsable.SelectedValue = mAccionG.id_enlace.ToString();
                 ddlAnalista.SelectedValue = mAccionG.id_analista.ToString();
                 dllTipoAccion.SelectedValue = mAccionG.id_tipo_accion.ToString();
-                txtFechaRecepcion.Text = mAccionG.fecha.ToString();
+                //txtFechaRecepcion.Text = mAccionG.fecha.ToString();
                 txtNoPlanAccion.Text = "";
 
                 int statusA = mAccionG.id_status;

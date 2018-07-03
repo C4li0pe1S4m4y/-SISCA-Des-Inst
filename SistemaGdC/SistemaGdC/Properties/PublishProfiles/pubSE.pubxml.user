@@ -31,7 +31,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>02/16/2018 09:42:17</publishTime>
     </File>
     <File Include="bin/Controladores.dll">
-      <publishTime>05/17/2018 14:28:12</publishTime>
+      <publishTime>05/18/2018 13:12:27</publishTime>
     </File>
     <File Include="bin/Controladores.exe">
       <publishTime>10/11/2017 23:43:19</publishTime>
@@ -41,6 +41,9 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
     </File>
     <File Include="bin/es/Microsoft.AspNet.FriendlyUrls.resources.dll">
       <publishTime>02/16/2018 09:42:17</publishTime>
+    </File>
+    <File Include="bin/es/Microsoft.ReportViewer.WebForms.resources.dll">
+      <publishTime>05/29/2015 21:25:26</publishTime>
     </File>
     <File Include="bin/es/System.Web.Optimization.resources.dll">
       <publishTime>02/16/2018 09:42:17</publishTime>
@@ -55,13 +58,19 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>02/16/2018 09:42:17</publishTime>
     </File>
     <File Include="bin/Microsoft.ReportViewer.Common.dll">
-      <publishTime>02/06/2016 17:42:26</publishTime>
+      <publishTime>12/29/2014 13:36:54</publishTime>
     </File>
     <File Include="bin/Microsoft.ReportViewer.DataVisualization.dll">
-      <publishTime>02/06/2016 17:42:26</publishTime>
+      <publishTime>12/29/2014 13:36:56</publishTime>
     </File>
     <File Include="bin/Microsoft.ReportViewer.ProcessingObjectModel.dll">
-      <publishTime>02/06/2016 17:42:26</publishTime>
+      <publishTime>12/29/2014 13:36:56</publishTime>
+    </File>
+    <File Include="bin/Microsoft.ReportViewer.WebForms.dll">
+      <publishTime>05/29/2015 21:27:38</publishTime>
+    </File>
+    <File Include="bin/Microsoft.ReportViewer.WinForms.DLL">
+      <publishTime>12/29/2014 13:36:56</publishTime>
     </File>
     <File Include="bin/Microsoft.ScriptManager.MSAjax.dll">
       <publishTime>02/16/2018 09:42:17</publishTime>
@@ -70,13 +79,13 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>02/16/2018 09:42:17</publishTime>
     </File>
     <File Include="bin/Microsoft.SqlServer.Types.dll">
-      <publishTime>02/13/2014 09:53:40</publishTime>
+      <publishTime>12/16/2014 15:20:30</publishTime>
     </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
       <publishTime>02/16/2018 09:42:17</publishTime>
     </File>
     <File Include="bin/Modelos.dll">
-      <publishTime>05/17/2018 14:28:12</publishTime>
+      <publishTime>05/18/2018 13:12:25</publishTime>
     </File>
     <File Include="bin/Modelos.exe">
       <publishTime>10/11/2017 23:42:43</publishTime>
@@ -127,22 +136,22 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>02/16/2018 09:42:17</publishTime>
     </File>
     <File Include="bin/SistemaGdC.dll">
-      <publishTime>05/17/2018 14:28:17</publishTime>
+      <publishTime>05/18/2018 13:12:35</publishTime>
     </File>
     <File Include="bin/SistemaGdC.pdb">
       <publishTime>12/18/2017 11:31:52</publishTime>
     </File>
     <File Include="bin/SqlServerTypes/x64/msvcr100.dll">
-      <publishTime>02/13/2014 09:53:40</publishTime>
+      <publishTime>12/16/2014 15:20:30</publishTime>
     </File>
     <File Include="bin/SqlServerTypes/x64/SqlServerSpatial110.dll">
-      <publishTime>02/13/2014 09:53:40</publishTime>
+      <publishTime>12/16/2014 15:20:30</publishTime>
     </File>
     <File Include="bin/SqlServerTypes/x86/msvcr100.dll">
-      <publishTime>02/13/2014 09:53:40</publishTime>
+      <publishTime>12/16/2014 15:20:30</publishTime>
     </File>
     <File Include="bin/SqlServerTypes/x86/SqlServerSpatial110.dll">
-      <publishTime>02/13/2014 09:53:40</publishTime>
+      <publishTime>12/16/2014 15:20:30</publishTime>
     </File>
     <File Include="bin/System.Web.Optimization.dll">
       <publishTime>02/16/2018 09:42:17</publishTime>
@@ -208,7 +217,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>05/16/2018 16:30:04</publishTime>
     </File>
     <File Include="Default.aspx">
-      <publishTime>05/17/2018 09:17:27</publishTime>
+      <publishTime>05/17/2018 14:54:36</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>02/16/2018 09:42:16</publishTime>
@@ -262,7 +271,19 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>03/23/2018 12:00:14</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>05/16/2018 14:16:57</publishTime>
+      <publishTime>05/17/2018 15:42:53</publishTime>
+    </File>
+    <File Include="Reportes/comovosquerras.xsc">
+      <publishTime>05/17/2018 15:27:40</publishTime>
+    </File>
+    <File Include="Reportes/comovosquerras.xss">
+      <publishTime>05/17/2018 15:27:40</publishTime>
+    </File>
+    <File Include="Reportes/DataSet1.xsc">
+      <publishTime>05/17/2018 21:06:28</publishTime>
+    </File>
+    <File Include="Reportes/DataSet1.xss">
+      <publishTime>05/17/2018 21:06:28</publishTime>
     </File>
     <File Include="Reportes/reporte1.aspx">
       <publishTime>05/16/2018 14:37:50</publishTime>
@@ -363,26 +384,29 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
     <File Include="Seguimientos/SeguimientoPlanAccion.aspx">
       <publishTime>05/15/2018 11:55:41</publishTime>
     </File>
+    <File Include="SISCA/Content/fondo7.jpg">
+      <publishTime>02/09/2018 12:10:38</publishTime>
+    </File>
     <File Include="Site.Master">
-      <publishTime>05/17/2018 14:39:30</publishTime>
+      <publishTime>05/18/2018 13:12:17</publishTime>
     </File>
     <File Include="Site.Mobile.Master">
       <publishTime>02/16/2018 09:42:16</publishTime>
     </File>
     <File Include="SqlServerTypes/readme.htm">
-      <publishTime>05/16/2018 11:57:10</publishTime>
+      <publishTime>05/17/2018 15:42:39</publishTime>
     </File>
     <File Include="SqlServerTypes/x64/msvcr100.dll">
-      <publishTime>02/13/2014 09:53:40</publishTime>
+      <publishTime>12/16/2014 15:20:30</publishTime>
     </File>
     <File Include="SqlServerTypes/x64/SqlServerSpatial110.dll">
-      <publishTime>02/13/2014 09:53:40</publishTime>
+      <publishTime>12/16/2014 15:20:30</publishTime>
     </File>
     <File Include="SqlServerTypes/x86/msvcr100.dll">
-      <publishTime>02/13/2014 09:53:40</publishTime>
+      <publishTime>12/16/2014 15:20:30</publishTime>
     </File>
     <File Include="SqlServerTypes/x86/SqlServerSpatial110.dll">
-      <publishTime>02/13/2014 09:53:40</publishTime>
+      <publishTime>12/16/2014 15:20:30</publishTime>
     </File>
     <File Include="Usuarios/IngresoUsuarios.aspx">
       <publishTime>05/14/2018 14:21:22</publishTime>
@@ -415,7 +439,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>05/17/2018 14:17:30</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/17/2018 08:46:01</publishTime>
+      <publishTime>05/18/2018 13:12:39</publishTime>
     </File>
   </ItemGroup>
 </Project>

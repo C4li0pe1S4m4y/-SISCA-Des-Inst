@@ -15,15 +15,12 @@
 
     <webopt:BundleReference runat="server" Path="~/Content/bootstrap.css" />
     <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" media="screen" />
-
     <link href="~/Content/bootstrap.css" rel="stylesheet" media="screen" />
-
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../Content/sweetalert.min.js"></script>
 
 </head>
-<body style="background-image: url(../Content/fondo7.jpg); background-repeat: no-repeat; background-attachment: fixed">
+<body style="background-image: url(../SISCA/Content/fondo7.jpg); background-repeat: no-repeat; background-attachment: fixed">
     <form runat="server">
         <asp:ScriptManager runat="server" EnablePageMethods="true">
             <Scripts>
@@ -84,7 +81,6 @@
 
         </div>
         <div class="container body-content">
-
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
             <hr />
@@ -172,6 +168,5 @@
             return patron.test(te);
         }
     </script>
-
 </body>
 </html>

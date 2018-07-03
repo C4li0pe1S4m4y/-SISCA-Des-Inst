@@ -18,7 +18,7 @@ namespace SistemaGdC.Seguimientos
         cActividades cActividades = new cActividades();
         cGeneral cGen = new cGeneral();
         cInformeCO cInfoCorrec = new cInformeCO();
-        cInformeEI cResultados = new cInformeEI();
+        cFuente cResultados = new cFuente();
         cEmpleado cEmpleado = new cEmpleado();
         cCorreo cCorreo = new cCorreo();
 
@@ -39,6 +39,7 @@ namespace SistemaGdC.Seguimientos
                 btnFinalizar.Visible = false;
                 panelBtEnlace.Visible = false;
                 panelBtAnalista.Visible = false;
+                txtObservacionAct.Enabled = false;
 
                 gvListadoAcciones.DataSource = cPlanAccion.ListadoAcciones(int.Parse(Session["id_empleado"].ToString()), "2", tipoConsulta());
                 gvListadoAcciones.DataBind();
@@ -47,7 +48,7 @@ namespace SistemaGdC.Seguimientos
                 panel3.Visible = false;
                 panel4.Visible = false;
 
-                mAccionG = cResultados.Obtner_AccionGenerada(40);
+                mAccionG = cAcciones.Obtner_AccionGenerada(40);
                 id_enlace = mAccionG.id_enlace;
 
                 cInfoCorrec.ddlTecnicaAnalisis(ddlTecnicaAnalisis);
@@ -97,7 +98,7 @@ namespace SistemaGdC.Seguimientos
             if (idUnidad > 0)
             {
 
-                cResultados.dllDependencia(ddldependencia, idUnidad);
+                cAcciones.dllDependencia(ddldependencia, idUnidad);
             }
         }
 
@@ -141,19 +142,19 @@ namespace SistemaGdC.Seguimientos
                 int index = Convert.ToInt16(e.CommandArgument);
                 GridViewRow selectedRow = gvListadoAcciones.Rows[index];
 
-                mAccionG = cResultados.Obtner_AccionGenerada(int.Parse(selectedRow.Cells[0].Text));
+                mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(selectedRow.Cells[0].Text));
 
                 ///////////////////////////////////////////////////////////////////////
-                txtanio.Text = mAccionG.anio_informe_ei.ToString();
-                cResultados.dropUnidad(ddlunidad);
+                //txtanio.Text = mAccionG.anio_informe_ei.ToString();
+                cAcciones.dropUnidad(ddlunidad);
                 ddlunidad.SelectedValue = mAccionG.id_unidad.ToString();
-                cResultados.dllDependencia(ddldependencia, mAccionG.id_unidad);
+                cAcciones.dllDependencia(ddldependencia, mAccionG.id_unidad);
                 ddldependencia.SelectedValue = mAccionG.id_dependencia.ToString();
                 txtDescripcion.Text = mAccionG.descripcion.ToString();
                 txtEvaluacion.Text = " "; //pendiente revisar
                 txtHallazgo.Text = mAccionG.correlativo_hallazgo.ToString();
 
-                cResultados.dropTipoAccion(ddlTipoAccionInforme);
+                cAcciones.dropTipoAccion(ddlTipoAccionInforme);
                 ddlTipoAccionInforme.SelectedValue = mAccionG.id_tipo_accion.ToString();
                 //////////////////////////////////////////////////////////////////////
 
@@ -200,7 +201,7 @@ namespace SistemaGdC.Seguimientos
             switch (int.Parse(Session["id_tipo_usuario"].ToString()))
             {
                 case 3: //Analista
-                    cActividades.actualizarActividad(int.Parse(Session["idActividad"].ToString()), 2);
+                    cActividades.actualizarStatusActividad(int.Parse(Session["idActividad"].ToString()), 2);
                     actualizarListadosActiviades();
 
                     int finPlan = int.Parse(gvListadoActividadesPendientes.Rows.Count.ToString());
@@ -232,13 +233,13 @@ namespace SistemaGdC.Seguimientos
         protected void btnRechazar_Click(object sender, EventArgs e)
         {
             mPlanAccion = cPlanAccion.Obtner_PlanAccion(int.Parse(Session["noAccion"].ToString()));
-            mAccionG = cResultados.Obtner_AccionGenerada(mPlanAccion.id_accion_generada);
+            mAccionG = cAcciones.Obtner_AccionGenerada(mPlanAccion.id_accion_generada);
             mEmpleado = cEmpleado.Obtner_Empleado(mAccionG.id_enlace);            
 
             switch (int.Parse(Session["id_tipo_usuario"].ToString()))
             {
                 case 3: //Analista
-                    cActividades.actualizarActividad(int.Parse(Session["idActividad"].ToString()), -2);
+                    cActividades.actualizarStatusActividad(int.Parse(Session["idActividad"].ToString()), -2);
                     actualizarListadosActiviades();
                     if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Actividad", txtRechazo.Text);
                     txtRechazo.Text = "";
@@ -261,6 +262,7 @@ namespace SistemaGdC.Seguimientos
                     panelBtEnlace.Visible = true;
                     btnFinalizar.Visible = true;
                     FileEvidencia.Visible = true;
+                    txtObservacionAct.Enabled = true;
                     break;
 
                 case 3:
@@ -285,6 +287,7 @@ namespace SistemaGdC.Seguimientos
                     mAccionesRealizar = cActividades.Obtner_Actividad(int.Parse(selectedRowT.Cells[0].Text));
                     btnFinalizar.Visible = false;
                     FileEvidencia.Visible = false;
+                    txtObservacionAct.Enabled = false;
                     break;
 
                 case "VerValidadas":
@@ -294,6 +297,7 @@ namespace SistemaGdC.Seguimientos
                     btnRechazar.Visible = false;
                     btnFinalizar.Visible = false;
                     FileEvidencia.Visible = false;
+                    txtObservacionAct.Enabled = false;
                     break;
 
                 case "VerRechazadas":
@@ -325,12 +329,14 @@ namespace SistemaGdC.Seguimientos
                     {
                         if (int.Parse(Session["id_tipo_usuario"].ToString()) == 5)
                         {
-                            cActividades.actualizarActividad(int.Parse(Session["idActividad"].ToString()), 1);
+                            cActividades.actualizarStatusActividad(int.Parse(Session["idActividad"].ToString()), 1);
+                            cActividades.actualizarObsActividad(int.Parse(Session["idActividad"].ToString()), txtObservacionAct.Text);
                             actualizarListadosActiviades();
 
                             FileEvidencia.PostedFile.SaveAs(Server.MapPath("~/Archivos/EvidenciasPlanesAccion/") + Session["idActividad"].ToString() + ".pdf");
                             btnFinalizar.Visible = false;
                             FileEvidencia.Visible = false;
+                            txtObservacionAct.Enabled = false;
                             ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Actividad finalizada correctamente', '', 'success');", true);                            
                         }
                         else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No tiene permisos para validar Actividad', '', 'warning');", true);
@@ -391,6 +397,7 @@ namespace SistemaGdC.Seguimientos
                             FileEficacia.PostedFile.SaveAs(Server.MapPath("~/Archivos/EficaciaPlanAccion/") + Session["noPlanAccion"].ToString() + ".pdf");
                             btnFinalizar.Visible = false;
                             FileEficacia.Visible = false;
+                            txtObservacionAct.Enabled = false;
                             ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Eficacia agregada exitosamente!', '', 'success');", true);
                             Response.Redirect("~/Seguimientos/SeguimientoPlanAccion.aspx");
                         }
@@ -452,7 +459,7 @@ namespace SistemaGdC.Seguimientos
         protected void btnRechazarEficacia_Click(object sender, EventArgs e)
         {
             mPlanAccion = cPlanAccion.Obtner_PlanAccion(int.Parse(Session["noAccion"].ToString()));
-            mAccionG = cResultados.Obtner_AccionGenerada(mPlanAccion.id_accion_generada);
+            mAccionG = cAcciones.Obtner_AccionGenerada(mPlanAccion.id_accion_generada);
             mEmpleado = cEmpleado.Obtner_Empleado(mAccionG.id_analista);
 
 

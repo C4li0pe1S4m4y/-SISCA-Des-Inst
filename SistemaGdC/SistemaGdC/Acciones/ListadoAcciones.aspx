@@ -129,7 +129,6 @@
 
                                             <asp:BoundField DataField="Dependencia" HeaderText="Dependencia" />
                                             <asp:BoundField DataField="Descripción" HeaderText="Descripción" />
-                                            <asp:BoundField DataField="Enlace" HeaderText="Enlace" />
 
                                             <asp:BoundField DataField="Tipo Acción" HeaderText="Tipo Acción" />
                                         </Columns>

@@ -4,7 +4,6 @@
 
     <%if (Session["id_tipo_usuario"].ToString() == "2")
         {%>
-    <link href="~/Content/bootstrap.css" rel="stylesheet" media="screen" />
 
     <style>
         .chart {

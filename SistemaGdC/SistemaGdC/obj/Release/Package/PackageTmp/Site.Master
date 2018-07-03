@@ -23,7 +23,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </head>
-<body style="background-image: url(../Content/fondo7.jpg); background-repeat: no-repeat; background-attachment: fixed">
+<body style="background-image: url(../SISCA/Content/fondo7.jpg); background-repeat: no-repeat; background-attachment: fixed">
     <form runat="server">
         <asp:ScriptManager runat="server" EnablePageMethods="true">
             <Scripts>

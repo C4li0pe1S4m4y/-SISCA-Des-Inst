@@ -202,40 +202,49 @@ namespace SistemaGdC.Informe {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVddlDependencia;
         
         /// <summary>
-        /// Control ddlResponsable.
+        /// Control ddlEnlace.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlResponsable;
+        protected global::System.Web.UI.WebControls.DropDownList ddlEnlace;
         
         /// <summary>
-        /// Control RFVddlResponsable.
+        /// Control RFVddlEnlace.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVddlResponsable;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVddlEnlace;
         
         /// <summary>
-        /// Control ddlAnalista.
+        /// Control ddlLider.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlAnalista;
+        protected global::System.Web.UI.WebControls.DropDownList ddlLider;
         
         /// <summary>
-        /// Control RFVddlAnalista.
+        /// Control RFVddlLider.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVddlAnalista;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVddlLider;
+        
+        /// <summary>
+        /// Control txtAnalista.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtAnalista;
         
         /// <summary>
         /// Control dllTipoAccion.
@@ -254,24 +263,6 @@ namespace SistemaGdC.Informe {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVdllTipoAccion;
-        
-        /// <summary>
-        /// Control txtFechaRecepcion.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFechaRecepcion;
-        
-        /// <summary>
-        /// Control RFVtxtFechaRecepcion.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVtxtFechaRecepcion;
         
         /// <summary>
         /// Control txtNoPlanAccion.
@@ -308,6 +299,15 @@ namespace SistemaGdC.Informe {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnGuardar;
+        
+        /// <summary>
+        /// Control btnEditar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnEditar;
         
         /// <summary>
         /// Control btNuevo.

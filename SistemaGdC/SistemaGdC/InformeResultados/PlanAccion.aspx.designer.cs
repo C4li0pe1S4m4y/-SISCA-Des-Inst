@@ -127,7 +127,7 @@ namespace SistemaGdC.InformeResultados {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTextArea txtCausa;
+        protected global::System.Web.UI.WebControls.TextBox txtCausa;
         
         /// <summary>
         /// Control RFVtxtCausa.
@@ -190,7 +190,7 @@ namespace SistemaGdC.InformeResultados {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtAccionRealizar;
+        protected global::System.Web.UI.WebControls.TextBox txtAccionRealizar;
         
         /// <summary>
         /// Control RFVtxtAccionRealizar.
@@ -200,6 +200,15 @@ namespace SistemaGdC.InformeResultados {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVtxtAccionRealizar;
+        
+        /// <summary>
+        /// Control txtResponsable.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtResponsable;
         
         /// <summary>
         /// Control ddlResponsable.
@@ -254,15 +263,6 @@ namespace SistemaGdC.InformeResultados {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVtxtFechaFin;
-        
-        /// <summary>
-        /// Control txtObservaciones.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTextArea txtObservaciones;
         
         /// <summary>
         /// Control btnGuardar.
