@@ -135,12 +135,6 @@
                                         <asp:DropDownList ID="ddlTecnicaAnalisis" runat="server" CssClass="form-control input"></asp:DropDownList>
                                     </div>
                                 </div>
-                                <div class="col-md-7">
-                                    <div class="form-group">
-                                        <label>Lider</label>
-                                        <asp:DropDownList ID="ddlLider" runat="server" CssClass="form-control input"></asp:DropDownList>
-                                    </div>
-                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">

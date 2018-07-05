@@ -94,15 +94,6 @@ namespace SistemaGdC.InformeResultados {
         protected global::System.Web.UI.WebControls.DropDownList ddlEstado;
         
         /// <summary>
-        /// Control ddlLider.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlLider;
-        
-        /// <summary>
         /// Control FileEvidencia.
         /// </summary>
         /// <remarks>

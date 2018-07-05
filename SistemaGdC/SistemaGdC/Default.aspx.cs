@@ -28,13 +28,13 @@ namespace SistemaGdC
                     Thread informesVencidos = new Thread(cInformeOM.buscarIOMvencidos);
                     informesVencidos.Start();
 
-                    /*
+                    
                     gvListadoPlanes.DataSource = cPlanAccion.ListadoPlanesAccion("todos");
                     gvListadoInformesCO.DataSource = cInformeCO.ListadoInformesCO("todos");
                     gvListadoInformesOM.DataSource = cInformeOM.ListadoInformesOM("todos");
                     gvListadoPlanes.DataBind();
                     gvListadoInformesCO.DataBind();
-                    gvListadoInformesOM.DataBind();*/
+                    gvListadoInformesOM.DataBind();
                     gvListadoPlanes.Columns[0].Visible = false;
                     gvListadoInformesCO.Columns[0].Visible = false;
                     gvListadoInformesOM.Columns[0].Visible = false;
@@ -238,7 +238,7 @@ namespace SistemaGdC
         protected void gvListadoInformesCO_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.Session["noAccion"] = int.Parse(gvListadoInformesCO.SelectedValue.ToString()); 
-            Response.Redirect("~/Visualizar/VerInformeCorrecion.aspx");            
+            Response.Redirect("~/Visualizar/VerInformeCO.aspx");            
         }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////

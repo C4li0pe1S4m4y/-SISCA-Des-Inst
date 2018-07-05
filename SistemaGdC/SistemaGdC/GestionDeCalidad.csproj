@@ -152,8 +152,6 @@
     <Folder Include="fonts\montserrat\" />
     <Folder Include="fonts\poppins\" />
     <Folder Include="MembersPages\" />
-    <Folder Include="Planes\" />
-    <Folder Include="Reportes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\packages\Microsoft.SqlServer.Types.11.0.2\nativeBinaries\x64\msvcr100.dll">
@@ -220,21 +218,20 @@
     <None Include="Properties\PublishProfiles\pubSE.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="fonts\logoCdag.png" />
+    <Content Include="Fuentes\InformeEvaluacionExterna.aspx" />
     <Content Include="InformeResultados\InformeOM.aspx" />
-    <Content Include="InformeResultados\InformeCorrecion.aspx" />
-    <Content Include="InformeResultados\IngresoFuente.aspx" />
-    <Content Include="InformeResultados\IngresoFuenteEntrada.aspx" />
-    <Content Include="InformeResultados\IngresoInforme.aspx" />
-    <Content Include="InformeResultados\ListadoAcciones.aspx" />
+    <Content Include="InformeResultados\InformeCO.aspx" />
+    <Content Include="Fuentes\InformeEvaluacionInterna.aspx" />
     <Content Include="InformeResultados\PlanAccion.aspx" />
-    <Content Include="InformeResultados\VoBoDirector.aspx" />
+    <Content Include="InformeResultados\SISCA\Content\fondo7.jpg" />
     <Content Include="Login.aspx" />
     <Content Include="Seguimientos\SeguimientoPlanAccion.aspx" />
     <Content Include="SISCA\Content\fondo7.jpg" />
     <Content Include="SqlServerTypes\readme.htm" />
-    <Content Include="Verificaciones\VerificacionInformesOMejora.aspx" />
-    <Content Include="Verificaciones\VerificacionInformesCorreccion.aspx" />
-    <Content Include="Verificaciones\VerificacionPlanes.aspx" />
+    <Content Include="Verificaciones\Fuentes\VerificacionInformeEE.aspx" />
+    <Content Include="Verificaciones\InformeResultados\VerificacionInformesOM.aspx" />
+    <Content Include="Verificaciones\InformeResultados\VerificacionInformesCO.aspx" />
+    <Content Include="Verificaciones\InformeResultados\VerificacionPlanes.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -269,13 +266,14 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Site.Master" />
-    <Content Include="Acciones\ListadoAcciones.aspx" />
+    <Content Include="InformeResultados\Acciones\ListadoAcciones.aspx" />
     <Content Include="Usuarios\IngresoUsuarios.aspx" />
     <Content Include="Usuarios\ListadoUsuarios.aspx" />
-    <Content Include="Verificaciones\VerificacionInformeEI.aspx" />
+    <Content Include="Verificaciones\Fuentes\VerificacionInformeEI.aspx" />
+    <Content Include="Verificaciones\SISCA\Content\fondo7.jpg" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Visualizar\VerInformeOM.aspx" />
-    <Content Include="Visualizar\VerInformeCorrecion.aspx" />
+    <Content Include="Visualizar\VerInformeCO.aspx" />
     <Content Include="Visualizar\VerPlanAccion.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -333,6 +331,13 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Fuentes\InformeEvaluacionExterna.aspx.cs">
+      <DependentUpon>InformeEvaluacionExterna.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Fuentes\InformeEvaluacionExterna.aspx.designer.cs">
+      <DependentUpon>InformeEvaluacionExterna.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -343,40 +348,19 @@
     <Compile Include="InformeResultados\InformeOM.aspx.designer.cs">
       <DependentUpon>InformeOM.aspx</DependentUpon>
     </Compile>
-    <Compile Include="InformeResultados\InformeCorrecion.aspx.cs">
-      <DependentUpon>InformeCorrecion.aspx</DependentUpon>
+    <Compile Include="InformeResultados\InformeCO.aspx.cs">
+      <DependentUpon>InformeCO.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="InformeResultados\InformeCorrecion.aspx.designer.cs">
-      <DependentUpon>InformeCorrecion.aspx</DependentUpon>
+    <Compile Include="InformeResultados\InformeCO.aspx.designer.cs">
+      <DependentUpon>InformeCO.aspx</DependentUpon>
     </Compile>
-    <Compile Include="InformeResultados\IngresoFuente.aspx.cs">
-      <DependentUpon>IngresoFuente.aspx</DependentUpon>
+    <Compile Include="Fuentes\InformeEvaluacionInterna.aspx.cs">
+      <DependentUpon>InformeEvaluacionInterna.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="InformeResultados\IngresoFuente.aspx.designer.cs">
-      <DependentUpon>IngresoFuente.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="InformeResultados\IngresoFuenteEntrada.aspx.cs">
-      <DependentUpon>IngresoFuenteEntrada.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="InformeResultados\IngresoFuenteEntrada.aspx.designer.cs">
-      <DependentUpon>IngresoFuenteEntrada.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="InformeResultados\IngresoInforme.aspx.cs">
-      <DependentUpon>IngresoInforme.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="InformeResultados\IngresoInforme.aspx.designer.cs">
-      <DependentUpon>IngresoInforme.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="InformeResultados\ListadoAcciones.aspx.cs">
-      <DependentUpon>ListadoAcciones.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="InformeResultados\ListadoAcciones.aspx.designer.cs">
-      <DependentUpon>ListadoAcciones.aspx</DependentUpon>
+    <Compile Include="Fuentes\InformeEvaluacionInterna.aspx.designer.cs">
+      <DependentUpon>InformeEvaluacionInterna.aspx</DependentUpon>
     </Compile>
     <Compile Include="InformeResultados\PlanAccion.aspx.cs">
       <DependentUpon>PlanAccion.aspx</DependentUpon>
@@ -384,13 +368,6 @@
     </Compile>
     <Compile Include="InformeResultados\PlanAccion.aspx.designer.cs">
       <DependentUpon>PlanAccion.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="InformeResultados\VoBoDirector.aspx.cs">
-      <DependentUpon>VoBoDirector.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="InformeResultados\VoBoDirector.aspx.designer.cs">
-      <DependentUpon>VoBoDirector.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
@@ -407,25 +384,32 @@
       <DependentUpon>SeguimientoPlanAccion.aspx</DependentUpon>
     </Compile>
     <Compile Include="SqlServerTypes\Loader.cs" />
-    <Compile Include="Verificaciones\VerificacionInformesOMejora.aspx.cs">
-      <DependentUpon>VerificacionInformesOMejora.aspx</DependentUpon>
+    <Compile Include="Verificaciones\Fuentes\VerificacionInformeEE.aspx.cs">
+      <DependentUpon>VerificacionInformeEE.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Verificaciones\VerificacionInformesOMejora.aspx.designer.cs">
-      <DependentUpon>VerificacionInformesOMejora.aspx</DependentUpon>
+    <Compile Include="Verificaciones\Fuentes\VerificacionInformeEE.aspx.designer.cs">
+      <DependentUpon>VerificacionInformeEE.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Verificaciones\VerificacionInformesCorreccion.aspx.cs">
-      <DependentUpon>VerificacionInformesCorreccion.aspx</DependentUpon>
+    <Compile Include="Verificaciones\InformeResultados\VerificacionInformesOM.aspx.cs">
+      <DependentUpon>VerificacionInformesOM.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Verificaciones\VerificacionInformesCorreccion.aspx.designer.cs">
-      <DependentUpon>VerificacionInformesCorreccion.aspx</DependentUpon>
+    <Compile Include="Verificaciones\InformeResultados\VerificacionInformesOM.aspx.designer.cs">
+      <DependentUpon>VerificacionInformesOM.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Verificaciones\VerificacionPlanes.aspx.cs">
+    <Compile Include="Verificaciones\InformeResultados\VerificacionInformesCO.aspx.cs">
+      <DependentUpon>VerificacionInformesCO.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Verificaciones\InformeResultados\VerificacionInformesCO.aspx.designer.cs">
+      <DependentUpon>VerificacionInformesCO.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Verificaciones\InformeResultados\VerificacionPlanes.aspx.cs">
       <DependentUpon>VerificacionPlanes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Verificaciones\VerificacionPlanes.aspx.designer.cs">
+    <Compile Include="Verificaciones\InformeResultados\VerificacionPlanes.aspx.designer.cs">
       <DependentUpon>VerificacionPlanes.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -443,11 +427,11 @@
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
-    <Compile Include="Acciones\ListadoAcciones.aspx.cs">
+    <Compile Include="InformeResultados\Acciones\ListadoAcciones.aspx.cs">
       <DependentUpon>ListadoAcciones.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Acciones\ListadoAcciones.aspx.designer.cs">
+    <Compile Include="InformeResultados\Acciones\ListadoAcciones.aspx.designer.cs">
       <DependentUpon>ListadoAcciones.aspx</DependentUpon>
     </Compile>
     <Compile Include="Usuarios\IngresoUsuarios.aspx.cs">
@@ -464,10 +448,11 @@
     <Compile Include="Usuarios\ListadoUsuarios.aspx.designer.cs">
       <DependentUpon>ListadoUsuarios.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Verificaciones\VerificacionInformeEI.aspx.cs">
+    <Compile Include="Verificaciones\Fuentes\VerificacionInformeEI.aspx.cs">
       <DependentUpon>VerificacionInformeEI.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Verificaciones\VerificacionInformeEI.aspx.designer.cs">
+    <Compile Include="Verificaciones\Fuentes\VerificacionInformeEI.aspx.designer.cs">
       <DependentUpon>VerificacionInformeEI.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
@@ -484,12 +469,12 @@
     <Compile Include="Visualizar\VerInformeOM.aspx.designer.cs">
       <DependentUpon>VerInformeOM.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Visualizar\VerInformeCorrecion.aspx.cs">
-      <DependentUpon>VerInformeCorrecion.aspx</DependentUpon>
+    <Compile Include="Visualizar\VerInformeCO.aspx.cs">
+      <DependentUpon>VerInformeCO.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Visualizar\VerInformeCorrecion.aspx.designer.cs">
-      <DependentUpon>VerInformeCorrecion.aspx</DependentUpon>
+    <Compile Include="Visualizar\VerInformeCO.aspx.designer.cs">
+      <DependentUpon>VerInformeCO.aspx</DependentUpon>
     </Compile>
     <Compile Include="Visualizar\VerPlanAccion.aspx.cs">
       <DependentUpon>VerPlanAccion.aspx</DependentUpon>

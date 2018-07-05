@@ -19,8 +19,8 @@ namespace Controladores
                 int resultado = 0;
                 conectar = new DBConexion();
                 conectar.AbrirConexion();
-                string query = string.Format("Insert Into sgc_plan_accion(tecnica_analisis,causa_raiz,id_lider,usur_ingreso,fecha_ingreso,id_accion_generada,id_status)  " +
-                    "Values('{0}','{1}','{2}','{3}',now(),'{4}',1)", obj.tecnica_analisis, obj.causa_raiz, obj.id_lider, obj.usuario_ingreso, obj.id_accion_generada);
+                string query = string.Format("Insert Into sgc_plan_accion(tecnica_analisis,causa_raiz,usur_ingreso,fecha_ingreso,id_accion_generada,id_status)  " +
+                    "Values('{0}','{1}','{2}',now(),'{3}',1)", obj.tecnica_analisis, obj.causa_raiz, obj.usuario_ingreso, obj.id_accion_generada);
                 MySqlCommand cmd = new MySqlCommand(query, conectar.conectar);
                 resultado = cmd.ExecuteNonQuery();
                 query = "select @@IDENTITY;";
@@ -73,8 +73,25 @@ namespace Controladores
             DataSet result = new DataSet();
             conectar = new DBConexion();
             conectar.AbrirConexion();
-            string query = string.Format("SELECT ag.id_accion_generada ID, CONCAT(ag.anio_informe_ei,'-',ag.no_informe_ei) Informe, pa.causa_raiz, ag.descripcion, pa.id_plan,TRUNCATE(((pa.id_status*100)/5),0) Progreso " +
-                " FROM sgc_plan_accion pa INNER JOIN sgc_accion_generada ag ON pa.id_accion_generada = ag.id_accion_generada;");
+            string query = string.Format("SELECT ag.id_accion_generada ID, "+
+
+                    "CASE f.id_tipo_fuente "+
+                        "WHEN 1 THEN CONCAT('EI-', f.anio, '-', f.no_informe_ei) "+
+                        "WHEN 2 THEN CONCAT('EE-', f.anio, '-', f.no_informe_ee) "+
+                        "WHEN 3 THEN CONCAT('Q-', f.anio, '-', f.no_queja) "+
+                        "WHEN 4 THEN CONCAT('IP-', f.anio, '-', f.no_iniciativa_pro) " +
+                        "WHEN 5 THEN CONCAT('MI-', f.anio, '-', f.no_medicion_ind) " +
+                        "WHEN 6 THEN CONCAT('MSC-', f.anio, '-', f.no_medicion_satisfaccion) " +
+                        "WHEN 7 THEN CONCAT('MRAD-', f.anio, '-', f.no_minuta_rev_ad) " +
+                        "WHEN 8 THEN CONCAT('SNC-', f.anio, '-', f.no_salida_no_conforme) " +
+                        "WHEN 9 THEN CONCAT('I-', f.anio, '-', f.no_ineficacia) " +
+                    "END AS Informe, " +
+
+                    "pa.causa_raiz, ag.descripcion, pa.id_plan, " +
+                    "TRUNCATE(((pa.id_status * 100) / 5), 0) Progreso " +
+                "FROM sgc_plan_accion pa " +
+                    "INNER JOIN sgc_accion_generada ag ON pa.id_accion_generada = ag.id_accion_generada " +
+                    "INNER JOIN sgc_fuente f ON f.id_fuente = ag.id_fuente; ");
             MySqlDataAdapter consulta = new MySqlDataAdapter(query, conectar.conectar);
             consulta.Fill(result);
             conectar.CerrarConexion();
@@ -128,7 +145,7 @@ namespace Controladores
             return result;
         }
 
-        public mPlanAccion Obtner_PlanAccion(int id)
+        public mPlanAccion Obtner_PlanAccion(int id) //ok
         {
             mPlanAccion objPlanAccion = new mPlanAccion();
             conectar = new DBConexion();
@@ -143,7 +160,7 @@ namespace Controladores
                 objPlanAccion.id_plan = int.Parse(dr.GetString("id_plan"));
                 objPlanAccion.causa_raiz = dr.GetString("causa_raiz");
                 objPlanAccion.tecnica_analisis = dr.GetString("tecnica_analisis");
-                objPlanAccion.id_lider = int.Parse(dr.GetString("id_lider"));
+                //objPlanAccion.id_lider = int.Parse(dr.GetString("id_lider"));
                 objPlanAccion.usuario_ingreso = dr.GetString("usur_ingreso");
                 DateTime fecha = DateTime.Parse(dr.GetString("fecha_ingreso"));
                     objPlanAccion.fecha_ingreso = fecha.ToString("yyyy-MM-dd");
@@ -175,7 +192,7 @@ namespace Controladores
 
                 case "validarLider": //Plan de Acción
                     join = "inner join sgc_plan_accion pa on pa.id_accion_generada = ag.id_accion_generada ";
-                    condicion = "AND pa.id_lider = " + id +" AND ag.id_status = 11";
+                    condicion = "AND ag.id_lider = " + id +" AND ag.id_status = 11";
                     break;
 
 //////////// SEGUIMIENTO DE ACTIVIDADES ////////////////////////////////////////////////////////////////////
@@ -191,7 +208,7 @@ namespace Controladores
 
                 case "seguimientoLider": //Lider
                     join = "inner join sgc_plan_accion pa on pa.id_accion_generada = ag.id_accion_generada ";
-                    condicion = "AND pa.id_lider = " + id + " AND ag.id_status = 14 AND pa.id_status = 3";
+                    condicion = "AND ag.id_lider = " + id + " AND ag.id_status = 14 AND pa.id_status = 3";
                     break;
 
                 case "seguimientoDirector": //Director
@@ -210,8 +227,8 @@ namespace Controladores
                     break;
 
                 case "validarInformeCoLider": //Informe de Corrección
-                    join = "inner join sgc_informe_correcion ic on ic.id_accion_generada = ag.id_accion_generada ";
-                    condicion = "AND ic.id_lider = " + id + " AND ag.id_status = 2";
+                    join = "inner join sgc_informe_co ic on ic.id_accion_generada = ag.id_accion_generada ";
+                    condicion = "AND ag.id_lider = " + id + " AND ag.id_status = 2";
                     //condicion = "AND ag.id_status = 2";
                     break;
 
@@ -227,7 +244,7 @@ namespace Controladores
 
                 case "validarInformeOMLider": //Informe de Corrección
                     join = "inner join sgc_informe_om ic on ic.id_accion_generada = ag.id_accion_generada ";
-                    condicion = "AND ic.id_lider = " + id + " AND ag.id_status = 3";
+                    condicion = "AND ag.id_lider = " + id + " AND ag.id_status = 3";
                     //condicion = "AND ag.id_status = 2";
                     break;
 
@@ -250,7 +267,8 @@ namespace Controladores
                         "inner join sgc_empleados ea on ea.id_empleado = ag.id_analista " +
                         "inner join sgc_empleados ee on ee.id_empleado = ag.id_enlace " +
                         "inner join sgc_tipo_accion ta on ta.id_tipo_accion = ag.id_tipo_accion " +
-                        "inner join sgc_informe_ei iei on iei.anio = ag.anio_informe_ei and iei.no_informe = ag.no_informe_ei " +
+                        "inner join sgc_fuente f on f.id_fuente = ag.id_fuente " +
+                        //"inner join sgc_informe_ei iei on iei.anio = ag.anio_informe_ei and iei.no_informe = ag.no_informe_ei " +
                         "left join sgc_status_accion_generada sag on sag.id_status = ag.id_status " +
                         "{1} " +                        
                         "where ag.aprobado = '{0}' {2}; ", aprobAG, join, condicion);
@@ -270,9 +288,9 @@ namespace Controladores
             try
             {
                 command.CommandText = string.Format("UPDATE sgc_plan_accion SET tecnica_analisis = '{1}', causa_raiz = '{2}', "+
-                    "id_lider = '{3}', usur_ingreso = '{4}', id_accion_generada = '{7}' "+
+                    "usur_ingreso = '{3}', id_accion_generada = '{4}' "+
                     "WHERE id_plan = '{0}'; ",
-                plan.id_plan,plan.tecnica_analisis,plan.causa_raiz,plan.id_lider,plan.usuario_ingreso,plan.id_accion_generada);
+                plan.id_plan,plan.tecnica_analisis,plan.causa_raiz,plan.usuario_ingreso,plan.id_accion_generada);
                 command.ExecuteNonQuery();
                 transaccion.Commit();
                 conectar.CerrarConexion();

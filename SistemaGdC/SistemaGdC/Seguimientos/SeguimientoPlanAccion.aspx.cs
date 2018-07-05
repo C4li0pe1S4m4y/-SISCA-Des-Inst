@@ -2,7 +2,7 @@
 using Modelos;
 using System;
 using System.Collections.Generic;
-using System.Data;
+//using System.Data;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -20,8 +20,8 @@ namespace SistemaGdC.Seguimientos
         cInformeCO cInfoCorrec = new cInformeCO();
         cFuente cResultados = new cFuente();
         cEmpleado cEmpleado = new cEmpleado();
-        cCorreo cCorreo = new cCorreo();
-
+        cCorreo cCorreo = new cCorreo();        
+        
         mPlanAccion mPlanAccion = new mPlanAccion();
         mAccionesGeneradas mAccionG = new mAccionesGeneradas();
         mAccionesRealizar mAccionesRealizar = new mAccionesRealizar();
@@ -53,13 +53,7 @@ namespace SistemaGdC.Seguimientos
 
                 cInfoCorrec.ddlTecnicaAnalisis(ddlTecnicaAnalisis);
 
-                ddlLider.DataSource = cGen.dropEmpleados();
-                ddlLider.DataTextField = "texto";
-                ddlLider.DataValueField = "id";
-                ddlLider.DataBind();
-
                 ddlTecnicaAnalisis.Enabled = false;
-                ddlLider.Enabled = false;
                 txtCausa.Enabled = false;
             }
         }
@@ -160,13 +154,13 @@ namespace SistemaGdC.Seguimientos
 
                 mPlanAccion = cPlanAccion.Obtner_PlanAccion(mAccionG.id_accion_generada);
                 ddlTecnicaAnalisis.SelectedValue = mPlanAccion.tecnica_analisis;
-                ddlLider.SelectedValue = mPlanAccion.id_lider.ToString();
+                //ddlLider.SelectedValue = mPlanAccion.id_lider.ToString();
                 txtCausa.Text = mPlanAccion.causa_raiz;
 
                 this.Session["noAccion"] = mAccionG.id_accion_generada;
+                
 
                 ddlTecnicaAnalisis.Enabled = false;
-                ddlLider.Enabled = false;
                 txtCausa.Enabled = false;
 
                 this.Session["noPlanAccion"] = mPlanAccion.id_plan;

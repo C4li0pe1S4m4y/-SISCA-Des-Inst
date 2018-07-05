@@ -42,16 +42,6 @@ namespace SistemaGdC.InformeResultados
                 cInformeOM.ddlEstadoInforme(ddlEstado);
                 cAcciones.dropTipoAccion(ddlTipoAccionInforme);
                 ddlTipoAccionInforme.SelectedValue = mAccionG.id_tipo_accion.ToString();
-                cGen = new cGeneral();
-                ddlLider.ClearSelection();
-                ddlLider.Items.Clear();
-                ddlLider.AppendDataBoundItems = true;
-                ddlLider.Items.Add("<< Elija Empleado >>");
-                ddlLider.Items[0].Value = "0";
-                ddlLider.DataSource = cGen.dropEmpleados();
-                ddlLider.DataTextField = "texto";
-                ddlLider.DataValueField = "id";
-                ddlLider.DataBind();
             }
         }
 
@@ -92,8 +82,6 @@ namespace SistemaGdC.InformeResultados
             if (mInformeOM.id_status == -1) actualizar = true;
 
             mInformeOM.id_accion_generada = int.Parse(Session["noAccion"].ToString());
-            mInformeOM.id_enlace = int.Parse(Session["id_empleado"].ToString());
-            mInformeOM.id_lider = int.Parse(ddlLider.SelectedValue);
             mInformeOM.descripcion_evidencia = txtDesEvidencia.Text;
             mInformeOM.descripcion_accion = txtAccionRealizada.Text;
             mInformeOM.estado = ddlEstado.SelectedValue;
@@ -118,7 +106,7 @@ namespace SistemaGdC.InformeResultados
 
                             FileEvidencia.PostedFile.SaveAs(Server.MapPath("~/Archivos/InformeOM/") + informe.ToString() + ".pdf");                            
 
-                            Response.Redirect("~/Acciones/ListadoAcciones.aspx");
+                            Response.Redirect("~/InformeResultados/Acciones/ListadoAcciones.aspx");
                         }
                         ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No ha sido posible ingresar Informe', 'Intente de nuevo', 'error');", true);
                     }
@@ -131,7 +119,7 @@ namespace SistemaGdC.InformeResultados
         
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Acciones/ListadoAcciones.aspx");
+            Response.Redirect("~/InformeResultados/Acciones/ListadoAcciones.aspx");
         }
     }
 }

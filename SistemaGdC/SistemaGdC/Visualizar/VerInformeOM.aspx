@@ -67,11 +67,6 @@
                             <label>Estado:</label>
                             <asp:DropDownList ID="ddlEstado" Enabled="false" runat="server" CssClass="form-control"></asp:DropDownList>
                         </div>
-                        <div class="form-group col-md-4">
-                            <label>Líder:</label>
-                            <asp:DropDownList ID="ddlLider" Enabled="false" runat="server" CssClass="form-control input"></asp:DropDownList>
-                        </div>
-
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>&nbsp;</label>

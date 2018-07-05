@@ -42,20 +42,10 @@ namespace SistemaGdC.Visualizar
                 cInfoOM.ddlEstadoInforme(ddlEstado);
                 cAcciones.dropTipoAccion(ddlTipoAccionInforme);
                 ddlTipoAccionInforme.SelectedValue = mAccionG.id_tipo_accion.ToString();
-                cGen = new cGeneral();
-                ddlLider.ClearSelection();
-                ddlLider.Items.Clear();
-                ddlLider.AppendDataBoundItems = true;
-                ddlLider.Items.Add("<< Elija Empleado >>");
-                ddlLider.Items[0].Value = "0";
-                ddlLider.DataSource = cGen.dropEmpleados();
-                ddlLider.DataTextField = "texto";
-                ddlLider.DataValueField = "id";
-                ddlLider.DataBind();
 
                 informeOM = cInfoOM.Obtner_InformeOM(mAccionG.id_accion_generada);
                 ddlEstado.SelectedValue = informeOM.estado;
-                ddlLider.SelectedValue = informeOM.id_lider.ToString();
+                //ddlLider.SelectedValue = informeOM.id_lider.ToString();
                 txtAccionRealizada.Text = informeOM.descripcion_accion;                
                 txtDesEvidencia.Text = informeOM.descripcion_evidencia;
                 this.Session["id_informe_om"] = informeOM.id_informe_om;

@@ -19,7 +19,6 @@ namespace SistemaGdC
             {
                 try
                 {
-                    //lblUser.Text = Session["Usuario"].ToString().ToLower();
                     gvListadoPlanes.DataSource = cPlanAccion.ListadoPlanesAccion("todos");
                     gvListadoInformesCO.DataSource = cInformeCO.ListadoInformesCO("todos");
                     gvListadoInformesOM.DataSource = cInformeOM.ListadoInformesOM("todos");

@@ -102,15 +102,15 @@ namespace Controladores
             ddl.DataBind();
         }
 
-        public int IngresraInforme(mInformeCO obj)
+        public int IngresraInforme(mInformeCO obj) //ok
         {
             try
             {
                 int resultado = 0;
                 conectar = new DBConexion();
                 conectar.AbrirConexion();
-                string query = string.Format("Insert Into sgc_informe_correcion(id_accion_generada,descripcion_accion,descripcion_evidencia,id_lider,id_enlace,fecha,estado,id_status) "+
-                    "Values('{0}','{1}','{2}','{3}',{4},now(),'{5}', 1)",obj.id_accion_generada,obj.descripcion_accion,obj.descripcion_evidencia,obj.id_lider,obj.id_enlace,obj.estado);
+                string query = string.Format("Insert Into sgc_informe_co(id_accion_generada,descripcion_accion,descripcion_evidencia,fecha,estado,id_status) "+
+                    "Values('{0}','{1}','{2}',now(),'{3}', 1)",obj.id_accion_generada,obj.descripcion_accion,obj.descripcion_evidencia,obj.estado);
                 MySqlCommand cmd = new MySqlCommand(query, conectar.conectar);
                 resultado = cmd.ExecuteNonQuery();
                 query = "select @@IDENTITY;";
@@ -137,9 +137,9 @@ namespace Controladores
             command.Transaction = transaccion;
             try
             {
-                command.CommandText = string.Format("UPDATE sgc_informe_correcion SET descripcion_accion = '{0}', descripcion_evidencia = '{1}', " +
-                    "id_lider = '{2}', estado = '{3}', id_status = 1 WHERE id_accion_generada = '{4}'; "
-                    , obj.descripcion_accion, obj.descripcion_evidencia, obj.id_lider, obj.estado, obj.id_accion_generada);
+                command.CommandText = string.Format("UPDATE sgc_informe_co SET descripcion_accion = '{0}', descripcion_evidencia = '{1}', " +
+                    "estado = '{2}', id_status = 1 WHERE id_accion_generada = '{3}'; "
+                    , obj.descripcion_accion, obj.descripcion_evidencia, obj.estado, obj.id_accion_generada);
                 command.ExecuteNonQuery();
                 transaccion.Commit();
                 conectar.CerrarConexion();
@@ -168,7 +168,7 @@ namespace Controladores
             command.Transaction = transaccion;
             try
             {
-                command.CommandText = string.Format("UPDATE sgc_informe_correcion SET id_status = '{1}' WHERE id_accion_generada = '{0}'; ",
+                command.CommandText = string.Format("UPDATE sgc_informe_co SET id_status = '{1}' WHERE id_accion_generada = '{0}'; ",
                 id, status);
                 command.ExecuteNonQuery();
                 transaccion.Commit();
@@ -189,7 +189,7 @@ namespace Controladores
         public mInformeCO Obtner_InformeCorreccion(int id)
         {
             mInformeCO mInformeCo = new mInformeCO();
-            string query = string.Format("SELECT * FROM sgc_informe_correcion WHERE id_accion_generada = {0}; "
+            string query = string.Format("SELECT * FROM sgc_informe_co WHERE id_accion_generada = {0}; "
             , id);
             conectar.AbrirConexion();
             MySqlCommand cmd = new MySqlCommand(query, conectar.conectar);
@@ -204,8 +204,8 @@ namespace Controladores
                 mInformeCo.descripcion_evidencia = dr.GetString("descripcion_evidencia");
                 DateTime fecha = DateTime.Parse(dr.GetString("fecha"));
                     mInformeCo.fecha = fecha.ToString("yyyy-MM-dd");
-                mInformeCo.id_enlace = int.Parse(dr.GetString("id_enlace"));
-                mInformeCo.id_lider = int.Parse(dr.GetString("id_lider"));
+                //mInformeCo.id_enlace = int.Parse(dr.GetString("id_enlace"));
+                //mInformeCo.id_lider = int.Parse(dr.GetString("id_lider"));
                 mInformeCo.id_status = int.Parse(dr.GetString("id_status"));
             }
             conectar.CerrarConexion();
@@ -226,7 +226,7 @@ namespace Controladores
             conectar = new DBConexion();
             conectar.AbrirConexion();
             string query = string.Format("SELECT ico.id_accion_generada ID, ico.descripcion_accion Descripción, TRUNCATE((((ag.id_status-20)*100)/3),0) Progreso " +
-                "FROM sgc_informe_correcion ico INNER JOIN sgc_accion_generada ag ON ico.id_accion_generada = ag.id_accion_generada;");
+                "FROM sgc_informe_co ico INNER JOIN sgc_accion_generada ag ON ico.id_accion_generada = ag.id_accion_generada;");
             MySqlDataAdapter consulta = new MySqlDataAdapter(query, conectar.conectar);
             consulta.Fill(result);
             conectar.CerrarConexion();

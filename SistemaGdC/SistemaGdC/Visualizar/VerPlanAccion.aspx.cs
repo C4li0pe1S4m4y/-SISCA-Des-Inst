@@ -57,7 +57,7 @@ namespace SistemaGdC.Visualizar
                 mPlanAccion = cPlanAccion.Obtner_PlanAccion(mAccionG.id_accion_generada); this.Session["noPlanAccion"] = mPlanAccion.id_plan;
 
                 ddlTecnicaAnalisis.SelectedValue = mPlanAccion.tecnica_analisis;
-                ddlLider.SelectedValue = mPlanAccion.id_lider.ToString();
+                //ddlLider.SelectedValue = mPlanAccion.id_lider.ToString();
                 txtCausa.Value = mPlanAccion.causa_raiz;
 
                 gvListado.DataSource = cPlanAccion.ListadoAccionesRealizar(int.Parse(Session["noPlanAccion"].ToString()));
@@ -114,7 +114,7 @@ namespace SistemaGdC.Visualizar
         protected void btnFinalizar_Click(object sender, EventArgs e)
         {
             cAcciones.validarCausaRaiz_Accion(int.Parse(Session["noAccion"].ToString()), 11);
-            Response.Redirect("~/Acciones/ListadoAcciones.aspx");
+            Response.Redirect("~/InformeResultados/Acciones/ListadoAcciones.aspx");
         }
 
         protected void btnDescargar_Click(object sender, EventArgs e)

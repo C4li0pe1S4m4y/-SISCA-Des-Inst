@@ -17,6 +17,7 @@ namespace Modelos
         public int id_periodo { get; set; }
         public int id_indicador { get; set; }
         public int id_ind_satisfaccion { get; set; }
+        public int no_fuente { get; set; } //solo para guardar encabezado
         public int no_informe_ei { get; set; }
         public int no_informe_ee { get; set; }
         public int no_queja { get; set; }

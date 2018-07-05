@@ -70,13 +70,6 @@
                                         <asp:RequiredFieldValidator ID="RFVddlTecnicaAnalisis" ValidationGroup="validarCausa" Style="color: red;" SetFocusOnError="true" ControlToValidate="ddlTecnicaAnalisis" InitialValue="0" runat="server" ErrorMessage="Seleccione Técnica de Análisis." Display="Dynamic" />
                                     </div>
                                 </div>
-                                <div class="col-md-7">
-                                    <div class="form-group">
-                                        <label>Lider</label>
-                                        <asp:DropDownList ID="ddlLider" runat="server" CssClass="form-control input"></asp:DropDownList>
-                                        <asp:RequiredFieldValidator ID="RFVddlLider" ValidationGroup="validarCausa" Style="color: red;" SetFocusOnError="true" ControlToValidate="ddlLider" InitialValue="0" runat="server" ErrorMessage="Seleccione Líder." Display="Dynamic" />
-                                    </div>
-                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">

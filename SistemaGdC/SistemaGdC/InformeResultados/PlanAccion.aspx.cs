@@ -42,17 +42,7 @@ namespace SistemaGdC.InformeResultados
                 cInfoCorrec.ddlTecnicaAnalisis(ddlTecnicaAnalisis);
 
                 cAcciones.dropTipoAccion(ddlTipoAccionInforme);
-                ddlTipoAccionInforme.SelectedValue = mAccionG.id_tipo_accion.ToString();
-                
-                ddlLider.ClearSelection();
-                ddlLider.Items.Clear();
-                ddlLider.AppendDataBoundItems = true;
-                ddlLider.Items.Add("<< Elija Empleado >>");
-                ddlLider.Items[0].Value = "0";
-                ddlLider.DataSource = cGen.dropEmpleados();
-                ddlLider.DataTextField = "texto";
-                ddlLider.DataValueField = "id";
-                ddlLider.DataBind();
+                ddlTipoAccionInforme.SelectedValue = mAccionG.id_tipo_accion.ToString();                
 
                 enabledPlan(false);
                 //if (mAccionG.id_status == 1)
@@ -62,7 +52,6 @@ namespace SistemaGdC.InformeResultados
                     case -1: //rechazado
                         mPlanAccion = cPlanAccion.Obtner_PlanAccion(mAccionG.id_accion_generada);
                         ddlTecnicaAnalisis.SelectedValue = mPlanAccion.tecnica_analisis;
-                        ddlLider.SelectedValue = mPlanAccion.id_lider.ToString();
                         txtCausa.Text = mPlanAccion.causa_raiz;
 
                         enabledCausaRaiz(false);
@@ -122,7 +111,6 @@ namespace SistemaGdC.InformeResultados
         {       
             mPlanAccion.tecnica_analisis = ddlTecnicaAnalisis.SelectedValue;
             mPlanAccion.causa_raiz = txtCausa.Text;
-            mPlanAccion.id_lider = int.Parse(ddlLider.SelectedValue);
             mPlanAccion.usuario_ingreso = Session["usuario"].ToString();
             mPlanAccion.id_accion_generada = int.Parse(Session["noAccion"].ToString());
 
@@ -186,14 +174,19 @@ namespace SistemaGdC.InformeResultados
             {
                 gvListado.DataSource = cPlanAccion.ListadoAccionesRealizar(int.Parse(Session["noPlanAccion"].ToString()));
                 gvListado.DataBind();
-                ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Actividad almacenada exitosamente!', '', 'success');", true);                
+                ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Actividad almacenada exitosamente!', '', 'success');", true);
+                limpiarActividad();
             }
         }
 
         protected void btnNuevo_Click(object sender, EventArgs e)
         {
+            limpiarActividad();
+        }
+
+        protected void limpiarActividad()
+        {
             txtAccionRealizar.Text = "";
-            //ddlResponsable.SelectedIndex = 0;
             txtResponsable.Text = "";
             txtFechaInicio.Text = "";
             txtFechaFin.Text = "";
@@ -210,7 +203,7 @@ namespace SistemaGdC.InformeResultados
             {
                 cPlanAccion.fechaRecepcion_plan(int.Parse(Session["noPlanAccion"].ToString()));
                 cAcciones.validarCausaRaiz_Accion(int.Parse(Session["noAccion"].ToString()), 11);
-                Response.Redirect("~/Acciones/ListadoAcciones.aspx");
+                Response.Redirect("~/InformeResultados/Acciones/ListadoAcciones.aspx");
             }
 
             catch
@@ -276,7 +269,6 @@ namespace SistemaGdC.InformeResultados
         void enabledCausaRaiz(bool en)
         {
             ddlTecnicaAnalisis.Enabled = en;
-            ddlLider.Enabled = en;
             txtCausa.Enabled = en;
             btnGuardarCausa.Enabled = en;
         }
@@ -295,7 +287,7 @@ namespace SistemaGdC.InformeResultados
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Acciones/ListadoAcciones.aspx");
+            Response.Redirect("~/InformeResultados/Acciones/ListadoAcciones.aspx");
         }
 
         protected void gvListado_RowCommand(object sender, GridViewCommandEventArgs e)

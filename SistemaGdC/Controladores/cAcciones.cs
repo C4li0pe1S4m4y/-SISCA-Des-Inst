@@ -227,7 +227,7 @@ namespace Controladores
                         "inner join sgc_empleados ea on ea.id_empleado = ag.id_analista " +
                         "inner join sgc_empleados ee on ee.id_empleado = ag.id_enlace " +
                         "inner join sgc_tipo_accion ta on ta.id_tipo_accion = ag.id_tipo_accion " +
-                        "inner join sgc_informe_ei iei on iei.anio = ag.anio_informe_ei and iei.no_informe = ag.no_informe_ei " +
+                        "inner join sgc_fuente f on f.id_fuente = ag.id_fuente " +
                         "left join sgc_status_accion_generada sag on sag.id_status = ag.id_status " +
                         "where ag.id_enlace = '{0}' AND ag.aprobado = '{1}' {2} ; ", id, aprobAG, statusAG);
 

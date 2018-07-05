@@ -12,8 +12,6 @@ namespace Modelos
         public string estado { get; set; }
         public string descripcion_accion { get; set; }
         public string descripcion_evidencia { get; set; }
-        public int id_lider { get; set; }
-        public int id_enlace { get; set; }
         public string fecha { get; set; }
         public int id_accion_generada { get; set; }
         public int id_status { get; set; }

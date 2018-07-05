@@ -22,22 +22,34 @@ namespace Controladores
             consulta.Fill(tabla);
             conectar.CerrarConexion();
             return tabla;
-        }
-
-        
+        }        
 
         public int AlmacenarEncabezado(mFuente mInforme) //OK -- agregar switch por tipo de fuente
         {
+            string tipoFuente = "";
+            switch(mInforme.id_tipo_fuente)
+            {
+                case 1: tipoFuente = "no_informe_ei"; break;
+                case 2: tipoFuente = "no_informe_ee"; break;
+                case 3: tipoFuente = "no_queja"; break;
+                case 4: tipoFuente = "no_iniciativa_pro"; break;
+                case 5: tipoFuente = "no_medicion_ind"; break;
+                case 6: tipoFuente = "no_medicion_satisfaccion"; break;
+                case 7: tipoFuente = "no_minuta_rev_ad"; break;
+                case 8: tipoFuente = "no_salida_no_conforme"; break;
+                case 9: tipoFuente = "no_ineficacia"; break;
+            }
+
             int result = 0;
             try
             {
                 conectar.AbrirConexion();
-                string query = string.Format("INSERT INTO sgc_fuente(anio, no_informe_ei, fecha, id_status, id_tipo_fuente) " +
-                    "VALUES('{0}', '{1}', '{2}', 0, 1); ",
-                    mInforme.anio, mInforme.no_informe_ei, mInforme.fecha);
+                string query = string.Format("INSERT INTO sgc_fuente(anio, {4}, fecha, id_status, id_tipo_fuente) " +
+                    "VALUES('{0}', '{1}', '{2}', 0, '{3}'); ",
+                    mInforme.anio, mInforme.no_fuente, mInforme.fecha, mInforme.id_tipo_fuente,tipoFuente);
                 MySqlCommand cmd = new MySqlCommand(query, conectar.conectar);
                 cmd.ExecuteNonQuery();
-                query = string.Format("SELECT * from sgc_fuente WHERE anio = '{0}' ORDER BY no_informe_ei DESC LIMIT 1; ", mInforme.anio);
+                query = string.Format("SELECT * from sgc_fuente WHERE anio = '{0}' ORDER BY {1} DESC LIMIT 1; ", mInforme.anio,tipoFuente);
                 cmd = new MySqlCommand(query, conectar.conectar);
                 MySqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
@@ -53,17 +65,65 @@ namespace Controladores
             return result;
         }
 
-        public int ultimoInforme(string anio) //OK -- agregar switch por tipo de fuente
+        public string nombreFuente(string idFuente) //OK -- agregar switch por tipo de fuente
         {
+            string nombre = "";
+            try
+            {
+                conectar.AbrirConexion();
+                string query = string.Format("SELECT "+
+                    "CASE f.id_tipo_fuente " +
+                        "WHEN 1 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_informe_ei, ')') " +
+                        "WHEN 2 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_informe_ee, ')') " +
+                        "WHEN 3 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_queja, ')') " +
+                        "WHEN 4 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_iniciativa_pro, ')') " +
+                        "WHEN 5 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_medicion_ind, ')') " +
+                        "WHEN 6 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_medicion_satisfaccion, ')') " +
+                        "WHEN 7 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_minuta_rev_ad, ')') " +
+                        "WHEN 8 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_salida_no_conforme, ')') " +
+                        "WHEN 9 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_ineficacia, ')') " +
+                    "END AS fuente " +
+                "FROM sgc_fuente f INNER JOIN sgc_tipo_fuente tf ON f.id_tipo_fuente = tf.id_tipo_fuente " +
+                "WHERE id_fuente = '{0}'; ", idFuente);
+                MySqlCommand cmd = new MySqlCommand(query, conectar.conectar);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                    nombre = reader["fuente"].ToString();
+
+                conectar.CerrarConexion();
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+            return nombre;
+        }
+
+        public int ultimoInforme(string anio, string idTipoFuente) //OK -- agregar switch por tipo de fuente ok
+        {
+            string tipoFuente = "";
+            switch (idTipoFuente)
+            {
+                case "1": tipoFuente = "no_informe_ei"; break;
+                case "2": tipoFuente = "no_informe_ee"; break;
+                case "3": tipoFuente = "no_queja"; break;
+                case "4": tipoFuente = "no_iniciativa_pro"; break;
+                case "5": tipoFuente = "no_medicion_ind"; break;
+                case "6": tipoFuente = "no_medicion_satisfaccion"; break;
+                case "7": tipoFuente = "no_minuta_rev_ad"; break;
+                case "8": tipoFuente = "no_salida_no_conforme"; break;
+                case "9": tipoFuente = "no_ineficacia"; break;
+            }
+
             int result = 0;
             try
             {
                 conectar.AbrirConexion();
-                string query = string.Format("SELECT * from sgc_fuente WHERE anio = '{0}' ORDER BY no_informe_ei DESC LIMIT 1; ", anio);
+                string query = string.Format("SELECT * from sgc_fuente WHERE anio = '{0}' AND id_tipo_fuente = '{1}' ORDER BY {2} DESC LIMIT 1; ", anio, idTipoFuente,tipoFuente);
                 MySqlCommand cmd = new MySqlCommand(query, conectar.conectar);
                 MySqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
-                    result = int.Parse(reader["no_informe_ei"].ToString());
+                    result = int.Parse(reader[tipoFuente].ToString());
 
                 conectar.CerrarConexion();
             }

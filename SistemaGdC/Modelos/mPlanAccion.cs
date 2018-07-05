@@ -11,7 +11,6 @@ namespace Modelos
         public int id_plan { get; set; }
         public string tecnica_analisis { get; set; }
         public string causa_raiz { get; set; }
-        public int id_lider { get; set; }
         public string usuario_ingreso { get; set; }
         public string fecha_ingreso { get; set; }
         public int id_accion_generada { get; set; }
