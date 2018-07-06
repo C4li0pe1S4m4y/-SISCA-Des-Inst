@@ -11,13 +11,13 @@ namespace SistemaGdC.Verificaciones.Fuentes
 {    
     public partial class VerificacionInformeEE : System.Web.UI.Page
     {
-        cFuente cInformeEI = new cFuente();
+        cFuente cInformeEE = new cFuente();
         cGeneral cGen = new cGeneral();
         cAcciones cAcciones = new cAcciones();
         cEmpleado cEmpleado = new cEmpleado();
         cCorreo cCorreo = new cCorreo();
 
-        mFuente mInformeEI = new mFuente();
+        mFuente mInformeEE = new mFuente();
         mAccionesGeneradas mAccionGenerada = new mAccionesGeneradas();
         mEmpleado mEmpleado = new mEmpleado();
         mAprobados aprobados = new mAprobados();
@@ -35,7 +35,7 @@ namespace SistemaGdC.Verificaciones.Fuentes
                 this.Session["pagina1"] = 0;
                 this.Session["pagina2"] = 0;
                 gvListadoInformes.Columns[0].Visible = true;
-                gvListadoInformes.DataSource = cInformeEI.ListadoFuentes(1,1);
+                gvListadoInformes.DataSource = cInformeEE.ListadoFuentes(1,2);
                 gvListadoInformes.DataBind();
                 gvListadoInformes.Columns[0].Visible = false;
                 
@@ -46,7 +46,7 @@ namespace SistemaGdC.Verificaciones.Fuentes
                 ddlAccionGenerada.Items.Add("<< Elija Accion >>");
                 ddlAccionGenerada.Items[0].Value = "0";
 
-                ddlAccionGenerada.DataSource = cInformeEI.dropAcciones();
+                ddlAccionGenerada.DataSource = cInformeEE.dropAcciones();
                 ddlAccionGenerada.DataTextField = "Accion";
                 ddlAccionGenerada.DataValueField = "id_acciones";
                 ddlAccionGenerada.DataBind();
@@ -164,7 +164,7 @@ namespace SistemaGdC.Verificaciones.Fuentes
         {
             gvListadoInformes.PageIndex = e.NewPageIndex;
             gvListadoInformes.Columns[0].Visible = true;
-            gvListadoInformes.DataSource = cInformeEI.ListadoFuentes(1,1);
+            gvListadoInformes.DataSource = cInformeEE.ListadoFuentes(1,1);
             gvListadoInformes.DataBind();
             gvListadoInformes.Columns[0].Visible = false;
         }
@@ -174,7 +174,7 @@ namespace SistemaGdC.Verificaciones.Fuentes
             this.Session["pagina1"] = e.NewPageIndex;
             gvListadoInformes.PageIndex = e.NewPageIndex;
             gvListadoInformes.Columns[0].Visible = true;
-            gvListadoInformes.DataSource = cInformeEI.ListadoFuentes(1,1);
+            gvListadoInformes.DataSource = cInformeEE.ListadoFuentes(1,1);
             gvListadoInformes.DataBind();
             gvListadoInformes.Columns[0].Visible = false;
         }
@@ -230,8 +230,8 @@ namespace SistemaGdC.Verificaciones.Fuentes
             aprobados.aprob = 0;
             aprobados.rech = 0;
             aprobados.pend = 0;
-            mInformeEI = cInformeEI.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text));
-            DataSet todos = cInformeEI.ListadoAcciones(mInformeEI.id_fuente, 0, "todos");
+            mInformeEE = cInformeEE.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "2");
+            DataSet todos = cInformeEE.ListadoAcciones(mInformeEE.id_fuente, 0, "todos");
             foreach (DataRow row in todos.Tables[0].Rows)
                 switch(row["aprobado"].ToString())
                 {
@@ -275,7 +275,7 @@ namespace SistemaGdC.Verificaciones.Fuentes
         protected void actualizarListadoAcciones() //carga y actualiza el Listado de Acciones
         {
             verColumnas(true);
-            gvListadoAcciones.DataSource = cInformeEI.ListadoAcciones(int.Parse(Session["idFuente"].ToString()), 0, "todos");
+            gvListadoAcciones.DataSource = cInformeEE.ListadoAcciones(int.Parse(Session["idFuente"].ToString()), 0, "todos");
             gvListadoAcciones.DataBind();
             verColumnas(false);
         }
@@ -365,8 +365,8 @@ namespace SistemaGdC.Verificaciones.Fuentes
             if (int.Parse(Session["id_tipo_usuario"].ToString()) == 1)
             {
                 mostrarBotones(false);
-                mInformeEI = cInformeEI.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text));
-                cAcciones.aprobarTodo_Accion(mInformeEI.id_fuente, "aprobado");
+                mInformeEE = cInformeEE.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "2");
+                cAcciones.aprobarTodo_Accion(mInformeEE.id_fuente, "aprobado");
                 ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Acciones validadas correctamente', '', 'success');", true);
 
                 botonesTodos();
@@ -382,8 +382,8 @@ namespace SistemaGdC.Verificaciones.Fuentes
             if (int.Parse(Session["id_tipo_usuario"].ToString()) == 1)
             {
                 mostrarBotones(false);
-                mInformeEI = cInformeEI.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text));
-                cAcciones.aprobarTodo_Accion(mInformeEI.id_fuente, "rechazado");
+                mInformeEE = cInformeEE.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "2");
+                cAcciones.aprobarTodo_Accion(mInformeEE.id_fuente, "rechazado");
                 ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Acciones rechazadas correctamente', '', 'error');", true);
 
                 botonesTodos();

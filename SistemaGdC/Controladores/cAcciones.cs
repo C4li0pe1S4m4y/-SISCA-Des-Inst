@@ -142,29 +142,52 @@ namespace Controladores
         {
             mAccionesGeneradas objAccionGenerada = new mAccionesGeneradas();
             conectar = new DBConexion();
-            string query = string.Format(" select * from sgc_accion_generada where id_accion_generada = {0}; "
+            string query = string.Format("SELECT * FROM sgc_accion_generada WHERE id_accion_generada = {0}; "
             , id);
             conectar.AbrirConexion();
             MySqlCommand cmd = new MySqlCommand(query, conectar.conectar);
-
             MySqlDataReader dr = cmd.ExecuteReader();
+            //conectar.CerrarConexion();
             while (dr.Read())
             {
                 objAccionGenerada.id_accion_generada = int.Parse(dr.GetString("id_accion_generada"));
-                //objAccionGenerada.anio_informe_ei = int.Parse(dr.GetString("anio_informe_ei"));
-                //objAccionGenerada.no_informe_ei = int.Parse(dr.GetString("no_informe_ei"));
-                objAccionGenerada.id_ccl_accion_generada = int.Parse(dr.GetString("id_ccl_accion_generada"));
                 objAccionGenerada.correlativo_hallazgo = int.Parse(dr.GetString("correlativo_hallazgo"));
                 objAccionGenerada.norma = dr.GetString("norma");
-                objAccionGenerada.id_proceso = int.Parse(dr.GetString("id_proceso"));
-                objAccionGenerada.id_unidad = int.Parse(dr.GetString("id_unidad"));
-                objAccionGenerada.id_dependencia = int.Parse(dr.GetString("id_dependencia"));
                 objAccionGenerada.descripcion = dr.GetString("descripcion");
+
+                if (!dr.IsDBNull(dr.GetOrdinal("fecha")))
+                {
+                    DateTime fecha = DateTime.Parse(dr.GetString("fecha"));
+                    objAccionGenerada.fecha = fecha.ToString("yyyy-MM-dd");
+                }
+
+                if (!dr.IsDBNull(dr.GetOrdinal("fecha_inicio")))
+                {
+                    DateTime fecha_inicio = DateTime.Parse(dr.GetString("fecha_inicio"));
+                    objAccionGenerada.fecha_inicio = fecha_inicio.ToString("yyyy-MM-dd");
+                }
+
+                if (!dr.IsDBNull(dr.GetOrdinal("fecha_fin")))
+                {
+                    DateTime fecha_fin = DateTime.Parse(dr.GetString("fecha_fin"));
+                    objAccionGenerada.fecha_fin = fecha_fin.ToString("yyyy-MM-dd");
+                }
+
+                //DateTime fecha_inicio = DateTime.Parse(dr.GetString("fecha_inicio"));
+                //objAccionGenerada.fecha_inicio = fecha_inicio.ToString("yyyy-MM-dd");
+                //DateTime fecha_fin = DateTime.Parse(dr.GetString("fecha_fin"));
+                //objAccionGenerada.fecha_fin = fecha_fin.ToString("yyyy-MM-dd");
+                objAccionGenerada.id_status = int.Parse(dr.GetString("id_status"));
+                objAccionGenerada.id_fuente = int.Parse(dr.GetString("id_fuente"));
                 objAccionGenerada.id_analista = int.Parse(dr.GetString("id_analista"));
                 objAccionGenerada.id_lider = int.Parse(dr.GetString("id_lider"));
                 objAccionGenerada.id_enlace = int.Parse(dr.GetString("id_enlace"));
+                objAccionGenerada.id_unidad = int.Parse(dr.GetString("id_unidad"));
+                objAccionGenerada.id_dependencia = int.Parse(dr.GetString("id_dependencia"));
+                objAccionGenerada.id_ccl_accion_generada = int.Parse(dr.GetString("id_ccl_accion_generada"));
+                objAccionGenerada.id_proceso = int.Parse(dr.GetString("id_proceso"));
                 objAccionGenerada.id_tipo_accion = int.Parse(dr.GetString("id_tipo_accion"));
-                objAccionGenerada.id_status = int.Parse(dr.GetString("id_status"));
+                objAccionGenerada.aprobado = int.Parse(dr.GetString("aprobado"));
             }
             return objAccionGenerada;
         }

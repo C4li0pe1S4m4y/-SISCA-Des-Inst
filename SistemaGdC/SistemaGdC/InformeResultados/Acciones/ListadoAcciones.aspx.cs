@@ -21,7 +21,7 @@ namespace SistemaGdC.InformeResultados.Acciones
 
             if (!IsPostBack)
             {
-                lblAcciones.InnerText = "control de acciones";
+                lblFuente.InnerText = "control de acciones"; //Para mostrar el # de Informe
 
                 this.Session["pagina"] = 0;
                 panel1.Visible = false;
@@ -94,6 +94,8 @@ namespace SistemaGdC.InformeResultados.Acciones
 
                 Session["noAccion"]= selectedRow.Cells[0].Text;
                 Session["noHallazgo"] = mAccionG.correlativo_hallazgo.ToString();
+
+                lblFuente.InnerText = cFuente.nombreFuente(Session["noAccion"].ToString());
 
                 ddlAccionGenerada.SelectedValue = mAccionG.id_ccl_accion_generada.ToString();
                 txtHallazgo.Text = mAccionG.correlativo_hallazgo.ToString();

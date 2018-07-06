@@ -1,5 +1,4 @@
-﻿
-<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="PlanAccion.aspx.cs" Inherits="SistemaGdC.InformeResultados.PlanAccion" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="PlanAccion.aspx.cs" Inherits="SistemaGdC.InformeResultados.PlanAccion" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -11,7 +10,9 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">Encabezado</div>
+                        <div class="panel-heading">
+                            <label id="lblFuente" runat="server"></label>
+                        </div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-8">
@@ -74,7 +75,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <label>Causa Raíz:</label>
-                                    <asp:TextBox ID="txtCausa" Width="100%" CssClass="form-control" TextMode="MultiLine" Style="height: 100px" runat="server"></asp:TextBox>                                    
+                                    <asp:TextBox ID="txtCausa" Width="100%" CssClass="form-control" TextMode="MultiLine" Style="height: 100px" runat="server"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="RFVtxtCausa" ValidationGroup="validarCausa" Style="color: red;" SetFocusOnError="true" ControlToValidate="txtCausa" InitialValue="" runat="server" ErrorMessage="Ingrese Causa." Display="Dynamic" />
                                 </div>
                             </div>
@@ -149,7 +150,7 @@
                                             <br />
                                             <label>&nbsp;</label>
                                             <asp:Button ID="btnGuardar" ValidationGroup="validarActividad" Text="Guardar" OnClick="btnGuardarActividad_Click" CssClass="btn btn-success btn-block" runat="server" Width="100%" />
-                                            <br />                                            
+                                            <br />
                                             <asp:Button ID="btnNuevo" Text="Nuevo" OnClick="btnNuevo_Click" CssClass="btn btn-warning btn-block" runat="server" Width="100%" />
                                         </div>
                                     </div>

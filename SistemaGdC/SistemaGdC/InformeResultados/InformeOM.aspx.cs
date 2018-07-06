@@ -13,7 +13,7 @@ namespace SistemaGdC.InformeResultados
 {
     public partial class InformeOM : System.Web.UI.Page
     {
-        cFuente cResultados = new cFuente();
+        cFuente cFuente = new cFuente();
         cGeneral cGen = new cGeneral();
         cInformeOM cInformeOM = new cInformeOM();
         mAccionesGeneradas mAccionG = new mAccionesGeneradas();
@@ -26,6 +26,7 @@ namespace SistemaGdC.InformeResultados
             {
                 mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(Session["noAccion"].ToString()));
 
+                lblFuente.InnerText = cFuente.nombreFuente(Session["noAccion"].ToString());
                 //txtanio.Text = mAccionG.anio_informe_ei.ToString();
                 cAcciones.dropUnidad(ddlunidad);
                 ddlunidad.SelectedValue = mAccionG.id_unidad.ToString();
@@ -35,7 +36,6 @@ namespace SistemaGdC.InformeResultados
                 txtEvaluacion.Text = Session["noAccion"].ToString();
                 txtHallazgo.Text = mAccionG.correlativo_hallazgo.ToString();
 
-                cResultados = new cFuente();
                 txtanio.Text = "2018";
                 cAcciones.dropUnidad(ddlunidad);
                 //cInfoCorrec = new cInformeCorreccion();
@@ -53,7 +53,6 @@ namespace SistemaGdC.InformeResultados
             int.TryParse(ddlunidad.SelectedValue, out idUnidad);
             if (idUnidad > 0)
             {
-                cResultados = new cFuente();
                 cAcciones.dllDependencia(ddldependencia, idUnidad);
             }
         }

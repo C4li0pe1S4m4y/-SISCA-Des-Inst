@@ -26,5 +26,6 @@ namespace Modelos
         public int no_medicion_satisfaccion { get; set; }
         public int no_minuta_rev_ad { get; set; }
         public int no_salida_no_conforme { get; set; }
+        public int no_ineficacia { get; set; }
     }
 }

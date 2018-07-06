@@ -66,7 +66,7 @@ namespace SistemaGdC.Informe
 
             if(!existeHallazgo)
             {
-                mInformeEE = cInformeEE.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text));
+                mInformeEE = cInformeEE.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "2");
 
                 mAccionG.id_fuente = mInformeEE.id_fuente;
                 mAccionG.correlativo_hallazgo = int.Parse(txtHallazgo.Text);
@@ -137,6 +137,7 @@ namespace SistemaGdC.Informe
             {
                 ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Informe creado exitosamente!', '', 'success');", true);
                 btnFinalizar.Visible = false;
+                this.Session["idFuente"] = resultado.ToString();
                 lblCorrelativo.Text = resultado.ToString();
 
                 pn1.Visible = true;
@@ -155,9 +156,10 @@ namespace SistemaGdC.Informe
 
         protected void btnBuscarEncabezado_Click(object sender, EventArgs e) //OK
         {
-            mInformeEE = cInformeEE.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text));
-            if (mInformeEE.no_informe_ee != 0)
+            mInformeEE = cInformeEE.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "2");
+            if (mInformeEE.no_fuente != 0)
             {
+                this.Session["idFuente"] = mInformeEE.id_fuente.ToString();
                 lblCorrelativo.Text = mInformeEE.id_fuente.ToString();
                 txtFechaInforme.Text = mInformeEE.fecha;
 
@@ -221,7 +223,7 @@ namespace SistemaGdC.Informe
 
         void limpiarAccion()
         {
-            mInformeEE = cInformeEE.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text));
+            mInformeEE = cInformeEE.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "2");
 
             mostrarCampos(true);
             btnGuardar.Visible = false;
@@ -369,7 +371,7 @@ namespace SistemaGdC.Informe
         protected void gvListadoAcciones_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             this.Session["pagina"] = e.NewPageIndex;
-            mInformeEE = cInformeEE.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text));
+            mInformeEE = cInformeEE.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "2");
             gvListadoAcciones.PageIndex = e.NewPageIndex;
             gvListadoAcciones.DataSource = cInformeEE.ListadoAcciones(mInformeEE.id_fuente, 0, "todos");
             gvListadoAcciones.DataBind();
@@ -377,9 +379,9 @@ namespace SistemaGdC.Informe
 
         protected void btnFinalizar_Click(object sender, EventArgs e)
         {
-            cInformeEE.actualizarInforme(int.Parse(txtanio.Text), int.Parse(txtInforme.Text), 1);
+            cInformeEE.actualizarInforme(int.Parse(Session["idFuente"].ToString()), 1);
             ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Ha finalizado correctamente el Informe', '', 'success');", true);
-            Response.Redirect("~/Fuentes/InformeEvaluacionInterna.aspx");
+            Response.Redirect("~/Fuentes/InformeEvaluacionExterna.aspx");
         }
 
         protected void btnEliminar_Click(object sender, EventArgs e)
@@ -388,7 +390,7 @@ namespace SistemaGdC.Informe
             {
                 verColumnas(true);
                 cAcciones.EliminarAccion(int.Parse(Session["noAccion"].ToString()));
-                mInformeEE = cInformeEE.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text));
+                mInformeEE = cInformeEE.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "2");
                 gvListadoAcciones.DataSource = cInformeEE.ListadoAcciones(mInformeEE.id_fuente, 0, "todos");
                 gvListadoAcciones.DataBind();
                 limpiarAccion();
@@ -451,7 +453,7 @@ namespace SistemaGdC.Informe
                     editada = cAcciones.actualizar_Accion(ag);
                     cAcciones.aprobar_Accion(ag.id_accion_generada,0);
                     //verColumnas(true);
-                    mInformeEE = cInformeEE.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text));
+                    mInformeEE = cInformeEE.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "2");
                     gvListadoAcciones.DataSource = cInformeEE.ListadoAcciones(mInformeEE.id_fuente, 0, "todos");
                     gvListadoAcciones.DataBind();
                     //verColumnas(false);

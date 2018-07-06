@@ -22,6 +22,15 @@ namespace SistemaGdC.InformeResultados {
         protected global::System.Web.UI.UpdatePanel updatepanel1;
         
         /// <summary>
+        /// Control lblFuente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblFuente;
+        
+        /// <summary>
         /// Control txtanio.
         /// </summary>
         /// <remarks>

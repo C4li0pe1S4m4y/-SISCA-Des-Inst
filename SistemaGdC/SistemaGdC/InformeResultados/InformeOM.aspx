@@ -9,7 +9,9 @@
             <asp:UpdatePanel ID="UpdatePanelResponsable" runat="server">
                 <ContentTemplate>
                     <div class="panel panel-default">
-                        <div class="panel-heading">Encabezado</div>
+                        <div class="panel-heading">
+                            <label id="lblFuente" runat="server"></label>
+                        </div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-8">
@@ -98,8 +100,8 @@
                         <asp:Button ID="btnCancelar" OnClick="btnCancelar_Click" Text="Cancelar" CssClass="btn" runat="server" Width="100%" />
                     </div>
                     <div class="col-sm-3">
-                        <asp:Button ID="btnGuardar" OnClick="btnGuardar_Click" Text="Finalizar" CssClass="btn btn-success" runat="server" Width="100%" 
-                        OnClientClick="return confirm('¿Desea finalizar el Informe?');"/>
+                        <asp:Button ID="btnGuardar" OnClick="btnGuardar_Click" Text="Finalizar" CssClass="btn btn-success" runat="server" Width="100%"
+                            OnClientClick="return confirm('¿Desea finalizar el Informe?');" />
                     </div>
                 </div>
             </div>

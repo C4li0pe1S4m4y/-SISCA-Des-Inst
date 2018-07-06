@@ -61,7 +61,7 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="anio" HeaderText="Año" />
-                                            <asp:BoundField DataField="no_informe_ei" HeaderText="No. de Informe" />
+                                            <asp:BoundField DataField="no_informe_ee" HeaderText="No. de Informe" />
                                             <asp:BoundField DataField="fecha" HeaderText="Fecha" />
                                             <asp:BoundField DataField="nombre" HeaderText="Status" />
                                         </Columns>

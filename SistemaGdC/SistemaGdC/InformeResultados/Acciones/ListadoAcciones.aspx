@@ -29,9 +29,7 @@
                 <div class="col-md-12" id="pn1" runat="server">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <label id="lblAcciones" runat="server"></label>
-                            Acciones
-
+                            <label id="lblFuente"  runat="server"></label>
                         </div>
                         <div class="panel-body">
                             <div class="row" id="panel1" runat="server">

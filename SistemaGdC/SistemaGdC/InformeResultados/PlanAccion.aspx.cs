@@ -10,7 +10,7 @@ namespace SistemaGdC.InformeResultados
 {
     public partial class PlanAccion : System.Web.UI.Page
     {
-        cFuente cResultados = new cFuente();
+        cFuente cFuente = new cFuente();
         cGeneral cGen = new cGeneral();
         cInformeCO cInfoCorrec = new cInformeCO();
         cAcciones cAcciones = new cAcciones();
@@ -19,6 +19,7 @@ namespace SistemaGdC.InformeResultados
         mAccionesGeneradas mAccionG = new mAccionesGeneradas();
         mPlanAccion mPlanAccion = new mPlanAccion();
         mAccionesRealizar mAccionRealizar = new mAccionesRealizar();
+        mFuente mFuente = new mFuente();
 
         int id_enlace;
 
@@ -26,9 +27,12 @@ namespace SistemaGdC.InformeResultados
         {
             if (!IsPostBack)
             {
+                lblFuente.InnerText = cFuente.nombreFuente(Session["noAccion"].ToString());
                 this.Session["noPlanAccion"] = 0;
 
                 mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(Session["noAccion"].ToString()));
+                mFuente = cFuente.ObtenerFuente(mAccionG.id_fuente);
+
                 id_enlace = mAccionG.id_enlace;
                 visibleAdjuntar(false);
                 cAcciones.dropUnidad(ddlunidad);
@@ -36,6 +40,10 @@ namespace SistemaGdC.InformeResultados
                 cAcciones.dllDependencia(ddldependencia, mAccionG.id_unidad);
                 ddldependencia.SelectedValue = mAccionG.id_dependencia.ToString();
                 txtDescripcion.Text = mAccionG.descripcion.ToString();
+
+                txtanio.Text = mFuente.anio.ToString();
+                txtHallazgo.Text = mAccionG.correlativo_hallazgo.ToString();
+                txtEvaluacion.Text = mFuente.no_fuente.ToString();
                 //txtEvaluacion.Text = mAccionG.no_informe_ei.ToString();
                 //txtHallazgo.Text = mAccionG.correlativo_hallazgo.ToString();
                 
