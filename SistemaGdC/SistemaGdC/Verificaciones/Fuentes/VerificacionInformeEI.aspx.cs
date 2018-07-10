@@ -232,7 +232,7 @@ namespace SistemaGdC.Verificaciones.Fuentes
             aprobados.rech = 0;
             aprobados.pend = 0;
             mInformeEI = cInformeEI.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "1");
-            DataSet todos = cInformeEI.ListadoAcciones(mInformeEI.id_fuente, 0, "todos");
+            DataSet todos = cInformeEI.ListadoAcciones(mInformeEI.id_fuente, 0, "todos", 1);
             foreach (DataRow row in todos.Tables[0].Rows)
                 switch(row["aprobado"].ToString())
                 {
@@ -276,7 +276,7 @@ namespace SistemaGdC.Verificaciones.Fuentes
         protected void actualizarListadoAcciones() //carga y actualiza el Listado de Acciones
         {
             verColumnas(true);
-            gvListadoAcciones.DataSource = cInformeEI.ListadoAcciones(int.Parse(Session["idFuente"].ToString()), 0, "todos");
+            gvListadoAcciones.DataSource = cInformeEI.ListadoAcciones(int.Parse(Session["idFuente"].ToString()), 0, "todos", 1);
             gvListadoAcciones.DataBind();
             verColumnas(false);
         }
@@ -383,7 +383,7 @@ namespace SistemaGdC.Verificaciones.Fuentes
             if (int.Parse(Session["id_tipo_usuario"].ToString()) == 1)
             {
                 mostrarBotones(false);
-                mInformeEI = cInformeEI.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "2");
+                mInformeEI = cInformeEI.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "1");
                 cAcciones.aprobarTodo_Accion(mInformeEI.id_fuente, "rechazado");
                 ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Acciones rechazadas correctamente', '', 'error');", true);
 

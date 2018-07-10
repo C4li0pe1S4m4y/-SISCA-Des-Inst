@@ -219,6 +219,9 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="fonts\logoCdag.png" />
     <Content Include="Fuentes\InformeEvaluacionExterna.aspx" />
+    <Content Include="Fuentes\IniciativaPropia.aspx" />
+    <Content Include="Fuentes\MedicionIndicadores.aspx" />
+    <Content Include="Fuentes\QuejaReclamo.aspx" />
     <Content Include="InformeResultados\InformeOM.aspx" />
     <Content Include="InformeResultados\InformeCO.aspx" />
     <Content Include="Fuentes\InformeEvaluacionInterna.aspx" />
@@ -229,6 +232,7 @@
     <Content Include="SISCA\Content\fondo7.jpg" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="Verificaciones\Fuentes\VerificacionInformeEE.aspx" />
+    <Content Include="Verificaciones\Fuentes\VerificacionQuejaReclamo.aspx" />
     <Content Include="Verificaciones\InformeResultados\VerificacionInformesOM.aspx" />
     <Content Include="Verificaciones\InformeResultados\VerificacionInformesCO.aspx" />
     <Content Include="Verificaciones\InformeResultados\VerificacionPlanes.aspx" />
@@ -338,6 +342,27 @@
     <Compile Include="Fuentes\InformeEvaluacionExterna.aspx.designer.cs">
       <DependentUpon>InformeEvaluacionExterna.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Fuentes\IniciativaPropia.aspx.cs">
+      <DependentUpon>IniciativaPropia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Fuentes\IniciativaPropia.aspx.designer.cs">
+      <DependentUpon>IniciativaPropia.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Fuentes\MedicionIndicadores.aspx.cs">
+      <DependentUpon>MedicionIndicadores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Fuentes\MedicionIndicadores.aspx.designer.cs">
+      <DependentUpon>MedicionIndicadores.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Fuentes\QuejaReclamo.aspx.cs">
+      <DependentUpon>QuejaReclamo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Fuentes\QuejaReclamo.aspx.designer.cs">
+      <DependentUpon>QuejaReclamo.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -390,6 +415,13 @@
     </Compile>
     <Compile Include="Verificaciones\Fuentes\VerificacionInformeEE.aspx.designer.cs">
       <DependentUpon>VerificacionInformeEE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Verificaciones\Fuentes\VerificacionQuejaReclamo.aspx.cs">
+      <DependentUpon>VerificacionQuejaReclamo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Verificaciones\Fuentes\VerificacionQuejaReclamo.aspx.designer.cs">
+      <DependentUpon>VerificacionQuejaReclamo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Verificaciones\InformeResultados\VerificacionInformesOM.aspx.cs">
       <DependentUpon>VerificacionInformesOM.aspx</DependentUpon>

@@ -6,16 +6,16 @@ using System.Web.UI.WebControls;
 
 namespace SistemaGdC.Informe
 {
-    public partial class InformeEvaluacionExterna : System.Web.UI.Page
+    public partial class QuejaReclamo : System.Web.UI.Page
     {
-        cFuente cInformeEE = new cFuente();
+        cFuente cQuejaReclamo = new cFuente();
         cGeneral cGen = new cGeneral();
         cCorreo cCorreo = new cCorreo();
         cUsuarios cUsuario = new cUsuarios(); ////////
         cEmpleado cEmpleado = new cEmpleado();
         cAcciones cAcciones = new cAcciones();
         mUsuario mUsuario = new mUsuario(); /////
-        mFuente mInformeEE = new mFuente();
+        mFuente mQuejaReclamo = new mFuente();
         mEmpleado mEmpleado = new mEmpleado();
         mAccionesGeneradas mAccionG = new mAccionesGeneradas();
         protected void Page_Load(object sender, EventArgs e)
@@ -25,7 +25,7 @@ namespace SistemaGdC.Informe
                 this.Session["pagina"] = 0;
                 string anio = DateTime.Today.ToString("yyyy");
                 txtanio.Text = anio;
-                txtInforme.Text = cInformeEE.ultimoInforme(anio,"2").ToString();
+                txtInforme.Text = cQuejaReclamo.ultimoInforme(anio,"3").ToString();
 
                 cargarDropLists();
 
@@ -40,51 +40,34 @@ namespace SistemaGdC.Informe
 
         protected void cargarDropLists()
         {
-            ddlAccionGenerada.ClearSelection();
-            ddlAccionGenerada.Items.Clear();
-            ddlAccionGenerada.AppendDataBoundItems = true;
-            ddlAccionGenerada.Items.Add("<< Elija Accion >>");
-            ddlAccionGenerada.Items[0].Value = "0";
-            ddlAccionGenerada.DataSource = cInformeEE.dropAcciones();
-            ddlAccionGenerada.DataTextField = "Accion";
-            ddlAccionGenerada.DataValueField = "id_acciones";
-            ddlAccionGenerada.DataBind();
-
             cAcciones.dropProceso(ddlProceso);
             cAcciones.dropUnidad(ddlUnidad);
             cAcciones.dropTipoAccion(dllTipoAccion);
+            cAcciones.dropFadn(ddlFadn);
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e) //ok
         {           
-            bool existeHallazgo = false;
+            verColumnas(true);                        
 
-            verColumnas(true);
+                mQuejaReclamo = cQuejaReclamo.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "3");
 
-            foreach (GridViewRow Row in gvListadoAcciones.Rows)        
-                if (Row.Cells[3].Text == txtHallazgo.Text) existeHallazgo = true;                         
-
-            if(!existeHallazgo)
-            {
-                mInformeEE = cInformeEE.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "2");
-
-                mAccionG.id_fuente = mInformeEE.id_fuente;
-                mAccionG.correlativo_hallazgo = int.Parse(txtHallazgo.Text);
-                mAccionG.norma = txtPuntoNorma.Text;
+                mAccionG.id_fuente = mQuejaReclamo.id_fuente;
+                mAccionG.instalacion = txtInstalacion.Text;
+                mAccionG.id_fadn = int.Parse(ddlFadn.SelectedValue);
                 mAccionG.descripcion = txtDescripcion.Text;
                 mAccionG.id_unidad = int.Parse(ddlUnidad.SelectedValue);
                 mAccionG.id_dependencia = int.Parse(ddlDependencia.SelectedValue);                               
-                mAccionG.id_ccl_accion_generada = int.Parse(ddlAccionGenerada.SelectedValue);
                 mAccionG.id_proceso = int.Parse(ddlProceso.SelectedValue);
                 mAccionG.id_tipo_accion = int.Parse(dllTipoAccion.SelectedValue);
                 mAccionG.id_lider = int.Parse(ddlLider.SelectedValue);
                 mAccionG.id_enlace = int.Parse(ddlEnlace.SelectedValue);
 
-                if (mInformeEE.id_status==0)
+                if (mQuejaReclamo.id_status==0)
                 {
                     if (cAcciones.ingresarAcción(mAccionG))
                     {
-                        gvListadoAcciones.DataSource = cInformeEE.ListadoAcciones(mInformeEE.id_fuente, 0, "todos", 2);
+                        gvListadoAcciones.DataSource = cQuejaReclamo.ListadoAcciones(mQuejaReclamo.id_fuente, 0, "todos", 3);
                         gvListadoAcciones.DataBind();
                         ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Acción generada exitosamente!', '', 'success');", true);
                         btnFinalizar.Visible = true;
@@ -93,8 +76,6 @@ namespace SistemaGdC.Informe
                     else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Error al ingresar!', 'Intente de nuevo', 'error');", true);
                 }                    
                 else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No es posible agregar más Acciones!', 'El Informe ya ha sido finalizado', 'warning');", true);
-            }
-            else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Ya existe Número de Hallazgo!', 'Intente con otro número', 'warning');", true);
 
             verColumnas(false);
         }
@@ -122,27 +103,27 @@ namespace SistemaGdC.Informe
 
         protected void txtanio_TextChanged(object sender, EventArgs e)
         {
-            txtInforme.Text = cInformeEE.ultimoInforme(txtanio.Text, "2").ToString();
+            txtInforme.Text = cQuejaReclamo.ultimoInforme(txtanio.Text,"3").ToString();
         }
 
         protected void btnGuardarEncabezado_Click(object sender, EventArgs e)
         {
-            mInformeEE.anio = int.Parse(txtanio.Text);
-            mInformeEE.no_fuente = int.Parse(txtInforme.Text);
-            mInformeEE.fecha = txtFechaInforme.Text;
-            mInformeEE.id_tipo_fuente = 2;            
+            mQuejaReclamo.anio = int.Parse(txtanio.Text);
+            mQuejaReclamo.no_fuente = int.Parse(txtInforme.Text);
+            mQuejaReclamo.fecha = txtFechaInforme.Text;
+            mQuejaReclamo.id_tipo_fuente = 3;          
             
-            int resultado = cInformeEE.AlmacenarEncabezado(mInformeEE);
+            int resultado = cQuejaReclamo.AlmacenarEncabezado(mQuejaReclamo);
             if (resultado > 0)
             {
                 ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Informe creado exitosamente!', '', 'success');", true);
                 btnFinalizar.Visible = false;
-                this.Session["idFuente"] = resultado.ToString();
+                this.Session["idFuente"]= resultado.ToString();
                 lblCorrelativo.Text = resultado.ToString();
 
                 pn1.Visible = true;
 
-                txtHallazgo.Text = "1";
+                //txtHallazgo.Text = "1";
             }
             else if (resultado == -10)
             {
@@ -156,14 +137,14 @@ namespace SistemaGdC.Informe
 
         protected void btnBuscarEncabezado_Click(object sender, EventArgs e) //OK
         {
-            mInformeEE = cInformeEE.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "2");
-            if (mInformeEE.no_fuente != 0)
+            mQuejaReclamo = cQuejaReclamo.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "3");
+            if (mQuejaReclamo.no_fuente != 0)
             {
-                this.Session["idFuente"] = mInformeEE.id_fuente.ToString();
-                lblCorrelativo.Text = mInformeEE.id_fuente.ToString();
-                txtFechaInforme.Text = mInformeEE.fecha;
+                this.Session["idFuente"] = mQuejaReclamo.id_fuente.ToString();
+                lblCorrelativo.Text = mQuejaReclamo.id_fuente.ToString();
+                txtFechaInforme.Text = mQuejaReclamo.fecha;
 
-                switch (mInformeEE.id_status)
+                switch (mQuejaReclamo.id_status)
                 {
                     case 0:
                     case -2:
@@ -174,25 +155,25 @@ namespace SistemaGdC.Informe
                         btnGuardar.Visible = false;
                         btNuevo.Visible = false;
 
-                        if (mInformeEE.id_status == 0)
+                        if (mQuejaReclamo.id_status == 0)
                         {
                             btnGuardar.Visible = true;
                             btNuevo.Visible = true;
                         }
 
-                        gvListadoAcciones.DataSource = cInformeEE.ListadoAcciones(mInformeEE.id_fuente, 0, "todos", 2);
+                        gvListadoAcciones.DataSource = cQuejaReclamo.ListadoAcciones(mQuejaReclamo.id_fuente, 0, "todos", 3);
                         gvListadoAcciones.DataBind();
                         if (gvListadoAcciones.Rows.Count > 0)
                         {
                             pn1.Visible = true;
                             btnFinalizar.Visible = false;
-                            if (mInformeEE.id_status == 0)
+                            if (mQuejaReclamo.id_status == 0)
                             {
                                 btnFinalizar.Visible = true;
                             } 
                             limpiarAccion();
                         }
-                        else txtHallazgo.Text = "1";
+                        //else txtHallazgo.Text = "1";
 
                         verColumnas(false);
 
@@ -223,7 +204,7 @@ namespace SistemaGdC.Informe
 
         void limpiarAccion()
         {
-            mInformeEE = cInformeEE.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "2");
+            mQuejaReclamo = cQuejaReclamo.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "3");
 
             mostrarCampos(true);
             btnGuardar.Visible = false;
@@ -231,26 +212,18 @@ namespace SistemaGdC.Informe
             btnEditar.Visible = false;            
             btnEliminar.Visible = false;
 
-            if(mInformeEE.id_status==0)
+            if(mQuejaReclamo.id_status==0)
             {
                 btnGuardar.Visible = true;
                 btNuevo.Visible = true;
             }
 
-            int hallazgo = 1;
-
-            verColumnas(true);
-            foreach (GridViewRow Row in gvListadoAcciones.Rows)            
-                if (int.Parse(Row.Cells[3].Text) >= hallazgo) hallazgo = int.Parse(Row.Cells[3].Text)+1;
-            verColumnas(false);
-
             cargarDropLists();
 
             try
             {
-                ddlAccionGenerada.SelectedIndex = 0;
-                txtHallazgo.Text = hallazgo.ToString();
-                txtPuntoNorma.Text = "";
+                ddlFadn.SelectedIndex = 0;
+                txtInstalacion.Text = "";
                 ddlProceso.SelectedIndex = 0;
                 ddlUnidad.SelectedIndex = 0;
                 ddlDependencia.SelectedIndex = 0;
@@ -259,7 +232,6 @@ namespace SistemaGdC.Informe
                 ddlLider.SelectedIndex = 0;
                 txtAnalista.Text = "";
                 dllTipoAccion.SelectedIndex = 0;
-                //txtFechaRecepcion.Text = "";
                 txtNoPlanAccion.Text = "";
             }
 
@@ -270,11 +242,6 @@ namespace SistemaGdC.Informe
             
 
             btnEliminar.Visible = false;
-        }
-
-        protected void btnListado_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~/InformeResultados/Acciones/ListadoAcciones.aspx?idInforme=" + lblCorrelativo.Text);
         }
 
         protected void gvListadoAcciones_RowCommand(object sender, GridViewCommandEventArgs e) //ok
@@ -289,9 +256,8 @@ namespace SistemaGdC.Informe
                 GridViewRow selectedRow = gvListadoAcciones.Rows[index - (pag * psize)];
                 mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(selectedRow.Cells[0].Text));
 
-                ddlAccionGenerada.SelectedValue = mAccionG.id_ccl_accion_generada.ToString();
-                txtHallazgo.Text = mAccionG.correlativo_hallazgo.ToString();
-                txtPuntoNorma.Text = mAccionG.norma.ToString();
+                ddlFadn.SelectedValue = mAccionG.id_fadn.ToString();
+                txtInstalacion.Text = mAccionG.instalacion.ToString();
                 ddlProceso.SelectedValue = mAccionG.id_proceso.ToString();
                 ddlUnidad.SelectedValue = mAccionG.id_unidad.ToString();
                 cAcciones.dllDependencia(ddlDependencia, mAccionG.id_unidad);
@@ -307,7 +273,7 @@ namespace SistemaGdC.Informe
 
                 this.Session["noAccion"] = mAccionG.id_accion_generada;
 
-                string aprob = selectedRow.Cells[11].Text;
+                string aprob = selectedRow.Cells[10].Text;
                 verColumnas(false);
 
                 switch(aprob)
@@ -338,15 +304,14 @@ namespace SistemaGdC.Informe
 
         protected void verColumnas(bool ver)
         {
-            gvListadoAcciones.Columns[4].Visible = ver;
-            gvListadoAcciones.Columns[11].Visible = ver;
+            gvListadoAcciones.Columns[2].Visible = ver;
+            gvListadoAcciones.Columns[10].Visible = ver;
         }
 
         protected void mostrarCampos(bool ver)
         {
-            ddlAccionGenerada.Enabled = ver;
-            txtHallazgo.Enabled = ver;
-            txtPuntoNorma.Enabled = ver;
+            ddlFadn.Enabled = ver;
+            txtInstalacion.Enabled = ver;
             ddlProceso.Enabled = ver;
             ddlUnidad.Enabled = ver;
             ddlDependencia.Enabled = ver;
@@ -354,7 +319,6 @@ namespace SistemaGdC.Informe
             ddlLider.Enabled = ver;
             dllTipoAccion.Enabled = ver;
             txtDescripcion.Enabled = ver;
-
         }
 
         protected void gvListado_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -371,17 +335,17 @@ namespace SistemaGdC.Informe
         protected void gvListadoAcciones_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             this.Session["pagina"] = e.NewPageIndex;
-            mInformeEE = cInformeEE.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "2");
+            mQuejaReclamo = cQuejaReclamo.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "3");
             gvListadoAcciones.PageIndex = e.NewPageIndex;
-            gvListadoAcciones.DataSource = cInformeEE.ListadoAcciones(mInformeEE.id_fuente, 0, "todos", 2);
+            gvListadoAcciones.DataSource = cQuejaReclamo.ListadoAcciones(mQuejaReclamo.id_fuente, 0, "todos", 3);
             gvListadoAcciones.DataBind();
         }
 
         protected void btnFinalizar_Click(object sender, EventArgs e)
         {
-            cInformeEE.actualizarInforme(int.Parse(Session["idFuente"].ToString()), 1);
+            cQuejaReclamo.actualizarInforme(int.Parse(Session["idFuente"].ToString()), 1);
             ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Ha finalizado correctamente el Informe', '', 'success');", true);
-            Response.Redirect("~/Fuentes/InformeEvaluacionExterna.aspx");
+            Response.Redirect("~/Fuentes/QuejaReclamo.aspx");
         }
 
         protected void btnEliminar_Click(object sender, EventArgs e)
@@ -390,8 +354,8 @@ namespace SistemaGdC.Informe
             {
                 verColumnas(true);
                 cAcciones.EliminarAccion(int.Parse(Session["noAccion"].ToString()));
-                mInformeEE = cInformeEE.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "2");
-                gvListadoAcciones.DataSource = cInformeEE.ListadoAcciones(mInformeEE.id_fuente, 0, "todos", 2);
+                mQuejaReclamo = cQuejaReclamo.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "3");
+                gvListadoAcciones.DataSource = cQuejaReclamo.ListadoAcciones(mQuejaReclamo.id_fuente, 0, "todos", 3);
                 gvListadoAcciones.DataBind();
                 limpiarAccion();
                 btnEliminar.Visible = false;
@@ -411,57 +375,42 @@ namespace SistemaGdC.Informe
             {
                 mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(Session["noAccion"].ToString()));               
 
-                bool existeHallazgo = false;
                 bool editada = false;
 
-                verColumnas(true);
-                foreach (GridViewRow Row in gvListadoAcciones.Rows)
-                    if (Row.Cells[3].Text == txtHallazgo.Text) existeHallazgo = true;
-                verColumnas(false);
-
-                if (!existeHallazgo
-                    || mAccionG.correlativo_hallazgo == int.Parse(txtHallazgo.Text))
-                {
                     mAccionesGeneradas ag = new mAccionesGeneradas();
 
-                    mAccionG.id_fuente = mInformeEE.id_fuente;
-                    mAccionG.correlativo_hallazgo = int.Parse(txtHallazgo.Text);
-                    mAccionG.norma = txtPuntoNorma.Text;
+                    mAccionG.id_fuente = mQuejaReclamo.id_fuente;
+                    mAccionG.instalacion = txtInstalacion.Text;
+                    mAccionG.id_fadn = int.Parse(ddlFadn.SelectedValue);
                     mAccionG.descripcion = txtDescripcion.Text;
-                    //mAccionG.anio_informe_ei = int.Parse(txtanio.Text);
-                    //mAccionG.no_informe_ei = int.Parse(txtInforme.Text);
                     mAccionG.id_unidad = int.Parse(ddlUnidad.SelectedValue);
                     mAccionG.id_dependencia = int.Parse(ddlDependencia.SelectedValue);
-                    mAccionG.id_ccl_accion_generada = int.Parse(ddlAccionGenerada.SelectedValue);
                     mAccionG.id_proceso = int.Parse(ddlProceso.SelectedValue);
                     mAccionG.id_tipo_accion = int.Parse(dllTipoAccion.SelectedValue);
                     mAccionG.id_lider = int.Parse(ddlLider.SelectedValue);
                     mAccionG.id_enlace = int.Parse(ddlEnlace.SelectedValue);
 
                     ag.id_accion_generada = int.Parse(Session["noAccion"].ToString());
-                    ag.norma = txtPuntoNorma.Text;
+                    ag.instalacion = txtInstalacion.Text;
+                    ag.id_fadn = int.Parse(ddlFadn.SelectedValue);
                     ag.descripcion = txtDescripcion.Text;
                     ag.id_lider = int.Parse(ddlLider.SelectedValue);
                     ag.id_enlace = int.Parse(ddlEnlace.SelectedValue);
                     ag.id_unidad = int.Parse(ddlUnidad.SelectedValue);
                     ag.id_dependencia = int.Parse(ddlDependencia.SelectedValue);
-                    ag.id_ccl_accion_generada = int.Parse(ddlAccionGenerada.SelectedValue);
                     ag.id_proceso = int.Parse(ddlProceso.SelectedValue);
                     ag.id_tipo_accion = int.Parse(dllTipoAccion.SelectedValue);
-                    ag.correlativo_hallazgo = int.Parse(txtHallazgo.Text);
 
                     editada = cAcciones.actualizar_Accion(ag);
                     cAcciones.aprobar_Accion(ag.id_accion_generada,0);
-                    //verColumnas(true);
-                    mInformeEE = cInformeEE.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "2");
-                    gvListadoAcciones.DataSource = cInformeEE.ListadoAcciones(mInformeEE.id_fuente, 0, "todos", 2);
+                    verColumnas(true);
+                    mQuejaReclamo = cQuejaReclamo.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "3");
+                    gvListadoAcciones.DataSource = cQuejaReclamo.ListadoAcciones(mQuejaReclamo.id_fuente, 0, "todos", 3);
                     gvListadoAcciones.DataBind();
-                    //verColumnas(false);
+                    verColumnas(false);
 
                     if(editada) ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('La Acción ha sido actualizada correctamente', '', 'success');", true);
                     else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No fue posible actualizar Acción', 'Intente de nuevo', 'error');", true);
-                }
-                else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Ya existe Número de Hallazgo!', 'Intente con otro número', 'warning');", true);
             }
             catch
             {

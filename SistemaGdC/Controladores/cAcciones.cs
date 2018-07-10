@@ -14,6 +14,25 @@ namespace Controladores
     {
         DBConexion conectar = new DBConexion();
 
+        public void dropFadn(DropDownList ddl) //OK
+        {
+            DataTable tabla = new DataTable();
+            conectar.AbrirConexion();
+            string query = "SELECT * FROM sgc_fadn;";
+            MySqlDataAdapter consulta = new MySqlDataAdapter(query, conectar.conectar);
+            consulta.Fill(tabla);
+            conectar.CerrarConexion();
+            ddl.ClearSelection();
+            ddl.Items.Clear();
+            ddl.AppendDataBoundItems = true;
+            ddl.Items.Add("<< Elija FADN >>");
+            ddl.Items[0].Value = "0";
+            ddl.DataSource = tabla;
+            ddl.DataTextField = "fadn";
+            ddl.DataValueField = "id_fadn";
+            ddl.DataBind();
+        }
+
         public void dropProceso(DropDownList ddl) //OK
         {
             DataTable tabla = new DataTable();
@@ -31,7 +50,6 @@ namespace Controladores
             ddl.DataTextField = "Proceso";
             ddl.DataValueField = "id_proceso";
             ddl.DataBind();
-
         }
 
         public void dropOpcionIngreso(DropDownList ddl) //OK
@@ -110,6 +128,25 @@ namespace Controladores
             ddl.DataBind();
         }
 
+        public void dropPeriodoM(DropDownList ddl) //OK
+        {
+            DataTable tabla = new DataTable();
+            conectar.AbrirConexion();
+            string query = "select * from sgc_periodo;";
+            MySqlDataAdapter consulta = new MySqlDataAdapter(query, conectar.conectar);
+            consulta.Fill(tabla);
+            conectar.CerrarConexion();
+            ddl.ClearSelection();
+            ddl.Items.Clear();
+            ddl.AppendDataBoundItems = true;
+            ddl.Items.Add("<< Elija Período >>");
+            ddl.Items[0].Value = "0";
+            ddl.DataSource = tabla;
+            ddl.DataTextField = "periodo";
+            ddl.DataValueField = "id_periodo";
+            ddl.DataBind();
+        }
+
         public bool ingresarAcción(mAccionesGeneradas accion)
         {
             try
@@ -118,13 +155,14 @@ namespace Controladores
                 string query = string.Format("INSERT INTO sgc_accion_generada (" +
                 "correlativo_hallazgo, norma, descripcion, id_status, " +
                 "id_fuente, id_analista, id_lider, id_enlace, id_unidad, " +
-                "id_dependencia, id_ccl_accion_generada, id_proceso, id_tipo_accion, fecha) " +
+                "id_dependencia, id_ccl_accion_generada, id_proceso, id_tipo_accion, fecha, id_fadn, instalacion, id_periodo) " +
 
-                "VALUES({0},'{1}','{2}',0,{3},(SELECT id_analista FROM sgc_unidad WHERE id_unidad = '{7}'),{4},{5},{6},{7},{8},{9},{10},now());",
+                "VALUES({0},'{1}','{2}',0,{3},(SELECT id_analista FROM sgc_unidad WHERE id_unidad = '{7}'),{4},{5},{6},{7},{8},{9},{10},now(),'{11}','{12}','{13}');",
 
                 accion.correlativo_hallazgo, accion.norma, accion.descripcion,
                 accion.id_fuente, accion.id_lider, accion.id_enlace, accion.id_unidad,
-                accion.id_dependencia, accion.id_ccl_accion_generada, accion.id_proceso, accion.id_tipo_accion);
+                accion.id_dependencia, accion.id_ccl_accion_generada, accion.id_proceso, accion.id_tipo_accion,
+                accion.id_fadn,accion.instalacion,accion.id_periodo);
 
                 MySqlCommand cmd = new MySqlCommand(query, conectar.conectar);
 
@@ -177,6 +215,14 @@ namespace Controladores
                 //objAccionGenerada.fecha_inicio = fecha_inicio.ToString("yyyy-MM-dd");
                 //DateTime fecha_fin = DateTime.Parse(dr.GetString("fecha_fin"));
                 //objAccionGenerada.fecha_fin = fecha_fin.ToString("yyyy-MM-dd");
+                if (!dr.IsDBNull(dr.GetOrdinal("id_fadn")))
+                    objAccionGenerada.id_fadn = int.Parse(dr.GetString("id_fadn"));
+                if (!dr.IsDBNull(dr.GetOrdinal("id_periodo")))
+                    objAccionGenerada.id_periodo = int.Parse(dr.GetString("id_periodo"));
+
+                if (!dr.IsDBNull(dr.GetOrdinal("instalacion")))
+                    objAccionGenerada.instalacion = dr.GetString("instalacion");
+
                 objAccionGenerada.id_status = int.Parse(dr.GetString("id_status"));
                 objAccionGenerada.id_fuente = int.Parse(dr.GetString("id_fuente"));
                 objAccionGenerada.id_analista = int.Parse(dr.GetString("id_analista"));
@@ -187,7 +233,8 @@ namespace Controladores
                 objAccionGenerada.id_ccl_accion_generada = int.Parse(dr.GetString("id_ccl_accion_generada"));
                 objAccionGenerada.id_proceso = int.Parse(dr.GetString("id_proceso"));
                 objAccionGenerada.id_tipo_accion = int.Parse(dr.GetString("id_tipo_accion"));
-                objAccionGenerada.aprobado = int.Parse(dr.GetString("aprobado"));
+                if (!dr.IsDBNull(dr.GetOrdinal("aprobado")))
+                    objAccionGenerada.aprobado = int.Parse(dr.GetString("aprobado"));
             }
             return objAccionGenerada;
         }
@@ -220,7 +267,7 @@ namespace Controladores
         }
 
 
-        public DataSet ListadoAcciones(int id, string aprobAG, string statusAG)
+        public DataSet ListadoAcciones(int id, string aprobAG, string statusAG) //crear consulta por tipo de fuente
         {
             switch (statusAG)
             {
@@ -239,20 +286,34 @@ namespace Controladores
 
             DataSet result = new DataSet();
             conectar.AbrirConexion();
-            string query2 = string.Format("select ag.id_accion_generada as 'id',ca.Accion as 'Acción',ag.correlativo_hallazgo as 'Correlativo',ag.norma as 'Punto de Norma', sag.nombre as 'Status', " +
-                "p.Proceso,u.Unidad,d.Unidad Dependencia,ag.descripcion as 'Descripción', concat(ee.Nombre, ' ', ee.Apellido) Enlace, " +
-                "concat(ea.Nombre, ' ', ea.Apellido) Analista, Date_format(ag.fecha,'%d/%m/%Y') as 'Fecha', ta.accion as 'Tipo Acción' " +
+            string query2 = string.Format("SELECT ag.id_accion_generada as 'id',ca.Accion as 'Acción',ag.correlativo_hallazgo as 'Correlativo',ag.norma as 'Punto de Norma', "+
+                "sag.nombre as 'Status', p.Proceso, u.Unidad, d.Unidad Dependencia, ag.descripcion as 'Descripción', ee.Nombre Enlace, "+
+                "ea.Nombre Analista, Date_format(ag.fecha, '%d/%m/%Y') as 'Fecha', "+
+                "ta.accion as 'Tipo Acción', " +
+                "CASE f.id_tipo_fuente " +
+                        "WHEN 1 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_informe_ei, ')') " +
+                        "WHEN 2 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_informe_ee, ')') " +
+                        "WHEN 3 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_queja, ')') " +
+                        "WHEN 4 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_iniciativa_pro, ')') " +
+                        "WHEN 5 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_medicion_ind, ')') " +
+                        "WHEN 6 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_medicion_satisfaccion, ')') " +
+                        "WHEN 7 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_minuta_rev_ad, ')') " +
+                        "WHEN 8 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_salida_no_conforme, ')') " +
+                        "WHEN 9 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_ineficacia, ')') " +
+                    "END AS Fuente " +
 
-                        "from sgc_accion_generada ag inner join sgc_ccl_accion_generada ca on ca.id_acciones = ag.id_ccl_accion_generada " +
-                        "inner join sgc_proceso p on p.id_proceso = ag.id_proceso " +
-                        "inner join sgc_unidad u on u.id_unidad = ag.id_unidad " +
-                        "inner join sgc_unidad d on d.id_unidad = ag.id_dependencia  " +
-                        "inner join sgc_empleados ea on ea.id_empleado = ag.id_analista " +
-                        "inner join sgc_empleados ee on ee.id_empleado = ag.id_enlace " +
-                        "inner join sgc_tipo_accion ta on ta.id_tipo_accion = ag.id_tipo_accion " +
-                        "inner join sgc_fuente f on f.id_fuente = ag.id_fuente " +
-                        "left join sgc_status_accion_generada sag on sag.id_status = ag.id_status " +
-                        "where ag.id_enlace = '{0}' AND ag.aprobado = '{1}' {2} ; ", id, aprobAG, statusAG);
+                        "FROM sgc_accion_generada ag " +
+                        "LEFT JOIN sgc_ccl_accion_generada ca on ca.id_acciones = ag.id_ccl_accion_generada " +
+                        "INNER JOIN sgc_proceso p on p.id_proceso = ag.id_proceso " +
+                        "INNER JOIN sgc_unidad u on u.id_unidad = ag.id_unidad " +
+                        "INNER JOIN sgc_unidad d on d.id_unidad = ag.id_dependencia  " +
+                        "INNER JOIN sgc_empleados ea on ea.id_empleado = ag.id_analista " +
+                        "INNER JOIN sgc_empleados ee on ee.id_empleado = ag.id_enlace " +
+                        "INNER JOIN sgc_tipo_accion ta on ta.id_tipo_accion = ag.id_tipo_accion " +
+                        "INNER JOIN sgc_fuente f on f.id_fuente = ag.id_fuente " +
+                        "INNER JOIN sgc_tipo_fuente tf ON f.id_tipo_fuente = tf.id_tipo_fuente " +
+                        "LEFT JOIN sgc_status_accion_generada sag on sag.id_status = ag.id_status " +
+                        "WHERE ag.id_enlace = '{0}' AND ag.aprobado = '{1}' {2} ; ", id, aprobAG, statusAG);
 
             MySqlDataAdapter consulta = new MySqlDataAdapter(query2, conectar.conectar);
             consulta.Fill(result);
@@ -271,10 +332,12 @@ namespace Controladores
                 command.CommandText = string.Format("UPDATE sgc_accion_generada SET norma = '{1}', "+
                     "descripcion = '{2}', id_analista = (SELECT id_analista FROM sgc_unidad WHERE id_unidad = '{6}'), id_lider = '{3}', id_enlace = '{4}', " +
                     "id_unidad = '{5}', id_dependencia = '{6}', id_ccl_accion_generada = '{7}', "+
-                    "id_proceso = '{8}', id_tipo_accion = '{9}', correlativo_hallazgo = '{10}' " +
+                    "id_proceso = '{8}', id_tipo_accion = '{9}', correlativo_hallazgo = '{10}', " +
+                    "id_fadn = '{11}', instalacion = '{12}', id_periodo = '{13}' " +
                     "WHERE id_accion_generada = '{0}'; ",
                 ag.id_accion_generada,ag.norma,ag.descripcion, ag.id_lider, ag.id_enlace,ag.id_unidad,
-                ag.id_dependencia,ag.id_ccl_accion_generada,ag.id_proceso,ag.id_tipo_accion,ag.correlativo_hallazgo);
+                ag.id_dependencia,ag.id_ccl_accion_generada,ag.id_proceso,ag.id_tipo_accion,ag.correlativo_hallazgo,
+                ag.id_fadn,ag.instalacion,ag.id_periodo);
                 command.ExecuteNonQuery();
                 transaccion.Commit();
                 conectar.CerrarConexion();

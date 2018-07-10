@@ -43,7 +43,7 @@ namespace SistemaGdC.InformeResultados
 
                 txtanio.Text = mFuente.anio.ToString();
                 txtHallazgo.Text = mAccionG.correlativo_hallazgo.ToString();
-                txtEvaluacion.Text = mFuente.no_fuente.ToString();
+                txtEvaluacion.Text = Session["noAccion"].ToString();
                 //txtEvaluacion.Text = mAccionG.no_informe_ei.ToString();
                 //txtHallazgo.Text = mAccionG.correlativo_hallazgo.ToString();
                 

@@ -13,10 +13,6 @@ namespace Modelos
         public string fecha { get; set; }
         public int id_status { get; set; }
         public int id_tipo_fuente { get; set; }
-        public int id_fadn { get; set; }
-        public int id_periodo { get; set; }
-        public int id_indicador { get; set; }
-        public int id_ind_satisfaccion { get; set; }
         public int no_fuente { get; set; } //solo para guardar encabezado
         public int no_informe_ei { get; set; }
         public int no_informe_ee { get; set; }
@@ -27,5 +23,8 @@ namespace Modelos
         public int no_minuta_rev_ad { get; set; }
         public int no_salida_no_conforme { get; set; }
         public int no_ineficacia { get; set; }
+        public int id_tipo_mejora { get; set; }
+        public int id_indicador { get; set; }
+        public int id_ind_satisfaccion { get; set; }
     }
 }

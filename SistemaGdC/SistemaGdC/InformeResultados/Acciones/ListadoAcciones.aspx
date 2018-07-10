@@ -122,11 +122,8 @@
                                                         Text="Ver" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:BoundField DataField="Acción" HeaderText="Acción" />
                                             <asp:BoundField DataField="Correlativo" HeaderText="Correlativo" />
-                                            <asp:BoundField DataField="Status" HeaderText="Status" />
-                                            <asp:BoundField DataField="Punto de Norma" HeaderText="Punto de Norma" />
-                                            <asp:BoundField DataField="Proceso" HeaderText="Proceso" />
+                                            <asp:BoundField DataField="Fuente" HeaderText="Fuente" />
 
                                             <asp:BoundField DataField="Dependencia" HeaderText="Dependencia" />
                                             <asp:BoundField DataField="Descripción" HeaderText="Descripción" />

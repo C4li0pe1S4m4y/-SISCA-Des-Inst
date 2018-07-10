@@ -39,17 +39,17 @@ namespace Controladores
                     informe.id_fuente = int.Parse(dr.GetString("id_fuente"));
                     informe.anio = int.Parse(dr.GetString("anio"));
                     DateTime fecha = DateTime.Parse(dr.GetString("fecha"));
-                        informe.fecha = fecha.ToString("yyyy-MM-dd");
+                    informe.fecha = fecha.ToString("yyyy-MM-dd");
                     informe.id_status = int.Parse(dr.GetString("id_status"));
                     informe.id_tipo_fuente = int.Parse(dr.GetString("id_tipo_fuente"));
-                    if (!dr.IsDBNull(dr.GetOrdinal("id_fadn")))
-                        informe.id_fadn = int.Parse(dr.GetString("id_fadn"));
-                    if (!dr.IsDBNull(dr.GetOrdinal("id_periodo")))
-                        informe.id_periodo = int.Parse(dr.GetString("id_periodo"));
+
+                    if (!dr.IsDBNull(dr.GetOrdinal("id_tipo_mejora")))
+                        informe.id_tipo_mejora = int.Parse(dr.GetString("id_tipo_mejora"));
                     if (!dr.IsDBNull(dr.GetOrdinal("id_indicador")))
                         informe.id_indicador = int.Parse(dr.GetString("id_indicador"));
                     if (!dr.IsDBNull(dr.GetOrdinal("id_ind_satisfaccion")))
                         informe.id_ind_satisfaccion = int.Parse(dr.GetString("id_ind_satisfaccion"));
+
                     if (!dr.IsDBNull(dr.GetOrdinal("no_informe_ei")))
                         informe.no_fuente = int.Parse(dr.GetString("no_informe_ei"));
                     if (!dr.IsDBNull(dr.GetOrdinal("no_informe_ee")))
@@ -81,7 +81,7 @@ namespace Controladores
         public int AlmacenarEncabezado(mFuente mInforme) //OK -- agregar switch por tipo de fuente ok
         {
             string tipoFuente = "";
-            switch(mInforme.id_tipo_fuente)
+            switch (mInforme.id_tipo_fuente)
             {
                 case 1: tipoFuente = "no_informe_ei"; break;
                 case 2: tipoFuente = "no_informe_ee"; break;
@@ -98,12 +98,12 @@ namespace Controladores
             try
             {
                 conectar.AbrirConexion();
-                string query = string.Format("INSERT INTO sgc_fuente(anio, {4}, fecha, id_status, id_tipo_fuente) " +
-                    "VALUES('{0}', '{1}', '{2}', 0, '{3}'); ",
-                    mInforme.anio, mInforme.no_fuente, mInforme.fecha, mInforme.id_tipo_fuente,tipoFuente);
+                string query = string.Format("INSERT INTO sgc_fuente(anio, {4}, fecha, id_status, id_tipo_fuente, id_tipo_mejora) " +
+                    "VALUES('{0}', '{1}', '{2}', 0, '{3}', '{5}'); ",
+                    mInforme.anio, mInforme.no_fuente, mInforme.fecha, mInforme.id_tipo_fuente, tipoFuente,mInforme.id_tipo_mejora);
                 MySqlCommand cmd = new MySqlCommand(query, conectar.conectar);
                 cmd.ExecuteNonQuery();
-                query = string.Format("SELECT * from sgc_fuente WHERE anio = '{0}' ORDER BY {1} DESC LIMIT 1; ", mInforme.anio,tipoFuente);
+                query = string.Format("SELECT * from sgc_fuente WHERE anio = '{0}' ORDER BY {1} DESC LIMIT 1; ", mInforme.anio, tipoFuente);
                 cmd = new MySqlCommand(query, conectar.conectar);
                 MySqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
@@ -125,7 +125,7 @@ namespace Controladores
             try
             {
                 conectar.AbrirConexion();
-                string query = string.Format("SELECT "+
+                string query = string.Format("SELECT " +
                     "CASE f.id_tipo_fuente " +
                         "WHEN 1 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_informe_ei, ')') " +
                         "WHEN 2 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_informe_ee, ')') " +
@@ -175,7 +175,7 @@ namespace Controladores
             try
             {
                 conectar.AbrirConexion();
-                string query = string.Format("SELECT * from sgc_fuente WHERE anio = '{0}' AND id_tipo_fuente = '{1}' ORDER BY {2} DESC LIMIT 1; ", anio, idTipoFuente,tipoFuente);
+                string query = string.Format("SELECT * from sgc_fuente WHERE anio = '{0}' AND id_tipo_fuente = '{1}' ORDER BY {2} DESC LIMIT 1; ", anio, idTipoFuente, tipoFuente);
                 MySqlCommand cmd = new MySqlCommand(query, conectar.conectar);
                 MySqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
@@ -187,8 +187,8 @@ namespace Controladores
             {
                 return -10;
             }
-            return result+1;
-        }        
+            return result + 1;
+        }
 
         public mFuente BuscarEncabezado(string noInforme, int anio, string idTipoFuente) //OK -- agregar switch por tipo de fuente 
         {
@@ -207,11 +207,41 @@ namespace Controladores
             }
 
             mFuente informe = new mFuente();
+
             try
             {
+                string query = string.Format("Select id_fuente,Date_format(fecha,'%Y-%m-%d') fecha, id_status, id_tipo_mejora from sgc_fuente where {2} = '{0}' AND anio = {1};", noInforme, anio, tipoFuente);
+                conectar.AbrirConexion();
+                MySqlCommand cmd = new MySqlCommand(query, conectar.conectar);
+                MySqlDataReader dr = cmd.ExecuteReader();
+                //
+                while (dr.Read())
+                {
+                    informe.id_fuente = int.Parse(dr.GetString("id_fuente"));
+                    informe.anio = anio;
+                    informe.no_fuente = int.Parse(noInforme);
+                    DateTime fecha = DateTime.Parse(dr.GetString("fecha"));
+                    informe.fecha = fecha.ToString("yyyy-MM-dd");
+                    informe.id_status = int.Parse(dr.GetString("id_status"));
+                    if (!dr.IsDBNull(dr.GetOrdinal("id_tipo_mejora")))
+                        informe.id_tipo_mejora = int.Parse(dr.GetString("id_tipo_mejora"));                    
+                }
+                conectar.CerrarConexion();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return informe;
+
+
+            //////////////////////////////
+            /*
+            try
+            {               
                 DataSet tabla = new DataSet();
                 conectar.AbrirConexion();
-                string query = string.Format("Select id_fuente,Date_format(fecha,'%Y-%m-%d') fecha, id_status from sgc_fuente where {2} = '{0}' AND anio = {1};", noInforme, anio, tipoFuente);
+                string query = string.Format("Select id_fuente,Date_format(fecha,'%Y-%m-%d') fecha, id_status, id_tipo_mejora from sgc_fuente where {2} = '{0}' AND anio = {1};", noInforme, anio, tipoFuente);
                 MySqlDataAdapter consulta = new MySqlDataAdapter(query, conectar.conectar);
                 consulta.Fill(tabla);
                 conectar.CerrarConexion();
@@ -222,19 +252,22 @@ namespace Controladores
                     informe.no_fuente = int.Parse(noInforme);
                     informe.fecha = (tabla.Tables[0].Rows[0]["fecha"].ToString());
                     informe.id_status = int.Parse(tabla.Tables[0].Rows[0]["id_status"].ToString());
+                    informe.id_tipo_mejora = int.Parse(tabla.Tables[0].Rows[0]["id_tipo_mejora"].ToString());
                 }
             }
             catch (Exception ex)
             {
                 throw;
             }
-            return informe;
-        }        
+            return informe;*/
+        }
 
-        public DataSet ListadoAcciones(int idFuente, int status, string aprobacion) //ok -- agregar switch para el select con las acciones
+        public DataSet ListadoAcciones(int idFuente, int status, string aprobacion, int tipoFuente) //ok -- agregar switch para el select con las acciones
         {
             string aprob = "";
-            switch(aprobacion)
+            string select = "";
+            string tablas = "";
+            switch (aprobacion)
             {
                 case "aprobado":
                     aprob = "AND ag.aprobado = 2";
@@ -249,13 +282,44 @@ namespace Controladores
                     break;
             }
 
+            switch (tipoFuente)
+            {
+                case 1:
+                case 2:
+                    select = "select ag.id_accion_generada as 'id',ca.Accion as 'Acción',ag.correlativo_hallazgo as 'Correlativo',ag.norma as 'Punto de Norma',  sag.nombre as 'Status', " +
+                        "p.Proceso,u.Unidad,d.Unidad Dependencia,ag.descripcion as 'Descripción', ee.Nombre Enlace, " +
+                        "ea.Nombre Analista, Date_format(ag.fecha,'%d/%m/%Y') as 'Fecha', ta.accion as 'Tipo Acción', ag.aprobado ";
+                    tablas = "inner join sgc_ccl_accion_generada ca on ca.id_acciones = ag.id_ccl_accion_generada";
+                    break;
+
+                case 3:
+                    select = "select ag.id_accion_generada as 'id',  sag.nombre as 'Status', f.fadn as 'Federación', ag.instalacion as 'Instalación', " +
+                        "p.Proceso,u.Unidad,d.Unidad Dependencia,ag.descripcion as 'Descripción', ee.Nombre Enlace, " +
+                        "ea.Nombre Analista, Date_format(ag.fecha,'%d/%m/%Y') as 'Fecha', ta.accion as 'Tipo Acción', ag.aprobado ";
+                    tablas = "inner join sgc_fadn f on ag.id_fadn = f.id_fadn";
+                    break;
+
+                case 4:
+                    select = "select ag.id_accion_generada as 'id',  sag.nombre as 'Status', " +
+                        "p.Proceso,u.Unidad,d.Unidad Dependencia,ag.descripcion as 'Descripción', ee.Nombre Enlace, " +
+                        "ea.Nombre Analista, Date_format(ag.fecha,'%d/%m/%Y') as 'Fecha', ta.accion as 'Tipo Acción', ag.aprobado ";
+                    tablas = "";
+                    break;
+
+                case 5:
+                    select = "select ag.id_accion_generada as 'id',  sag.nombre as 'Status', pe.periodo as 'Período', " +
+                        "p.Proceso,u.Unidad,d.Unidad Dependencia,ag.descripcion as 'Descripción', ee.Nombre Enlace, " +
+                        "ea.Nombre Analista, Date_format(ag.fecha,'%d/%m/%Y') as 'Fecha', ta.accion as 'Tipo Acción', ag.aprobado ";
+                    tablas = "inner join sgc_periodo pe on ag.id_periodo = pe.id_periodo";
+                    break;
+            }
+
             DataSet result = new DataSet();
             conectar.AbrirConexion();
-            string query2 = string.Format("select ag.id_accion_generada as 'id',ca.Accion as 'Acción',ag.correlativo_hallazgo as 'Correlativo',ag.norma as 'Punto de Norma',  sag.nombre as 'Status', " +
-                "p.Proceso,u.Unidad,d.Unidad Dependencia,ag.descripcion as 'Descripción', ee.Nombre Enlace, " +
-                "ea.Nombre Analista, Date_format(ag.fecha,'%d/%m/%Y') as 'Fecha', ta.accion as 'Tipo Acción', ag.aprobado " +
+            string query2 = string.Format("{2} " +
 
-                        "from sgc_accion_generada ag inner join sgc_ccl_accion_generada ca on ca.id_acciones = ag.id_ccl_accion_generada " +
+                        "from sgc_accion_generada ag " +
+                        "{3} " +
                         "inner join sgc_proceso p on p.id_proceso = ag.id_proceso " +
                         "inner join sgc_unidad u on u.id_unidad = ag.id_unidad " +
                         "inner join sgc_unidad d on d.id_unidad = ag.id_dependencia  " +
@@ -265,7 +329,7 @@ namespace Controladores
                         "inner join sgc_tipo_accion ta on ta.id_tipo_accion = ag.id_tipo_accion " +
                         "left join sgc_status_accion_generada sag on sag.id_status = ag.id_status " +
 
-                        "where ag.id_fuente = '{0}' {1}; ", idFuente, aprob);
+                        "where ag.id_fuente = '{0}' {1}; ", idFuente, aprob, select, tablas);
 
             MySqlDataAdapter consulta = new MySqlDataAdapter(query2, conectar.conectar);
             consulta.Fill(result);
@@ -284,7 +348,7 @@ namespace Controladores
             return result;
         }
 
-        
+
         public void actualizarInforme(int idFuente, int status) //ok
         {
             conectar.AbrirConexion();
@@ -313,6 +377,61 @@ namespace Controladores
             };
         }
 
-        
+        public void dropMejora(DropDownList ddl) //OK
+        {
+            DataTable tabla = new DataTable();
+            conectar.AbrirConexion();
+            string query = "select * from sgc_tipo_mejora;";
+            MySqlDataAdapter consulta = new MySqlDataAdapter(query, conectar.conectar);
+            consulta.Fill(tabla);
+            conectar.CerrarConexion();
+            ddl.ClearSelection();
+            ddl.Items.Clear();
+            ddl.AppendDataBoundItems = true;
+            ddl.Items.Add("<< Elija Tipo de Mejora >>");
+            ddl.Items[0].Value = "0";
+            ddl.DataSource = tabla;
+            ddl.DataTextField = "mejora";
+            ddl.DataValueField = "id_tipo_mejora";
+            ddl.DataBind();
+        }
+
+        public void dropIndicador(DropDownList ddl) //OK
+        {
+            DataTable tabla = new DataTable();
+            conectar.AbrirConexion();
+            string query = "select * from sgc_indicador;";
+            MySqlDataAdapter consulta = new MySqlDataAdapter(query, conectar.conectar);
+            consulta.Fill(tabla);
+            conectar.CerrarConexion();
+            ddl.ClearSelection();
+            ddl.Items.Clear();
+            ddl.AppendDataBoundItems = true;
+            ddl.Items.Add("<< Elija Indicador >>");
+            ddl.Items[0].Value = "0";
+            ddl.DataSource = tabla;
+            ddl.DataTextField = "indicador";
+            ddl.DataValueField = "id_indicador";
+            ddl.DataBind();
+        }
+
+        public void dropIndSatisfaccion(DropDownList ddl) //OK
+        {
+            DataTable tabla = new DataTable();
+            conectar.AbrirConexion();
+            string query = "select * from sgc_indicador_satisfaccion;";
+            MySqlDataAdapter consulta = new MySqlDataAdapter(query, conectar.conectar);
+            consulta.Fill(tabla);
+            conectar.CerrarConexion();
+            ddl.ClearSelection();
+            ddl.Items.Clear();
+            ddl.AppendDataBoundItems = true;
+            ddl.Items.Add("<< Elija Indicador de Satisfacción >>");
+            ddl.Items[0].Value = "0";
+            ddl.DataSource = tabla;
+            ddl.DataTextField = "ind_satisfaccion";
+            ddl.DataValueField = "id_ind_satisfaccion";
+            ddl.DataBind();
+        }
     }
 }
