@@ -340,7 +340,7 @@ namespace SistemaGdC.Informe
         {
             cIniciativaPropia.actualizarInforme(int.Parse(Session["idFuente"].ToString()), 1);
             ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Ha finalizado correctamente el Informe', '', 'success');", true);
-            Response.Redirect("~/Fuentes/QuejaReclamo.aspx");
+            Response.Redirect("~/Fuentes/IniciativaPropia.aspx");
         }
 
         protected void btnEliminar_Click(object sender, EventArgs e)

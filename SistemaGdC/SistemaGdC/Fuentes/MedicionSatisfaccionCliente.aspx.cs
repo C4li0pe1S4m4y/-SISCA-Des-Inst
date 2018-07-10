@@ -6,16 +6,16 @@ using System.Web.UI.WebControls;
 
 namespace SistemaGdC.Informe
 {
-    public partial class MedicionIndicadores : System.Web.UI.Page
+    public partial class MedicionSatisfaccionCliente : System.Web.UI.Page
     {
-        cFuente cMedicionInd = new cFuente();
+        cFuente cSatisfaccionCliente = new cFuente();
         cGeneral cGen = new cGeneral();
         cCorreo cCorreo = new cCorreo();
         cUsuarios cUsuario = new cUsuarios(); ////////
         cEmpleado cEmpleado = new cEmpleado();
         cAcciones cAcciones = new cAcciones();
         mUsuario mUsuario = new mUsuario(); /////
-        mFuente mMedicionInd = new mFuente();
+        mFuente mSatisfaccionCliente = new mFuente();
         mEmpleado mEmpleado = new mEmpleado();
         mAccionesGeneradas mAccionG = new mAccionesGeneradas();
         protected void Page_Load(object sender, EventArgs e)
@@ -25,7 +25,7 @@ namespace SistemaGdC.Informe
                 this.Session["pagina"] = 0;
                 string anio = DateTime.Today.ToString("yyyy");
                 txtanio.Text = anio;
-                txtInforme.Text = cMedicionInd.ultimoInforme(anio,"5").ToString();
+                txtInforme.Text = cSatisfaccionCliente.ultimoInforme(anio,"6").ToString();
 
                 cargarDropLists();
 
@@ -40,22 +40,22 @@ namespace SistemaGdC.Informe
 
         protected void cargarDropLists()
         {
-            cMedicionInd.dropIndicador(ddlIndicador);
+            cSatisfaccionCliente.dropIndSatisfaccion(ddlIndSatisfaccion);
             cAcciones.dropProceso(ddlProceso);
             cAcciones.dropUnidad(ddlUnidad);
             cAcciones.dropTipoAccion(dllTipoAccion);
-            cAcciones.dropPeriodoM(ddlPeriodoM);
+            cAcciones.dropPeriodoM(ddlPeriodo);
         }
 
         protected void btnGuardarEncabezado_Click(object sender, EventArgs e)
         {
-            mMedicionInd.id_indicador = int.Parse(ddlIndicador.SelectedValue);
-            mMedicionInd.anio = int.Parse(txtanio.Text);
-            mMedicionInd.no_fuente = int.Parse(txtInforme.Text);
-            mMedicionInd.fecha = txtFechaInforme.Text;
-            mMedicionInd.id_tipo_fuente = 5;
+            mSatisfaccionCliente.id_ind_satisfaccion = int.Parse(ddlIndSatisfaccion.SelectedValue);
+            mSatisfaccionCliente.anio = int.Parse(txtanio.Text);
+            mSatisfaccionCliente.no_fuente = int.Parse(txtInforme.Text);
+            mSatisfaccionCliente.fecha = txtFechaInforme.Text;
+            mSatisfaccionCliente.id_tipo_fuente = 6;
 
-            int resultado = cMedicionInd.AlmacenarEncabezado(mMedicionInd);
+            int resultado = cSatisfaccionCliente.AlmacenarEncabezado(mSatisfaccionCliente);
             if (resultado > 0)
             {
                 ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Informe creado exitosamente!', '', 'success');", true);
@@ -79,17 +79,16 @@ namespace SistemaGdC.Informe
 
         protected void btnBuscarEncabezado_Click(object sender, EventArgs e) //OK
         {
-            mMedicionInd = cMedicionInd.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "5");
-            if (mMedicionInd.no_fuente != 0)
+            mSatisfaccionCliente = cSatisfaccionCliente.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "6");
+            if (mSatisfaccionCliente.no_fuente != 0)
             {
-                this.Session["idFuente"] = mMedicionInd.id_fuente.ToString();
-                lblCorrelativo.Text = mMedicionInd.id_fuente.ToString();
-                txtFechaInforme.Text = mMedicionInd.fecha;
-                cMedicionInd.dropIndicador(ddlIndicador);
-                ddlIndicador.SelectedValue = mMedicionInd.id_indicador.ToString();
+                this.Session["idFuente"] = mSatisfaccionCliente.id_fuente.ToString();
+                lblCorrelativo.Text = mSatisfaccionCliente.id_fuente.ToString();
+                txtFechaInforme.Text = mSatisfaccionCliente.fecha;
+                cSatisfaccionCliente.dropIndSatisfaccion(ddlIndSatisfaccion);
+                ddlIndSatisfaccion.SelectedValue = mSatisfaccionCliente.id_ind_satisfaccion.ToString();
 
-
-                switch (mMedicionInd.id_status)
+                switch (mSatisfaccionCliente.id_status)
                 {
                     case 0:
                     case -2:
@@ -100,19 +99,19 @@ namespace SistemaGdC.Informe
                         btnGuardar.Visible = false;
                         btNuevo.Visible = false;
 
-                        if (mMedicionInd.id_status == 0)
+                        if (mSatisfaccionCliente.id_status == 0)
                         {
                             btnGuardar.Visible = true;
                             btNuevo.Visible = true;
                         }
 
-                        gvListadoAcciones.DataSource = cMedicionInd.ListadoAcciones(mMedicionInd.id_fuente, 0, "todos", 5);
+                        gvListadoAcciones.DataSource = cSatisfaccionCliente.ListadoAcciones(mSatisfaccionCliente.id_fuente, 0, "todos", 6);
                         gvListadoAcciones.DataBind();
                         if (gvListadoAcciones.Rows.Count > 0)
                         {
                             pn1.Visible = true;
                             btnFinalizar.Visible = false;
-                            if (mMedicionInd.id_status == 0)
+                            if (mSatisfaccionCliente.id_status == 0)
                             {
                                 btnFinalizar.Visible = true;
                             }
@@ -146,10 +145,10 @@ namespace SistemaGdC.Informe
         {           
             verColumnas(true);
 
-            mMedicionInd = cMedicionInd.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "5");
+            mSatisfaccionCliente = cSatisfaccionCliente.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "6");
 
-                mAccionG.id_fuente = mMedicionInd.id_fuente;
-                mAccionG.id_periodo = int.Parse(ddlPeriodoM.SelectedValue);
+                mAccionG.id_fuente = mSatisfaccionCliente.id_fuente;
+                mAccionG.id_periodo = int.Parse(ddlPeriodo.SelectedValue);
                 mAccionG.descripcion = txtDescripcion.Text;
                 mAccionG.id_unidad = int.Parse(ddlUnidad.SelectedValue);
                 mAccionG.id_dependencia = int.Parse(ddlDependencia.SelectedValue);                               
@@ -158,11 +157,11 @@ namespace SistemaGdC.Informe
                 mAccionG.id_lider = int.Parse(ddlLider.SelectedValue);
                 mAccionG.id_enlace = int.Parse(ddlEnlace.SelectedValue);
 
-                if (mMedicionInd.id_status==0)
+                if (mSatisfaccionCliente.id_status==0)
                 {
                     if (cAcciones.ingresarAcción(mAccionG))
                     {
-                        gvListadoAcciones.DataSource = cMedicionInd.ListadoAcciones(mMedicionInd.id_fuente, 0, "todos", 5);
+                        gvListadoAcciones.DataSource = cSatisfaccionCliente.ListadoAcciones(mSatisfaccionCliente.id_fuente, 0, "todos", 6);
                         gvListadoAcciones.DataBind();
                         ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Acción generada exitosamente!', '', 'success');", true);
                         btnFinalizar.Visible = true;
@@ -198,7 +197,7 @@ namespace SistemaGdC.Informe
 
         protected void txtanio_TextChanged(object sender, EventArgs e)
         {
-            txtInforme.Text = cMedicionInd.ultimoInforme(txtanio.Text,"5").ToString();
+            txtInforme.Text = cSatisfaccionCliente.ultimoInforme(txtanio.Text,"6").ToString();
         }        
 
         protected void btNuevo_Click(object sender, EventArgs e)
@@ -208,7 +207,7 @@ namespace SistemaGdC.Informe
 
         void limpiarAccion()
         {
-            mMedicionInd = cMedicionInd.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "5");
+            mSatisfaccionCliente = cSatisfaccionCliente.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "6");
 
             mostrarCampos(true);
             btnGuardar.Visible = false;
@@ -216,7 +215,7 @@ namespace SistemaGdC.Informe
             btnEditar.Visible = false;            
             btnEliminar.Visible = false;
 
-            if(mMedicionInd.id_status==0)
+            if(mSatisfaccionCliente.id_status==0)
             {
                 btnGuardar.Visible = true;
                 btNuevo.Visible = true;
@@ -226,7 +225,7 @@ namespace SistemaGdC.Informe
 
             try
             {
-                ddlPeriodoM.SelectedIndex = 0;
+                ddlPeriodo.SelectedIndex = 0;
                 ddlProceso.SelectedIndex = 0;
                 ddlUnidad.SelectedIndex = 0;
                 ddlDependencia.SelectedIndex = 0;
@@ -259,7 +258,7 @@ namespace SistemaGdC.Informe
                 GridViewRow selectedRow = gvListadoAcciones.Rows[index - (pag * psize)];
                 mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(selectedRow.Cells[0].Text));
 
-                ddlPeriodoM.SelectedValue = mAccionG.id_periodo.ToString();
+                ddlPeriodo.SelectedValue = mAccionG.id_periodo.ToString();
                 ddlProceso.SelectedValue = mAccionG.id_proceso.ToString();
                 ddlUnidad.SelectedValue = mAccionG.id_unidad.ToString();
                 cAcciones.dllDependencia(ddlDependencia, mAccionG.id_unidad);
@@ -306,13 +305,13 @@ namespace SistemaGdC.Informe
 
         protected void verColumnas(bool ver)
         {
-            gvListadoAcciones.Columns[2].Visible = ver;
-            gvListadoAcciones.Columns[9].Visible = ver;
+            gvListadoAcciones.Columns[2].Visible = ver; //status
+            gvListadoAcciones.Columns[9].Visible = ver; //aprobado
         }
 
         protected void mostrarCampos(bool ver)
         {
-            ddlPeriodoM.Enabled = ver;
+            ddlPeriodo.Enabled = ver;
             ddlProceso.Enabled = ver;
             ddlUnidad.Enabled = ver;
             ddlDependencia.Enabled = ver;
@@ -336,17 +335,17 @@ namespace SistemaGdC.Informe
         protected void gvListadoAcciones_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             this.Session["pagina"] = e.NewPageIndex;
-            mMedicionInd = cMedicionInd.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "5");
+            mSatisfaccionCliente = cSatisfaccionCliente.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "6");
             gvListadoAcciones.PageIndex = e.NewPageIndex;
-            gvListadoAcciones.DataSource = cMedicionInd.ListadoAcciones(mMedicionInd.id_fuente, 0, "todos", 5);
+            gvListadoAcciones.DataSource = cSatisfaccionCliente.ListadoAcciones(mSatisfaccionCliente.id_fuente, 0, "todos", 6);
             gvListadoAcciones.DataBind();
         }
 
         protected void btnFinalizar_Click(object sender, EventArgs e)
         {
-            cMedicionInd.actualizarInforme(int.Parse(Session["idFuente"].ToString()), 1);
+            cSatisfaccionCliente.actualizarInforme(int.Parse(Session["idFuente"].ToString()), 1);
             ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Ha finalizado correctamente el Informe', '', 'success');", true);
-            Response.Redirect("~/Fuentes/MedicionIndicadores.aspx");
+            Response.Redirect("~/Fuentes/MedicionSatisfaccionCliente.aspx");
         }
 
         protected void btnEliminar_Click(object sender, EventArgs e)
@@ -355,8 +354,8 @@ namespace SistemaGdC.Informe
             {
                 verColumnas(true);
                 cAcciones.EliminarAccion(int.Parse(Session["noAccion"].ToString()));
-                mMedicionInd = cMedicionInd.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "5");
-                gvListadoAcciones.DataSource = cMedicionInd.ListadoAcciones(mMedicionInd.id_fuente, 0, "todos", 5);
+                mSatisfaccionCliente = cSatisfaccionCliente.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "6");
+                gvListadoAcciones.DataSource = cSatisfaccionCliente.ListadoAcciones(mSatisfaccionCliente.id_fuente, 0, "todos", 6);
                 gvListadoAcciones.DataBind();
                 limpiarAccion();
                 btnEliminar.Visible = false;
@@ -380,8 +379,8 @@ namespace SistemaGdC.Informe
 
                     mAccionesGeneradas ag = new mAccionesGeneradas();
 
-                    mAccionG.id_fuente = mMedicionInd.id_fuente;
-                    mAccionG.id_periodo = int.Parse(ddlPeriodoM.SelectedValue);
+                    mAccionG.id_fuente = mSatisfaccionCliente.id_fuente;
+                    mAccionG.id_periodo = int.Parse(ddlPeriodo.SelectedValue);
                     mAccionG.descripcion = txtDescripcion.Text;
                     mAccionG.id_unidad = int.Parse(ddlUnidad.SelectedValue);
                     mAccionG.id_dependencia = int.Parse(ddlDependencia.SelectedValue);
@@ -391,7 +390,7 @@ namespace SistemaGdC.Informe
                     mAccionG.id_enlace = int.Parse(ddlEnlace.SelectedValue);
 
                     ag.id_accion_generada = int.Parse(Session["noAccion"].ToString());
-                    ag.id_periodo = int.Parse(ddlPeriodoM.SelectedValue);
+                    ag.id_periodo = int.Parse(ddlPeriodo.SelectedValue);
                     ag.descripcion = txtDescripcion.Text;
                     ag.id_lider = int.Parse(ddlLider.SelectedValue);
                     ag.id_enlace = int.Parse(ddlEnlace.SelectedValue);
@@ -403,8 +402,8 @@ namespace SistemaGdC.Informe
                     editada = cAcciones.actualizar_Accion(ag);
                     cAcciones.aprobar_Accion(ag.id_accion_generada,0);
                     verColumnas(true);
-                    mMedicionInd = cMedicionInd.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "5");
-                    gvListadoAcciones.DataSource = cMedicionInd.ListadoAcciones(mMedicionInd.id_fuente, 0, "todos", 5);
+                    mSatisfaccionCliente = cSatisfaccionCliente.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "6");
+                    gvListadoAcciones.DataSource = cSatisfaccionCliente.ListadoAcciones(mSatisfaccionCliente.id_fuente, 0, "todos", 6);
                     gvListadoAcciones.DataBind();
                     verColumnas(false);
 

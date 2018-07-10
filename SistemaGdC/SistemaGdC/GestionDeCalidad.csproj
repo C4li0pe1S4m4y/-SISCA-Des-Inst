@@ -219,8 +219,10 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="fonts\logoCdag.png" />
     <Content Include="Fuentes\InformeEvaluacionExterna.aspx" />
+    <Content Include="Fuentes\MinutaRevisionAD.aspx" />
     <Content Include="Fuentes\IniciativaPropia.aspx" />
     <Content Include="Fuentes\MedicionIndicadores.aspx" />
+    <Content Include="Fuentes\MedicionSatisfaccionCliente.aspx" />
     <Content Include="Fuentes\QuejaReclamo.aspx" />
     <Content Include="InformeResultados\InformeOM.aspx" />
     <Content Include="InformeResultados\InformeCO.aspx" />
@@ -342,6 +344,13 @@
     <Compile Include="Fuentes\InformeEvaluacionExterna.aspx.designer.cs">
       <DependentUpon>InformeEvaluacionExterna.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Fuentes\MinutaRevisionAD.aspx.cs">
+      <DependentUpon>MinutaRevisionAD.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Fuentes\MinutaRevisionAD.aspx.designer.cs">
+      <DependentUpon>MinutaRevisionAD.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Fuentes\IniciativaPropia.aspx.cs">
       <DependentUpon>IniciativaPropia.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -355,6 +364,13 @@
     </Compile>
     <Compile Include="Fuentes\MedicionIndicadores.aspx.designer.cs">
       <DependentUpon>MedicionIndicadores.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Fuentes\MedicionSatisfaccionCliente.aspx.cs">
+      <DependentUpon>MedicionSatisfaccionCliente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Fuentes\MedicionSatisfaccionCliente.aspx.designer.cs">
+      <DependentUpon>MedicionSatisfaccionCliente.aspx</DependentUpon>
     </Compile>
     <Compile Include="Fuentes\QuejaReclamo.aspx.cs">
       <DependentUpon>QuejaReclamo.aspx</DependentUpon>

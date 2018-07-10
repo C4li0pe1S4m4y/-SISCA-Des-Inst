@@ -1,10 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MedicionIndicadores.aspx.cs" Inherits="SistemaGdC.Informe.MedicionIndicadores" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MedicionSatisfaccionCliente.aspx.cs" Inherits="SistemaGdC.Informe.MedicionSatisfaccionCliente" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h2>&nbsp;</h2>
-    <h2 style="color: white"><b>Medición de Indicadores</b></h2>
+    <h2 style="color: white"><b>Medición de Satisfacción del Cliente</b></h2>
 
     <style>
         .chart {
@@ -53,8 +53,8 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label>Indicador: </label>
-                                    <asp:DropDownList ID="ddlIndicador" CssClass="form-control input" Width="100%" runat="server" Enabled="true"></asp:DropDownList>
-                                    <asp:RequiredFieldValidator ValidationGroup="validarInforme" ID="RFVddlIndicador" Style="color: red;" SetFocusOnError="true" ControlToValidate="ddlIndicador" InitialValue="0" runat="server" ErrorMessage="Seleccione Indicador." Display="Dynamic" />
+                                    <asp:DropDownList ID="ddlIndSatisfaccion" CssClass="form-control input" Width="100%" runat="server" Enabled="true"></asp:DropDownList>
+                                    <asp:RequiredFieldValidator ValidationGroup="validarInforme" ID="RFVddlIndSatisfaccion" Style="color: red;" SetFocusOnError="true" ControlToValidate="ddlIndSatisfaccion" InitialValue="0" runat="server" ErrorMessage="Seleccione Indicador." Display="Dynamic" />
                                 </div>
                                 <div class="col-md-2">
                                     <label>Fecha Informe:</label>
@@ -88,9 +88,9 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Período de Medición: </label>
-                                        <asp:DropDownList ID="ddlPeriodoM" CssClass="form-control input" Width="100%" runat="server" Enabled="true"></asp:DropDownList>
-                                        <asp:RequiredFieldValidator ValidationGroup="validar" ID="RFVddlPeriodoM" Style="color: red;" SetFocusOnError="true" ControlToValidate="ddlPeriodoM" InitialValue="0" runat="server" ErrorMessage="Seleccione FADN." Display="Dynamic" />
+                                        <label>Período: </label>
+                                        <asp:DropDownList ID="ddlPeriodo" CssClass="form-control input" Width="100%" runat="server" Enabled="true"></asp:DropDownList>
+                                        <asp:RequiredFieldValidator ValidationGroup="validar" ID="RFVddlPeriodo" Style="color: red;" SetFocusOnError="true" ControlToValidate="ddlPeriodo" InitialValue="0" runat="server" ErrorMessage="Seleccione Período." Display="Dynamic" />
                                     </div>
                                     <div class="form-group">
                                         <label>Proceso Relacionado: </label>
@@ -169,7 +169,7 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="Status" HeaderText="Status" />
-                                            <asp:BoundField DataField="Período" HeaderText="Período" />                                        
+                                            <asp:BoundField DataField="Período" HeaderText="Período" />                                            
                                             <asp:BoundField DataField="Proceso" HeaderText="Proceso" />
                                             <asp:BoundField DataField="Dependencia" HeaderText="Dependencia" />
                                             <asp:BoundField DataField="Descripción" HeaderText="Descripción" />

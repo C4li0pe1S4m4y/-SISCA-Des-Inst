@@ -29,5 +29,6 @@ namespace Modelos
         public int id_fadn { get; set; }
         public int id_periodo { get; set; }
         public string instalacion { get; set; }
+        public int correlativo_compromiso { get; set; }
     }
 }

@@ -1,10 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MedicionIndicadores.aspx.cs" Inherits="SistemaGdC.Informe.MedicionIndicadores" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MinutaRevisionAD.aspx.cs" Inherits="SistemaGdC.Informe.MinutaRevisionAD" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h2>&nbsp;</h2>
-    <h2 style="color: white"><b>Medición de Indicadores</b></h2>
+    <h2 style="color: white"><b>Minuta de Revisión de la Alta Dirección</b></h2>
 
     <style>
         .chart {
@@ -47,16 +47,11 @@
                                     <label>Año:</label>
                                     <asp:TextBox ID="txtanio" CssClass="form-control input" runat="server" OnTextChanged="txtanio_TextChanged" AutoPostBack="true"></asp:TextBox>
                                 </div>
-                                <div class="col-md-1">
-                                    <label>No.:</label>
+                                <div class="col-md-3">
+                                    <label>No. de Evaluación:</label>
                                     <asp:TextBox ID="txtInforme" CssClass="form-control input" runat="server"></asp:TextBox>
                                 </div>
                                 <div class="col-md-3">
-                                    <label>Indicador: </label>
-                                    <asp:DropDownList ID="ddlIndicador" CssClass="form-control input" Width="100%" runat="server" Enabled="true"></asp:DropDownList>
-                                    <asp:RequiredFieldValidator ValidationGroup="validarInforme" ID="RFVddlIndicador" Style="color: red;" SetFocusOnError="true" ControlToValidate="ddlIndicador" InitialValue="0" runat="server" ErrorMessage="Seleccione Indicador." Display="Dynamic" />
-                                </div>
-                                <div class="col-md-2">
                                     <label>Fecha Informe:</label>
                                     <asp:TextBox ID="txtFechaInforme" CssClass="form-control input" TextMode="Date" runat="server"></asp:TextBox>
                                 </div>
@@ -65,7 +60,7 @@
                                         <label>&nbsp;</label>
                                     </div>
                                     <div>
-                                        <asp:Button ID="btnGuardarEncabezado" OnClick="btnGuardarEncabezado_Click" Text="Almacenar" runat="server" CssClass="btn btn-success btn-block" ValidationGroup="validarInforme"/>
+                                        <asp:Button ID="btnGuardarEncabezado" OnClick="btnGuardarEncabezado_Click" Text="Almacenar" runat="server" CssClass="btn btn-success btn-block" />
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -87,10 +82,14 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Período de Medición: </label>
-                                        <asp:DropDownList ID="ddlPeriodoM" CssClass="form-control input" Width="100%" runat="server" Enabled="true"></asp:DropDownList>
-                                        <asp:RequiredFieldValidator ValidationGroup="validar" ID="RFVddlPeriodoM" Style="color: red;" SetFocusOnError="true" ControlToValidate="ddlPeriodoM" InitialValue="0" runat="server" ErrorMessage="Seleccione FADN." Display="Dynamic" />
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>No. de Compromiso: </label>
+                                                <asp:TextBox ID="txtCompromiso" CssClass="form-control input" runat="server"></asp:TextBox>
+                                                <asp:RequiredFieldValidator ValidationGroup="validar" ID="RFVtxtCompromiso" Style="color: red;" SetFocusOnError="true" ControlToValidate="txtCompromiso" InitialValue="" runat="server" ErrorMessage="Ingrese No. Compromiso." Display="Dynamic" />
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label>Proceso Relacionado: </label>
@@ -154,7 +153,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12" style="overflow: auto; height: 100%">
-                                    <asp:GridView ID="gvListadoAcciones" runat="server" DataKeyNames="id"
+                                    <asp:GridView ID="gvListadoAcciones" runat="server" DataKeyNames="Compromiso"
                                         AllowPaging="true" OnPageIndexChanging="gvListadoAcciones_PageIndexChanging" PageSize="10"
                                         BackColor="#fdffe6" CssClass="table table-hover table-bordered" AutoGenerateColumns="false" Width="1500px"
                                         OnRowCommand="gvListadoAcciones_RowCommand" OnRowDataBound="gvListado_RowDataBound">
@@ -168,8 +167,8 @@
                                                         Text="Ver" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                            <asp:BoundField DataField="Compromiso" HeaderText="Compromiso" />
                                             <asp:BoundField DataField="Status" HeaderText="Status" />
-                                            <asp:BoundField DataField="Período" HeaderText="Período" />                                        
                                             <asp:BoundField DataField="Proceso" HeaderText="Proceso" />
                                             <asp:BoundField DataField="Dependencia" HeaderText="Dependencia" />
                                             <asp:BoundField DataField="Descripción" HeaderText="Descripción" />

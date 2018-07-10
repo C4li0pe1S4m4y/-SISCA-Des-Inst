@@ -98,9 +98,9 @@ namespace Controladores
             try
             {
                 conectar.AbrirConexion();
-                string query = string.Format("INSERT INTO sgc_fuente(anio, {4}, fecha, id_status, id_tipo_fuente, id_tipo_mejora) " +
-                    "VALUES('{0}', '{1}', '{2}', 0, '{3}', '{5}'); ",
-                    mInforme.anio, mInforme.no_fuente, mInforme.fecha, mInforme.id_tipo_fuente, tipoFuente,mInforme.id_tipo_mejora);
+                string query = string.Format("INSERT INTO sgc_fuente(anio, {4}, fecha, id_status, id_tipo_fuente, id_tipo_mejora, id_indicador) " +
+                    "VALUES('{0}', '{1}', '{2}', 0, '{3}', '{5}', '{6}'); ",
+                    mInforme.anio, mInforme.no_fuente, mInforme.fecha, mInforme.id_tipo_fuente, tipoFuente,mInforme.id_tipo_mejora,mInforme.id_indicador);
                 MySqlCommand cmd = new MySqlCommand(query, conectar.conectar);
                 cmd.ExecuteNonQuery();
                 query = string.Format("SELECT * from sgc_fuente WHERE anio = '{0}' ORDER BY {1} DESC LIMIT 1; ", mInforme.anio, tipoFuente);
@@ -210,7 +210,7 @@ namespace Controladores
 
             try
             {
-                string query = string.Format("Select id_fuente,Date_format(fecha,'%Y-%m-%d') fecha, id_status, id_tipo_mejora from sgc_fuente where {2} = '{0}' AND anio = {1};", noInforme, anio, tipoFuente);
+                string query = string.Format("Select id_fuente,Date_format(fecha,'%Y-%m-%d') fecha, id_status, id_tipo_mejora, id_indicador, id_ind_satisfaccion from sgc_fuente where {2} = '{0}' AND anio = {1};", noInforme, anio, tipoFuente);
                 conectar.AbrirConexion();
                 MySqlCommand cmd = new MySqlCommand(query, conectar.conectar);
                 MySqlDataReader dr = cmd.ExecuteReader();
@@ -224,7 +224,11 @@ namespace Controladores
                     informe.fecha = fecha.ToString("yyyy-MM-dd");
                     informe.id_status = int.Parse(dr.GetString("id_status"));
                     if (!dr.IsDBNull(dr.GetOrdinal("id_tipo_mejora")))
-                        informe.id_tipo_mejora = int.Parse(dr.GetString("id_tipo_mejora"));                    
+                        informe.id_tipo_mejora = int.Parse(dr.GetString("id_tipo_mejora"));
+                    if (!dr.IsDBNull(dr.GetOrdinal("id_indicador")))
+                        informe.id_indicador = int.Parse(dr.GetString("id_indicador"));
+                    if (!dr.IsDBNull(dr.GetOrdinal("id_ind_satisfaccion")))
+                        informe.id_ind_satisfaccion = int.Parse(dr.GetString("id_ind_satisfaccion"));
                 }
                 conectar.CerrarConexion();
             }
@@ -233,33 +237,6 @@ namespace Controladores
                 throw;
             }
             return informe;
-
-
-            //////////////////////////////
-            /*
-            try
-            {               
-                DataSet tabla = new DataSet();
-                conectar.AbrirConexion();
-                string query = string.Format("Select id_fuente,Date_format(fecha,'%Y-%m-%d') fecha, id_status, id_tipo_mejora from sgc_fuente where {2} = '{0}' AND anio = {1};", noInforme, anio, tipoFuente);
-                MySqlDataAdapter consulta = new MySqlDataAdapter(query, conectar.conectar);
-                consulta.Fill(tabla);
-                conectar.CerrarConexion();
-                if (tabla.Tables[0].Rows.Count > 0)
-                {
-                    informe.id_fuente = int.Parse(tabla.Tables[0].Rows[0]["id_fuente"].ToString());
-                    informe.anio = anio;
-                    informe.no_fuente = int.Parse(noInforme);
-                    informe.fecha = (tabla.Tables[0].Rows[0]["fecha"].ToString());
-                    informe.id_status = int.Parse(tabla.Tables[0].Rows[0]["id_status"].ToString());
-                    informe.id_tipo_mejora = int.Parse(tabla.Tables[0].Rows[0]["id_tipo_mejora"].ToString());
-                }
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return informe;*/
         }
 
         public DataSet ListadoAcciones(int idFuente, int status, string aprobacion, int tipoFuente) //ok -- agregar switch para el select con las acciones
@@ -307,10 +284,18 @@ namespace Controladores
                     break;
 
                 case 5:
+                case 6:
                     select = "select ag.id_accion_generada as 'id',  sag.nombre as 'Status', pe.periodo as 'Período', " +
                         "p.Proceso,u.Unidad,d.Unidad Dependencia,ag.descripcion as 'Descripción', ee.Nombre Enlace, " +
                         "ea.Nombre Analista, Date_format(ag.fecha,'%d/%m/%Y') as 'Fecha', ta.accion as 'Tipo Acción', ag.aprobado ";
                     tablas = "inner join sgc_periodo pe on ag.id_periodo = pe.id_periodo";
+                    break;
+
+                case 7:
+                    select = "select ag.id_accion_generada as 'id',  sag.nombre as 'Status', ag.correlativo_compromiso as 'Compromiso', " +
+                        "p.Proceso,u.Unidad,d.Unidad Dependencia,ag.descripcion as 'Descripción', ee.Nombre Enlace, " +
+                        "ea.Nombre Analista, Date_format(ag.fecha,'%d/%m/%Y') as 'Fecha', ta.accion as 'Tipo Acción', ag.aprobado ";
+                    tablas = "";
                     break;
             }
 
