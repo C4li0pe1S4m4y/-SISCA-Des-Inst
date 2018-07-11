@@ -4,7 +4,7 @@ using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace SistemaGdC.Informe
+namespace SistemaGdC.Fuentes
 {
     public partial class MinutaRevisionAD : System.Web.UI.Page
     {
@@ -322,8 +322,8 @@ namespace SistemaGdC.Informe
 
         protected void verColumnas(bool ver)
         {
-           // gvListadoAcciones.Columns[3].Visible = ver; //status
-           // gvListadoAcciones.Columns[9].Visible = ver; //aprobado
+            gvListadoAcciones.Columns[3].Visible = ver; //status
+            gvListadoAcciones.Columns[9].Visible = ver; //aprobado
         }
 
         protected void mostrarCampos(bool ver)

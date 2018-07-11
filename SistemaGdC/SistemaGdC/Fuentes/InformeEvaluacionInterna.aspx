@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="InformeEvaluacionInterna.aspx.cs" Inherits="SistemaGdC.Informe.InformeEvaluacionInterna" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="InformeEvaluacionInterna.aspx.cs" Inherits="SistemaGdC.Fuentes.InformeEvaluacionInterna" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 

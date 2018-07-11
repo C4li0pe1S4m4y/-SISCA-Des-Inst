@@ -10,7 +10,7 @@
 namespace SistemaGdC.Fuentes {
     
     
-    public partial class MedicionIndicadores {
+    public partial class SalidaNoConforme {
         
         /// <summary>
         /// Control UpdatePanel1.
@@ -58,24 +58,6 @@ namespace SistemaGdC.Fuentes {
         protected global::System.Web.UI.WebControls.TextBox txtInforme;
         
         /// <summary>
-        /// Control ddlIndicador.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlIndicador;
-        
-        /// <summary>
-        /// Control RFVddlIndicador.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVddlIndicador;
-        
-        /// <summary>
         /// Control txtFechaInforme.
         /// </summary>
         /// <remarks>
@@ -110,24 +92,6 @@ namespace SistemaGdC.Fuentes {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl pn1;
-        
-        /// <summary>
-        /// Control ddlPeriodoM.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlPeriodoM;
-        
-        /// <summary>
-        /// Control RFVddlPeriodoM.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVddlPeriodoM;
         
         /// <summary>
         /// Control ddlProceso.

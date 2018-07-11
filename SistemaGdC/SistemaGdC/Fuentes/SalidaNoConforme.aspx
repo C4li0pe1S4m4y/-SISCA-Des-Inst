@@ -1,10 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MedicionSatisfaccionCliente.aspx.cs" Inherits="SistemaGdC.Fuentes.MedicionSatisfaccionCliente" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SalidaNoConforme.aspx.cs" Inherits="SistemaGdC.Fuentes.SalidaNoConforme" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h2>&nbsp;</h2>
-    <h2 style="color: white"><b>Medición de Satisfacción del Cliente</b></h2>
+    <h2 style="color: white"><b>Salida No Conforme</b></h2>
 
     <style>
         .chart {
@@ -51,31 +51,26 @@
                                     <label>No.:</label>
                                     <asp:TextBox ID="txtInforme" CssClass="form-control input" runat="server"></asp:TextBox>
                                 </div>
-                                <div class="col-md-3">
-                                    <label>Indicador: </label>
-                                    <asp:DropDownList ID="ddlIndSatisfaccion" CssClass="form-control input" Width="100%" runat="server" Enabled="true"></asp:DropDownList>
-                                    <asp:RequiredFieldValidator ValidationGroup="validarInforme" ID="RFVddlIndSatisfaccion" Style="color: red;" SetFocusOnError="true" ControlToValidate="ddlIndSatisfaccion" InitialValue="0" runat="server" ErrorMessage="Seleccione Indicador." Display="Dynamic" />
-                                </div>
                                 <div class="col-md-2">
                                     <label>Fecha Informe:</label>
-                                    <asp:TextBox ID="txtFechaInforme" CssClass="form-control input" TextMode="Date" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="txtFechaInforme" CssClass="form-control input" TextMode="Date" runat="server"></asp:TextBox>
+                            </div>
+                            <div class="col-md-2">
+                                <div>
+                                    <label>&nbsp;</label>
                                 </div>
-                                <div class="col-md-2">
-                                    <div>
-                                        <label>&nbsp;</label>
-                                    </div>
-                                    <div>
-                                        <asp:Button ID="btnGuardarEncabezado" OnClick="btnGuardarEncabezado_Click" Text="Almacenar" runat="server" CssClass="btn btn-success btn-block" ValidationGroup="validarInforme"/>
-                                    </div>
+                                <div>
+                                    <asp:Button ID="btnGuardarEncabezado" OnClick="btnGuardarEncabezado_Click" Text="Almacenar" runat="server" CssClass="btn btn-success btn-block" ValidationGroup="validarInforme" />
                                 </div>
-                                <div class="col-md-2">
-                                    <div>
-                                        <label>&nbsp;</label>
-                                    </div>
-                                    <div>
-                                        <asp:Button ID="btnBuscarEncabezado" OnClick="btnBuscarEncabezado_Click" Text="Buscar" runat="server" CssClass="btn btn-info btn-block" />
-                                    </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div>
+                                    <label>&nbsp;</label>
                                 </div>
+                                <div>
+                                    <asp:Button ID="btnBuscarEncabezado" OnClick="btnBuscarEncabezado_Click" Text="Buscar" runat="server" CssClass="btn btn-info btn-block" />
+                                </div>
+                            </div>
                             </div>
 
                         </div>
@@ -87,11 +82,6 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Período: </label>
-                                        <asp:DropDownList ID="ddlPeriodo" CssClass="form-control input" Width="100%" runat="server" Enabled="true"></asp:DropDownList>
-                                        <asp:RequiredFieldValidator ValidationGroup="validar" ID="RFVddlPeriodo" Style="color: red;" SetFocusOnError="true" ControlToValidate="ddlPeriodo" InitialValue="0" runat="server" ErrorMessage="Seleccione Período." Display="Dynamic" />
-                                    </div>
                                     <div class="form-group">
                                         <label>Proceso Relacionado: </label>
                                         <asp:DropDownList ID="ddlProceso" CssClass="form-control input" Width="100%" runat="server" Enabled="true"></asp:DropDownList>
@@ -169,7 +159,6 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="Status" HeaderText="Status" />
-                                            <asp:BoundField DataField="Período" HeaderText="Período" />                                            
                                             <asp:BoundField DataField="Proceso" HeaderText="Proceso" />
                                             <asp:BoundField DataField="Dependencia" HeaderText="Dependencia" />
                                             <asp:BoundField DataField="Descripción" HeaderText="Descripción" />

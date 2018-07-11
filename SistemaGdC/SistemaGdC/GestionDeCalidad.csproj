@@ -219,6 +219,7 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="fonts\logoCdag.png" />
     <Content Include="Fuentes\InformeEvaluacionExterna.aspx" />
+    <Content Include="Fuentes\SalidaNoConforme.aspx" />
     <Content Include="Fuentes\MinutaRevisionAD.aspx" />
     <Content Include="Fuentes\IniciativaPropia.aspx" />
     <Content Include="Fuentes\MedicionIndicadores.aspx" />
@@ -343,6 +344,13 @@
     </Compile>
     <Compile Include="Fuentes\InformeEvaluacionExterna.aspx.designer.cs">
       <DependentUpon>InformeEvaluacionExterna.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Fuentes\SalidaNoConforme.aspx.cs">
+      <DependentUpon>SalidaNoConforme.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Fuentes\SalidaNoConforme.aspx.designer.cs">
+      <DependentUpon>SalidaNoConforme.aspx</DependentUpon>
     </Compile>
     <Compile Include="Fuentes\MinutaRevisionAD.aspx.cs">
       <DependentUpon>MinutaRevisionAD.aspx</DependentUpon>

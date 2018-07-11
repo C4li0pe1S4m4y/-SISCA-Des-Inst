@@ -6,16 +6,16 @@ using System.Web.UI.WebControls;
 
 namespace SistemaGdC.Fuentes
 {
-    public partial class MedicionSatisfaccionCliente : System.Web.UI.Page
+    public partial class SalidaNoConforme : System.Web.UI.Page
     {
-        cFuente cSatisfaccionCliente = new cFuente();
+        cFuente cSalidaNoConforme = new cFuente();
         cGeneral cGen = new cGeneral();
         cCorreo cCorreo = new cCorreo();
         cUsuarios cUsuario = new cUsuarios(); ////////
         cEmpleado cEmpleado = new cEmpleado();
         cAcciones cAcciones = new cAcciones();
         mUsuario mUsuario = new mUsuario(); /////
-        mFuente mSatisfaccionCliente = new mFuente();
+        mFuente mSalidaNoConforme = new mFuente();
         mEmpleado mEmpleado = new mEmpleado();
         mAccionesGeneradas mAccionG = new mAccionesGeneradas();
         protected void Page_Load(object sender, EventArgs e)
@@ -25,7 +25,7 @@ namespace SistemaGdC.Fuentes
                 this.Session["pagina"] = 0;
                 string anio = DateTime.Today.ToString("yyyy");
                 txtanio.Text = anio;
-                txtInforme.Text = cSatisfaccionCliente.ultimoInforme(anio,"6").ToString();
+                txtInforme.Text = cSalidaNoConforme.ultimoInforme(anio,"8").ToString();
 
                 cargarDropLists();
 
@@ -40,22 +40,19 @@ namespace SistemaGdC.Fuentes
 
         protected void cargarDropLists()
         {
-            cSatisfaccionCliente.dropIndSatisfaccion(ddlIndSatisfaccion);
             cAcciones.dropProceso(ddlProceso);
             cAcciones.dropUnidad(ddlUnidad);
             cAcciones.dropTipoAccion(dllTipoAccion);
-            cAcciones.dropPeriodoM(ddlPeriodo);
         }
 
         protected void btnGuardarEncabezado_Click(object sender, EventArgs e)
         {
-            mSatisfaccionCliente.id_ind_satisfaccion = int.Parse(ddlIndSatisfaccion.SelectedValue);
-            mSatisfaccionCliente.anio = int.Parse(txtanio.Text);
-            mSatisfaccionCliente.no_fuente = int.Parse(txtInforme.Text);
-            mSatisfaccionCliente.fecha = txtFechaInforme.Text;
-            mSatisfaccionCliente.id_tipo_fuente = 6;
+            mSalidaNoConforme.anio = int.Parse(txtanio.Text);
+            mSalidaNoConforme.no_fuente = int.Parse(txtInforme.Text);
+            mSalidaNoConforme.fecha = txtFechaInforme.Text;
+            mSalidaNoConforme.id_tipo_fuente = 8;
 
-            int resultado = cSatisfaccionCliente.AlmacenarEncabezado(mSatisfaccionCliente);
+            int resultado = cSalidaNoConforme.AlmacenarEncabezado(mSalidaNoConforme);
             if (resultado > 0)
             {
                 ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Informe creado exitosamente!', '', 'success');", true);
@@ -79,16 +76,14 @@ namespace SistemaGdC.Fuentes
 
         protected void btnBuscarEncabezado_Click(object sender, EventArgs e) //OK
         {
-            mSatisfaccionCliente = cSatisfaccionCliente.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "6");
-            if (mSatisfaccionCliente.no_fuente != 0)
+            mSalidaNoConforme = cSalidaNoConforme.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "8");
+            if (mSalidaNoConforme.no_fuente != 0)
             {
-                this.Session["idFuente"] = mSatisfaccionCliente.id_fuente.ToString();
-                lblCorrelativo.Text = mSatisfaccionCliente.id_fuente.ToString();
-                txtFechaInforme.Text = mSatisfaccionCliente.fecha;
-                cSatisfaccionCliente.dropIndSatisfaccion(ddlIndSatisfaccion);
-                ddlIndSatisfaccion.SelectedValue = mSatisfaccionCliente.id_ind_satisfaccion.ToString();
+                this.Session["idFuente"] = mSalidaNoConforme.id_fuente.ToString();
+                lblCorrelativo.Text = mSalidaNoConforme.id_fuente.ToString();
+                txtFechaInforme.Text = mSalidaNoConforme.fecha;
 
-                switch (mSatisfaccionCliente.id_status)
+                switch (mSalidaNoConforme.id_status)
                 {
                     case 0:
                     case -2:
@@ -99,19 +94,19 @@ namespace SistemaGdC.Fuentes
                         btnGuardar.Visible = false;
                         btNuevo.Visible = false;
 
-                        if (mSatisfaccionCliente.id_status == 0)
+                        if (mSalidaNoConforme.id_status == 0)
                         {
                             btnGuardar.Visible = true;
                             btNuevo.Visible = true;
                         }
 
-                        gvListadoAcciones.DataSource = cSatisfaccionCliente.ListadoAcciones(mSatisfaccionCliente.id_fuente, 0, "todos", 6);
+                        gvListadoAcciones.DataSource = cSalidaNoConforme.ListadoAcciones(mSalidaNoConforme.id_fuente, 0, "todos", 8);
                         gvListadoAcciones.DataBind();
                         if (gvListadoAcciones.Rows.Count > 0)
                         {
                             pn1.Visible = true;
                             btnFinalizar.Visible = false;
-                            if (mSatisfaccionCliente.id_status == 0)
+                            if (mSalidaNoConforme.id_status == 0)
                             {
                                 btnFinalizar.Visible = true;
                             }
@@ -145,10 +140,9 @@ namespace SistemaGdC.Fuentes
         {           
             verColumnas(true);
 
-            mSatisfaccionCliente = cSatisfaccionCliente.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "6");
+            mSalidaNoConforme = cSalidaNoConforme.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "8");
 
-                mAccionG.id_fuente = mSatisfaccionCliente.id_fuente;
-                mAccionG.id_periodo = int.Parse(ddlPeriodo.SelectedValue);
+                mAccionG.id_fuente = mSalidaNoConforme.id_fuente;
                 mAccionG.descripcion = txtDescripcion.Text;
                 mAccionG.id_unidad = int.Parse(ddlUnidad.SelectedValue);
                 mAccionG.id_dependencia = int.Parse(ddlDependencia.SelectedValue);                               
@@ -157,11 +151,11 @@ namespace SistemaGdC.Fuentes
                 mAccionG.id_lider = int.Parse(ddlLider.SelectedValue);
                 mAccionG.id_enlace = int.Parse(ddlEnlace.SelectedValue);
 
-                if (mSatisfaccionCliente.id_status==0)
+                if (mSalidaNoConforme.id_status==0)
                 {
                     if (cAcciones.ingresarAcción(mAccionG))
                     {
-                        gvListadoAcciones.DataSource = cSatisfaccionCliente.ListadoAcciones(mSatisfaccionCliente.id_fuente, 0, "todos", 6);
+                        gvListadoAcciones.DataSource = cSalidaNoConforme.ListadoAcciones(mSalidaNoConforme.id_fuente, 0, "todos", 8);
                         gvListadoAcciones.DataBind();
                         ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Acción generada exitosamente!', '', 'success');", true);
                         btnFinalizar.Visible = true;
@@ -197,7 +191,7 @@ namespace SistemaGdC.Fuentes
 
         protected void txtanio_TextChanged(object sender, EventArgs e)
         {
-            txtInforme.Text = cSatisfaccionCliente.ultimoInforme(txtanio.Text,"6").ToString();
+            txtInforme.Text = cSalidaNoConforme.ultimoInforme(txtanio.Text,"8").ToString();
         }        
 
         protected void btNuevo_Click(object sender, EventArgs e)
@@ -207,7 +201,7 @@ namespace SistemaGdC.Fuentes
 
         void limpiarAccion()
         {
-            mSatisfaccionCliente = cSatisfaccionCliente.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "6");
+            mSalidaNoConforme = cSalidaNoConforme.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "8");
 
             mostrarCampos(true);
             btnGuardar.Visible = false;
@@ -215,7 +209,7 @@ namespace SistemaGdC.Fuentes
             btnEditar.Visible = false;            
             btnEliminar.Visible = false;
 
-            if(mSatisfaccionCliente.id_status==0)
+            if(mSalidaNoConforme.id_status==0)
             {
                 btnGuardar.Visible = true;
                 btNuevo.Visible = true;
@@ -225,7 +219,6 @@ namespace SistemaGdC.Fuentes
 
             try
             {
-                ddlPeriodo.SelectedIndex = 0;
                 ddlProceso.SelectedIndex = 0;
                 ddlUnidad.SelectedIndex = 0;
                 ddlDependencia.SelectedIndex = 0;
@@ -258,7 +251,6 @@ namespace SistemaGdC.Fuentes
                 GridViewRow selectedRow = gvListadoAcciones.Rows[index - (pag * psize)];
                 mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(selectedRow.Cells[0].Text));
 
-                ddlPeriodo.SelectedValue = mAccionG.id_periodo.ToString();
                 ddlProceso.SelectedValue = mAccionG.id_proceso.ToString();
                 ddlUnidad.SelectedValue = mAccionG.id_unidad.ToString();
                 cAcciones.dllDependencia(ddlDependencia, mAccionG.id_unidad);
@@ -274,7 +266,7 @@ namespace SistemaGdC.Fuentes
 
                 this.Session["noAccion"] = mAccionG.id_accion_generada;
 
-                string aprob = selectedRow.Cells[9].Text;
+                string aprob = selectedRow.Cells[8].Text;
                 verColumnas(false);
 
                 switch(aprob)
@@ -306,12 +298,11 @@ namespace SistemaGdC.Fuentes
         protected void verColumnas(bool ver)
         {
             gvListadoAcciones.Columns[2].Visible = ver; //status
-            gvListadoAcciones.Columns[9].Visible = ver; //aprobado
+            gvListadoAcciones.Columns[8].Visible = ver; //aprobado
         }
 
         protected void mostrarCampos(bool ver)
         {
-            ddlPeriodo.Enabled = ver;
             ddlProceso.Enabled = ver;
             ddlUnidad.Enabled = ver;
             ddlDependencia.Enabled = ver;
@@ -335,17 +326,17 @@ namespace SistemaGdC.Fuentes
         protected void gvListadoAcciones_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             this.Session["pagina"] = e.NewPageIndex;
-            mSatisfaccionCliente = cSatisfaccionCliente.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "6");
+            mSalidaNoConforme = cSalidaNoConforme.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "8");
             gvListadoAcciones.PageIndex = e.NewPageIndex;
-            gvListadoAcciones.DataSource = cSatisfaccionCliente.ListadoAcciones(mSatisfaccionCliente.id_fuente, 0, "todos", 6);
+            gvListadoAcciones.DataSource = cSalidaNoConforme.ListadoAcciones(mSalidaNoConforme.id_fuente, 0, "todos", 8);
             gvListadoAcciones.DataBind();
         }
 
         protected void btnFinalizar_Click(object sender, EventArgs e)
         {
-            cSatisfaccionCliente.actualizarInforme(int.Parse(Session["idFuente"].ToString()), 1);
+            cSalidaNoConforme.actualizarInforme(int.Parse(Session["idFuente"].ToString()), 1);
             ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Ha finalizado correctamente el Informe', '', 'success');", true);
-            Response.Redirect("~/Fuentes/MedicionSatisfaccionCliente.aspx");
+            Response.Redirect("~/Fuentes/IniciativaPropia.aspx");
         }
 
         protected void btnEliminar_Click(object sender, EventArgs e)
@@ -354,8 +345,8 @@ namespace SistemaGdC.Fuentes
             {
                 verColumnas(true);
                 cAcciones.EliminarAccion(int.Parse(Session["noAccion"].ToString()));
-                mSatisfaccionCliente = cSatisfaccionCliente.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "6");
-                gvListadoAcciones.DataSource = cSatisfaccionCliente.ListadoAcciones(mSatisfaccionCliente.id_fuente, 0, "todos", 6);
+                mSalidaNoConforme = cSalidaNoConforme.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "8");
+                gvListadoAcciones.DataSource = cSalidaNoConforme.ListadoAcciones(mSalidaNoConforme.id_fuente, 0, "todos", 8);
                 gvListadoAcciones.DataBind();
                 limpiarAccion();
                 btnEliminar.Visible = false;
@@ -379,8 +370,7 @@ namespace SistemaGdC.Fuentes
 
                     mAccionesGeneradas ag = new mAccionesGeneradas();
 
-                    mAccionG.id_fuente = mSatisfaccionCliente.id_fuente;
-                    mAccionG.id_periodo = int.Parse(ddlPeriodo.SelectedValue);
+                    mAccionG.id_fuente = mSalidaNoConforme.id_fuente;
                     mAccionG.descripcion = txtDescripcion.Text;
                     mAccionG.id_unidad = int.Parse(ddlUnidad.SelectedValue);
                     mAccionG.id_dependencia = int.Parse(ddlDependencia.SelectedValue);
@@ -390,7 +380,6 @@ namespace SistemaGdC.Fuentes
                     mAccionG.id_enlace = int.Parse(ddlEnlace.SelectedValue);
 
                     ag.id_accion_generada = int.Parse(Session["noAccion"].ToString());
-                    ag.id_periodo = int.Parse(ddlPeriodo.SelectedValue);
                     ag.descripcion = txtDescripcion.Text;
                     ag.id_lider = int.Parse(ddlLider.SelectedValue);
                     ag.id_enlace = int.Parse(ddlEnlace.SelectedValue);
@@ -402,8 +391,8 @@ namespace SistemaGdC.Fuentes
                     editada = cAcciones.actualizar_Accion(ag);
                     cAcciones.aprobar_Accion(ag.id_accion_generada,0);
                     verColumnas(true);
-                    mSatisfaccionCliente = cSatisfaccionCliente.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "6");
-                    gvListadoAcciones.DataSource = cSatisfaccionCliente.ListadoAcciones(mSatisfaccionCliente.id_fuente, 0, "todos", 6);
+                    mSalidaNoConforme = cSalidaNoConforme.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "8");
+                    gvListadoAcciones.DataSource = cSalidaNoConforme.ListadoAcciones(mSalidaNoConforme.id_fuente, 0, "todos", 8);
                     gvListadoAcciones.DataBind();
                     verColumnas(false);
 

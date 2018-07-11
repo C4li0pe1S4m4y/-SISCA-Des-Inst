@@ -4,7 +4,7 @@ using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace SistemaGdC.Informe
+namespace SistemaGdC.Fuentes
 {
     public partial class MedicionIndicadores : System.Web.UI.Page
     {

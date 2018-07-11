@@ -277,6 +277,7 @@ namespace Controladores
                     break;
 
                 case 4:
+                case 8:
                     select = "select ag.id_accion_generada as 'id',  sag.nombre as 'Status', " +
                         "p.Proceso,u.Unidad,d.Unidad Dependencia,ag.descripcion as 'Descripción', ee.Nombre Enlace, " +
                         "ea.Nombre Analista, Date_format(ag.fecha,'%d/%m/%Y') as 'Fecha', ta.accion as 'Tipo Acción', ag.aprobado ";

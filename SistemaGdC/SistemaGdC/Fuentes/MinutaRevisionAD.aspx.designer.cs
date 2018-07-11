@@ -7,7 +7,7 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace SistemaGdC.Informe {
+namespace SistemaGdC.Fuentes {
     
     
     public partial class MinutaRevisionAD {

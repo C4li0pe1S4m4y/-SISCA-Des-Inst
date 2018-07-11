@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MinutaRevisionAD.aspx.cs" Inherits="SistemaGdC.Informe.MinutaRevisionAD" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MinutaRevisionAD.aspx.cs" Inherits="SistemaGdC.Fuentes.MinutaRevisionAD" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 
