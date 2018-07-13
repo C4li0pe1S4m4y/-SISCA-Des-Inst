@@ -25,6 +25,34 @@
             overflow: hidden;
             border: solid 1px #000000;
         }
+
+        #Background {
+            position: fixed;
+            top: 0px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+            background-color: #F0F0F0;
+            filter: alpha(opacity=80);
+            opacity: 0.8;
+            z-index: 100000;
+        }
+
+        #Progress {
+            position: fixed;
+            top: 40%;
+            left: 25%;
+            height: 20%;
+            width: 50%;
+            z-index: 100001;
+
+            background-image: url(../Content/loading.gif);
+            background-repeat: no-repeat;
+            background-position: center;
+        }
     </style>
 
     <script type="text/javascript">
@@ -48,7 +76,7 @@
                                 <div class="col-md-12" style="overflow: auto; height: 100%">
                                     <asp:GridView ID="gvListadoInformes" runat="server"
                                         AllowPaging="true" OnPageIndexChanging="gvListadoInformes_PageIndexChanging"
-                                        BackColor="#fdffe6" CssClass="table table-hover table-bordered" AutoGenerateColumns="false" Width="1500px"
+                                        BackColor="#fdffe6" CssClass="table table-hover table-bordered" AutoGenerateColumns="false" Width="100%"
                                         OnRowCommand="gvListadoInformes_RowCommand" PageSize="5">
                                         <AlternatingRowStyle BackColor="#f2fffc" />
                                         <Columns>
@@ -125,8 +153,9 @@
                                         <label>&nbsp;</label>
                                     </div>
                                     <div>
-                                        <asp:Button ID="btnRechazarTodo" Text="Rechazar Pends." runat="server" CssClass="btn btn-danger btn-block" OnClick="btnRechazarTodo_Click"
-                                            OnClientClick="return confirm('¿Desea rechazar todas las Acciones pendientes?');"/>
+                                        <asp:Button ID="btnRechazarTodo" Text="Rechazar Pends." runat="server" CssClass="btn btn-danger btn-block" 
+                                            data-toggle="modal" data-target="#myModalAccion"
+                                            OnClick="btnRechazarTodo_Click" OnClientClick="return confirm('¿Desea rechazar todas las Acciones pendientes?');"/>                                            
                                     </div>
                                 </div>
                             </div>
@@ -146,7 +175,7 @@
                                 <div class="col-md-12" style="overflow: auto; height: 100%">
                                     <asp:GridView ID="gvListadoAcciones" runat="server" DataKeyNames="Correlativo"
                                         AllowPaging="true" OnPageIndexChanging="gvListadoAcciones_PageIndexChanging" PageSize="3"
-                                        BackColor="#fdffe6" CssClass="table table-hover table-bordered" AutoGenerateColumns="false" Width="1500px"
+                                        BackColor="#fdffe6" CssClass="table table-hover table-bordered" AutoGenerateColumns="false" Width="100%"
                                         OnRowCommand="gvListadoAcciones_RowCommand" OnRowDataBound="gvListado_RowDataBound">
                                         <AlternatingRowStyle BackColor="#f2fffc" />
                                         <Columns>
@@ -309,4 +338,18 @@
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>
+    <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="update1">
+        <ProgressTemplate>
+            <div id="Background"></div>
+            <div id="Progress">
+                <h6>
+                    <p style="text-align: center">
+                        <b>Procesando Datos, Espere por favor...
+                        <br />
+                        </b>
+                    </p>
+                </h6>
+            </div>
+        </ProgressTemplate>
+    </asp:UpdateProgress>
 </asp:Content>

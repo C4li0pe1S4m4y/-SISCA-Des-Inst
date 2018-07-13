@@ -217,6 +217,7 @@ namespace Controladores
                 //objAccionGenerada.fecha_fin = fecha_fin.ToString("yyyy-MM-dd");
                 if (!dr.IsDBNull(dr.GetOrdinal("id_fadn")))
                     objAccionGenerada.id_fadn = int.Parse(dr.GetString("id_fadn"));
+
                 if (!dr.IsDBNull(dr.GetOrdinal("id_periodo")))
                     objAccionGenerada.id_periodo = int.Parse(dr.GetString("id_periodo"));
 
@@ -235,7 +236,8 @@ namespace Controladores
                 objAccionGenerada.id_tipo_accion = int.Parse(dr.GetString("id_tipo_accion"));
                 if (!dr.IsDBNull(dr.GetOrdinal("aprobado")))
                     objAccionGenerada.aprobado = int.Parse(dr.GetString("aprobado"));
-                objAccionGenerada.correlativo_compromiso = int.Parse(dr.GetString("correlativo_compromiso"));
+                if (!dr.IsDBNull(dr.GetOrdinal("correlativo_compromiso")))
+                    objAccionGenerada.correlativo_compromiso = int.Parse(dr.GetString("correlativo_compromiso"));
             }
             return objAccionGenerada;
         }

@@ -172,7 +172,7 @@
                             <div class="row">
                                 <div class="col-md-12" style="overflow: auto; height: 100%">
                                     <asp:GridView ID="gvListado" runat="server"
-                                        BackColor="#fdffe6" CssClass="table table-hover table-bordered" Width="1500px"
+                                        BackColor="#fdffe6" CssClass="table table-hover table-bordered" Width="100%"
                                         OnRowCommand="gvListado_RowCommand">
                                         <AlternatingRowStyle BackColor="#f2fffc" />
                                         <Columns>

@@ -110,7 +110,7 @@
                                 <div class="col-md-12" style="height: 100%">
                                     <asp:GridView ID="gvListadoAcciones" runat="server" DataKeyNames="Correlativo"
                                         AllowPaging="true" OnPageIndexChanging="gvListadoAcciones_PageIndexChanging" PageSize="5"
-                                        BackColor="#fdffe6" CssClass="table table-hover table-bordered" AutoGenerateColumns="false" Width="1500px"
+                                        BackColor="#fdffe6" CssClass="table table-hover table-bordered" AutoGenerateColumns="false" Width="100%"
                                         OnRowCommand="gvListadoAcciones_RowCommand">
                                         <AlternatingRowStyle BackColor="#f2fffc" />
                                         <Columns>

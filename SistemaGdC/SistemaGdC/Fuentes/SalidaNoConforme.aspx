@@ -146,7 +146,7 @@
                                 <div class="col-md-12" style="overflow: auto; height: 100%">
                                     <asp:GridView ID="gvListadoAcciones" runat="server" DataKeyNames="id"
                                         AllowPaging="true" OnPageIndexChanging="gvListadoAcciones_PageIndexChanging" PageSize="10"
-                                        BackColor="#fdffe6" CssClass="table table-hover table-bordered" AutoGenerateColumns="false" Width="1500px"
+                                        BackColor="#fdffe6" CssClass="table table-hover table-bordered" AutoGenerateColumns="false" Width="100%"
                                         OnRowCommand="gvListadoAcciones_RowCommand" OnRowDataBound="gvListado_RowDataBound">
                                         <AlternatingRowStyle BackColor="#f2fffc" />
                                         <Columns>

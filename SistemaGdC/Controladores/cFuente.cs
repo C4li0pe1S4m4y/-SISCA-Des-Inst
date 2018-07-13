@@ -239,88 +239,92 @@ namespace Controladores
             return informe;
         }
 
-        public DataSet ListadoAcciones(int idFuente, int status, string aprobacion, int tipoFuente) //ok -- agregar switch para el select con las acciones
+        public DataTable ListadoAcciones(int idFuente, int status, string aprobacion, int tipoFuente) //ok -- agregar switch para el select con las acciones
         {
-            string aprob = "";
-            string select = "";
-            string tablas = "";
-            switch (aprobacion)
+            try
             {
-                case "aprobado":
-                    aprob = "AND ag.aprobado = 2";
-                    break;
+                string aprob = "";
+                string select = "";
+                string tablas = "";
+                switch (aprobacion)
+                {
+                    case "aprobado":
+                        aprob = "AND ag.aprobado = 2";
+                        break;
 
-                case "rechazado":
-                    aprob = "AND ag.aprobado = -2";
-                    break;
+                    case "rechazado":
+                        aprob = "AND ag.aprobado = -2";
+                        break;
 
-                case "todos":
-                    aprob = "";
-                    break;
+                    case "todos":
+                        aprob = "";
+                        break;
+                }
+
+                switch (tipoFuente)
+                {
+                    case 1:
+                    case 2:
+                        select = "select ag.id_accion_generada as 'id',ca.Accion as 'Acción',ag.correlativo_hallazgo as 'Correlativo',ag.norma as 'Punto de Norma',  sag.nombre as 'Status', " +
+                            "p.Proceso,u.Unidad,d.Unidad Dependencia,ag.descripcion as 'Descripción', ee.Nombre Enlace, " +
+                            "ea.Nombre Analista, Date_format(ag.fecha,'%d/%m/%Y') as 'Fecha', ta.accion as 'Tipo Acción', ag.aprobado ";
+                        tablas = "inner join sgc_ccl_accion_generada ca on ca.id_acciones = ag.id_ccl_accion_generada";
+                        break;
+
+                    case 3:
+                        select = "select ag.id_accion_generada as 'id',  sag.nombre as 'Status', f.fadn as 'Federación', ag.instalacion as 'Instalación', " +
+                            "p.Proceso,u.Unidad,d.Unidad Dependencia,ag.descripcion as 'Descripción', ee.Nombre Enlace, " +
+                            "ea.Nombre Analista, Date_format(ag.fecha,'%d/%m/%Y') as 'Fecha', ta.accion as 'Tipo Acción', ag.aprobado ";
+                        tablas = "inner join sgc_fadn f on ag.id_fadn = f.id_fadn";
+                        break;
+
+                    case 4:
+                    case 8:
+                        select = "select ag.id_accion_generada as 'id',  sag.nombre as 'Status', " +
+                            "p.Proceso,u.Unidad,d.Unidad Dependencia,ag.descripcion as 'Descripción', ee.Nombre Enlace, " +
+                            "ea.Nombre Analista, Date_format(ag.fecha,'%d/%m/%Y') as 'Fecha', ta.accion as 'Tipo Acción', ag.aprobado ";
+                        tablas = "";
+                        break;
+
+                    case 5:
+                    case 6:
+                        select = "select ag.id_accion_generada as 'id',  sag.nombre as 'Status', pe.periodo as 'Período', " +
+                            "p.Proceso,u.Unidad,d.Unidad Dependencia,ag.descripcion as 'Descripción', ee.Nombre Enlace, " +
+                            "ea.Nombre Analista, Date_format(ag.fecha,'%d/%m/%Y') as 'Fecha', ta.accion as 'Tipo Acción', ag.aprobado ";
+                        tablas = "inner join sgc_periodo pe on ag.id_periodo = pe.id_periodo";
+                        break;
+
+                    case 7:
+                        select = "select ag.id_accion_generada as 'id',  sag.nombre as 'Status', ag.correlativo_compromiso as 'Compromiso', " +
+                            "p.Proceso,u.Unidad,d.Unidad Dependencia,ag.descripcion as 'Descripción', ee.Nombre Enlace, " +
+                            "ea.Nombre Analista, Date_format(ag.fecha,'%d/%m/%Y') as 'Fecha', ta.accion as 'Tipo Acción', ag.aprobado ";
+                        tablas = "";
+                        break;
+                }
+
+                DataTable result = new DataTable();
+                conectar.AbrirConexion();
+                string query2 = string.Format("{2} " +
+
+                            "from sgc_accion_generada ag " +
+                            "{3} " +
+                            "inner join sgc_proceso p on p.id_proceso = ag.id_proceso " +
+                            "inner join sgc_unidad u on u.id_unidad = ag.id_unidad " +
+                            "inner join sgc_unidad d on d.id_unidad = ag.id_dependencia  " +
+                            "inner join sgc_empleados ea on ea.id_empleado = ag.id_analista " +
+                            "inner join sgc_empleados el on el.id_empleado = ag.id_lider " +
+                            "inner join sgc_empleados ee on ee.id_empleado = ag.id_enlace " +
+                            "inner join sgc_tipo_accion ta on ta.id_tipo_accion = ag.id_tipo_accion " +
+                            "left join sgc_status_accion_generada sag on sag.id_status = ag.id_status " +
+
+                            "where ag.id_fuente = '{0}' {1}; ", idFuente, aprob, select, tablas);
+
+                MySqlDataAdapter consulta = new MySqlDataAdapter(query2, conectar.conectar);
+                consulta.Fill(result);
+                conectar.CerrarConexion();
+                return result;
             }
-
-            switch (tipoFuente)
-            {
-                case 1:
-                case 2:
-                    select = "select ag.id_accion_generada as 'id',ca.Accion as 'Acción',ag.correlativo_hallazgo as 'Correlativo',ag.norma as 'Punto de Norma',  sag.nombre as 'Status', " +
-                        "p.Proceso,u.Unidad,d.Unidad Dependencia,ag.descripcion as 'Descripción', ee.Nombre Enlace, " +
-                        "ea.Nombre Analista, Date_format(ag.fecha,'%d/%m/%Y') as 'Fecha', ta.accion as 'Tipo Acción', ag.aprobado ";
-                    tablas = "inner join sgc_ccl_accion_generada ca on ca.id_acciones = ag.id_ccl_accion_generada";
-                    break;
-
-                case 3:
-                    select = "select ag.id_accion_generada as 'id',  sag.nombre as 'Status', f.fadn as 'Federación', ag.instalacion as 'Instalación', " +
-                        "p.Proceso,u.Unidad,d.Unidad Dependencia,ag.descripcion as 'Descripción', ee.Nombre Enlace, " +
-                        "ea.Nombre Analista, Date_format(ag.fecha,'%d/%m/%Y') as 'Fecha', ta.accion as 'Tipo Acción', ag.aprobado ";
-                    tablas = "inner join sgc_fadn f on ag.id_fadn = f.id_fadn";
-                    break;
-
-                case 4:
-                case 8:
-                    select = "select ag.id_accion_generada as 'id',  sag.nombre as 'Status', " +
-                        "p.Proceso,u.Unidad,d.Unidad Dependencia,ag.descripcion as 'Descripción', ee.Nombre Enlace, " +
-                        "ea.Nombre Analista, Date_format(ag.fecha,'%d/%m/%Y') as 'Fecha', ta.accion as 'Tipo Acción', ag.aprobado ";
-                    tablas = "";
-                    break;
-
-                case 5:
-                case 6:
-                    select = "select ag.id_accion_generada as 'id',  sag.nombre as 'Status', pe.periodo as 'Período', " +
-                        "p.Proceso,u.Unidad,d.Unidad Dependencia,ag.descripcion as 'Descripción', ee.Nombre Enlace, " +
-                        "ea.Nombre Analista, Date_format(ag.fecha,'%d/%m/%Y') as 'Fecha', ta.accion as 'Tipo Acción', ag.aprobado ";
-                    tablas = "inner join sgc_periodo pe on ag.id_periodo = pe.id_periodo";
-                    break;
-
-                case 7:
-                    select = "select ag.id_accion_generada as 'id',  sag.nombre as 'Status', ag.correlativo_compromiso as 'Compromiso', " +
-                        "p.Proceso,u.Unidad,d.Unidad Dependencia,ag.descripcion as 'Descripción', ee.Nombre Enlace, " +
-                        "ea.Nombre Analista, Date_format(ag.fecha,'%d/%m/%Y') as 'Fecha', ta.accion as 'Tipo Acción', ag.aprobado ";
-                    tablas = "";
-                    break;
-            }
-
-            DataSet result = new DataSet();
-            conectar.AbrirConexion();
-            string query2 = string.Format("{2} " +
-
-                        "from sgc_accion_generada ag " +
-                        "{3} " +
-                        "inner join sgc_proceso p on p.id_proceso = ag.id_proceso " +
-                        "inner join sgc_unidad u on u.id_unidad = ag.id_unidad " +
-                        "inner join sgc_unidad d on d.id_unidad = ag.id_dependencia  " +
-                        "inner join sgc_empleados ea on ea.id_empleado = ag.id_analista " +
-                        "inner join sgc_empleados el on el.id_empleado = ag.id_lider " +
-                        "inner join sgc_empleados ee on ee.id_empleado = ag.id_enlace " +
-                        "inner join sgc_tipo_accion ta on ta.id_tipo_accion = ag.id_tipo_accion " +
-                        "left join sgc_status_accion_generada sag on sag.id_status = ag.id_status " +
-
-                        "where ag.id_fuente = '{0}' {1}; ", idFuente, aprob, select, tablas);
-
-            MySqlDataAdapter consulta = new MySqlDataAdapter(query2, conectar.conectar);
-            consulta.Fill(result);
-            conectar.CerrarConexion();
-            return result;
+            finally { }            
         }
 
         public DataSet ListadoFuentes(int status, int tipoFuente) //ok

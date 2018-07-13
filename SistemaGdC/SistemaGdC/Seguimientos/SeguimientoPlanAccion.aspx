@@ -87,7 +87,7 @@
                                 <div class="col-md-12">
                                     <div class="col-md-12" style="overflow: auto; height: 100%">
                                         <asp:GridView ID="gvListadoAcciones" runat="server" DataKeyNames="Correlativo"
-                                            BackColor="#fdffe6" CssClass="table table-hover table-bordered" AutoGenerateColumns="false" Width="1500px"
+                                            BackColor="#fdffe6" CssClass="table table-hover table-bordered" AutoGenerateColumns="false" Width="100%"
                                             OnRowCommand="gvListadoAcciones_RowCommand">
                                             <AlternatingRowStyle BackColor="#f2fffc" />
                                             <Columns>
@@ -307,7 +307,7 @@
                             <div class="row">
                                 <div class="col-md-12" style="overflow: auto; height: 100%">
                                     <asp:GridView ID="gvListadoActividadesPendientes" runat="server" DataKeyNames="No."
-                                        BackColor="#fdffe6" CssClass="table table-hover table-bordered" AutoGenerateColumns="false" Width="1500px"
+                                        BackColor="#fdffe6" CssClass="table table-hover table-bordered" AutoGenerateColumns="false" Width="100%"
                                         OnRowCommand="gvListadoActividades_RowCommand">
                                         <AlternatingRowStyle BackColor="#f2fffc" />
                                         <Columns>
@@ -339,7 +339,7 @@
                             <div class="row">
                                 <div class="col-md-12" style="overflow: auto; height: 100%">
                                     <asp:GridView ID="gvListadoActividadesTerminadas" runat="server" DataKeyNames="No."
-                                        BackColor="#fdffe6" CssClass="table table-hover table-bordered" AutoGenerateColumns="false" Width="1500px"
+                                        BackColor="#fdffe6" CssClass="table table-hover table-bordered" AutoGenerateColumns="false" Width="100%"
                                         OnRowCommand="gvListadoActividades_RowCommand">
                                         <AlternatingRowStyle BackColor="#f2fffc" />
                                         <Columns>
@@ -371,7 +371,7 @@
                             <div class="row">
                                 <div class="col-md-12" style="overflow: auto; height: 100%">
                                     <asp:GridView ID="gvListadoActividadesValidadas" runat="server" DataKeyNames="No."
-                                        BackColor="#fdffe6" CssClass="table table-hover table-bordered" AutoGenerateColumns="false" Width="1500px"
+                                        BackColor="#fdffe6" CssClass="table table-hover table-bordered" AutoGenerateColumns="false" Width="100%"
                                         OnRowCommand="gvListadoActividades_RowCommand">
                                         <AlternatingRowStyle BackColor="#f2fffc" />
                                         <Columns>
@@ -403,7 +403,7 @@
                             <div class="row">
                                 <div class="col-md-12" style="overflow: auto; height: 100%">
                                     <asp:GridView ID="gvListadoActividadesRechazadas" runat="server" DataKeyNames="No."
-                                        BackColor="#fdffe6" CssClass="table table-hover table-bordered" AutoGenerateColumns="false" Width="1500px"
+                                        BackColor="#fdffe6" CssClass="table table-hover table-bordered" AutoGenerateColumns="false" Width="100%"
                                         OnRowCommand="gvListadoActividades_RowCommand">
                                         <AlternatingRowStyle BackColor="#f2fffc" />
                                         <Columns>

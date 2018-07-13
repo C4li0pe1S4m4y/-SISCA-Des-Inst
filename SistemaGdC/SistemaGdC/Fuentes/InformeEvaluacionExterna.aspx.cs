@@ -284,9 +284,10 @@ namespace SistemaGdC.Fuentes
                 int index = Convert.ToInt16(e.CommandArgument);
                 int pag = Convert.ToInt16(Session["pagina"]);
                 int psize = gvListadoAcciones.PageSize;
-
+               
                 verColumnas(true);
                 GridViewRow selectedRow = gvListadoAcciones.Rows[index - (pag * psize)];
+
                 mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(selectedRow.Cells[0].Text));
 
                 ddlAccionGenerada.SelectedValue = mAccionG.id_ccl_accion_generada.ToString();
@@ -354,7 +355,6 @@ namespace SistemaGdC.Fuentes
             ddlLider.Enabled = ver;
             dllTipoAccion.Enabled = ver;
             txtDescripcion.Enabled = ver;
-
         }
 
         protected void gvListado_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -370,11 +370,13 @@ namespace SistemaGdC.Fuentes
 
         protected void gvListadoAcciones_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
+            verColumnas(true); /////////////////
             this.Session["pagina"] = e.NewPageIndex;
             mInformeEE = cInformeEE.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "2");
             gvListadoAcciones.PageIndex = e.NewPageIndex;
             gvListadoAcciones.DataSource = cInformeEE.ListadoAcciones(mInformeEE.id_fuente, 0, "todos", 2);
             gvListadoAcciones.DataBind();
+            verColumnas(true); /////////////////
         }
 
         protected void btnFinalizar_Click(object sender, EventArgs e)
@@ -452,11 +454,11 @@ namespace SistemaGdC.Fuentes
 
                     editada = cAcciones.actualizar_Accion(ag);
                     cAcciones.aprobar_Accion(ag.id_accion_generada,0);
-                    //verColumnas(true);
+                    verColumnas(true); ///////////
                     mInformeEE = cInformeEE.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "2");
                     gvListadoAcciones.DataSource = cInformeEE.ListadoAcciones(mInformeEE.id_fuente, 0, "todos", 2);
                     gvListadoAcciones.DataBind();
-                    //verColumnas(false);
+                    verColumnas(false); ///////////
 
                     if(editada) ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('La Acción ha sido actualizada correctamente', '', 'success');", true);
                     else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No fue posible actualizar Acción', 'Intente de nuevo', 'error');", true);

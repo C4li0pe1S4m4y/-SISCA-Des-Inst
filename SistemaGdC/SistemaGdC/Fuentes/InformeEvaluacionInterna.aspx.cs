@@ -452,11 +452,11 @@ namespace SistemaGdC.Fuentes
 
                     editada = cAcciones.actualizar_Accion(ag);
                     cAcciones.aprobar_Accion(ag.id_accion_generada,0);
-                    //verColumnas(true);
+                    verColumnas(true);
                     mInformeEI = cInformeEI.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "1");
                     gvListadoAcciones.DataSource = cInformeEI.ListadoAcciones(mInformeEI.id_fuente, 0, "todos", 1);
                     gvListadoAcciones.DataBind();
-                    //verColumnas(false);
+                    verColumnas(false);
 
                     if(editada) ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('La Acción ha sido actualizada correctamente', '', 'success');", true);
                     else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No fue posible actualizar Acción', 'Intente de nuevo', 'error');", true);

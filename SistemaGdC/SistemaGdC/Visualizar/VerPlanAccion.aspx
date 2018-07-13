@@ -162,7 +162,7 @@
                             <div class="row">
                                 <div class="col-md-12" style="overflow: auto; height: 100%">
                                     <asp:GridView ID="gvListado" runat="server" DataKeyNames="No."
-                                        BackColor="#fdffe6" CssClass="table table-hover table-bordered" Width="1500px"
+                                        BackColor="#fdffe6" CssClass="table table-hover table-bordered" Width="100%"
                                         OnSelectedIndexChanged="gvListado_SelectedIndexChanged">
                                         <AlternatingRowStyle BackColor="#f2fffc" />
                                         <Columns>

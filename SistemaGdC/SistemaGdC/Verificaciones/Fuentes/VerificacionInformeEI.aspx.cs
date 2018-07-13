@@ -232,8 +232,8 @@ namespace SistemaGdC.Verificaciones.Fuentes
             aprobados.rech = 0;
             aprobados.pend = 0;
             mInformeEI = cInformeEI.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "1");
-            DataSet todos = cInformeEI.ListadoAcciones(mInformeEI.id_fuente, 0, "todos", 1);
-            foreach (DataRow row in todos.Tables[0].Rows)
+            DataTable todos = cInformeEI.ListadoAcciones(mInformeEI.id_fuente, 0, "todos", 1);
+            foreach (DataRow row in todos.Rows)
                 switch(row["aprobado"].ToString())
                 {
                     case "2":

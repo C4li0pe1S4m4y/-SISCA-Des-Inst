@@ -18,6 +18,9 @@ namespace SistemaGdC.Fuentes
         mFuente mSalidaNoConforme = new mFuente();
         mEmpleado mEmpleado = new mEmpleado();
         mAccionesGeneradas mAccionG = new mAccionesGeneradas();
+
+        static int tipoFuente;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -336,7 +339,7 @@ namespace SistemaGdC.Fuentes
         {
             cSalidaNoConforme.actualizarInforme(int.Parse(Session["idFuente"].ToString()), 1);
             ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Ha finalizado correctamente el Informe', '', 'success');", true);
-            Response.Redirect("~/Fuentes/IniciativaPropia.aspx");
+            Response.Redirect("~/Fuentes/SalidaNoConforme.aspx");
         }
 
         protected void btnEliminar_Click(object sender, EventArgs e)
