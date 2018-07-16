@@ -234,6 +234,7 @@
     <Content Include="Seguimientos\SeguimientoPlanAccion.aspx" />
     <Content Include="SISCA\Content\fondo7.jpg" />
     <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="Verificaciones\Fuentes\VerificacionInformeEI.aspx" />
     <Content Include="Verificaciones\Fuentes\VerificacionInformeEE.aspx" />
     <Content Include="Verificaciones\Fuentes\VerificacionQuejaReclamo.aspx" />
     <Content Include="Verificaciones\InformeResultados\VerificacionInformesOM.aspx" />
@@ -276,7 +277,6 @@
     <Content Include="InformeResultados\Acciones\ListadoAcciones.aspx" />
     <Content Include="Usuarios\IngresoUsuarios.aspx" />
     <Content Include="Usuarios\ListadoUsuarios.aspx" />
-    <Content Include="Verificaciones\Fuentes\VerificacionInformeEI.aspx" />
     <Content Include="Verificaciones\SISCA\Content\fondo7.jpg" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Visualizar\VerInformeOM.aspx" />
@@ -433,6 +433,13 @@
       <DependentUpon>SeguimientoPlanAccion.aspx</DependentUpon>
     </Compile>
     <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="Verificaciones\Fuentes\VerificacionInformeEI.aspx.cs">
+      <DependentUpon>VerificacionInformeEI.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Verificaciones\Fuentes\VerificacionInformeEI.aspx.designer.cs">
+      <DependentUpon>VerificacionInformeEI.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Verificaciones\Fuentes\VerificacionInformeEE.aspx.cs">
       <DependentUpon>VerificacionInformeEE.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -503,13 +510,6 @@
     </Compile>
     <Compile Include="Usuarios\ListadoUsuarios.aspx.designer.cs">
       <DependentUpon>ListadoUsuarios.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Verificaciones\Fuentes\VerificacionInformeEI.aspx.cs">
-      <DependentUpon>VerificacionInformeEI.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Verificaciones\Fuentes\VerificacionInformeEI.aspx.designer.cs">
-      <DependentUpon>VerificacionInformeEI.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>

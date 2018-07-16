@@ -12,7 +12,7 @@ namespace Controladores
     {
         public void enviarCorreo(string direccion, string asunto, string mensaje)
         {
-            var origen = new MailAddress("cdag.soporte@gmail.com", "Prueba SISCA");
+            var origen = new MailAddress("cdag.soporte@gmail.com", "SISCA");
             var destino = new MailAddress(direccion, "To Name");
             const string fromPassword = "SopTec2o18";
 

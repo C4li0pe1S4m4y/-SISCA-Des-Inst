@@ -5,13 +5,14 @@
     <h2>&nbsp;</h2>
     <h2 style="color: white"><b>Verificación de Informe de Evaluación Interna</b></h2>
 
-    <style>
+    <style type="text/css">
         .chart {
-            width: 100%;panel1.Visible = false;
-                panel2.Visible = true;
-                panel3.Visible = true;
-                panel4.Visible = false;
-                mostrarBotones(false);
+            width: 100%;
+            panel1 .Visible = false;
+            panel2 .Visible = true;
+            panel3 .Visible = true;
+            panel4 .Visible = false;
+            mostrarBotones(false);
             height: 100%;
             min-height: 100%;
         }
@@ -59,9 +60,9 @@
         function closeMaccion() {
             $(".modal-fade").modal("hide");
             $(".modal-backdrop").remove();
-
-            $('#myModalAccion').modal('hide');
-            console.log("cerrar");
+            
+            $('#mRechazarUnaAccion').modal('hide');
+            $('#mRechazarTodasAcciones').modal('hide');
         }
     </script>
     <asp:UpdatePanel ID="update1" runat="server">
@@ -144,8 +145,8 @@
                                         <label>&nbsp;</label>
                                     </div>
                                     <div>
-                                        <asp:Button ID="btnValidarTodo" Text="Validar Pends." runat="server" CssClass="btn btn-success btn-block" OnClick="btnValidarTodo_Click" 
-                                            OnClientClick="return confirm('¿Desea validar todas las Acciones pendientes?');"/>
+                                        <asp:Button ID="btnValidarTodo" Text="Validar Pends." runat="server" CssClass="btn btn-success btn-block" OnClick="btnValidarTodo_Click"
+                                            OnClientClick="return confirm('¿Desea validar todas las Acciones pendientes?');" />
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -153,9 +154,10 @@
                                         <label>&nbsp;</label>
                                     </div>
                                     <div>
-                                        <asp:Button ID="btnRechazarTodo" Text="Rechazar Pends." runat="server" CssClass="btn btn-danger btn-block" 
-                                            data-toggle="modal" data-target="#myModalAccion"
-                                            OnClick="btnRechazarTodo_Click" OnClientClick="return confirm('¿Desea rechazar todas las Acciones pendientes?');"/>                                            
+                                        <%--<asp:Button ID="btnRechazarTodo" Text="Rechazar Pends." runat="server" CssClass="btn btn-danger btn-block"
+                                            OnClick="btnRechazarTodo_Click" OnClientClick="return confirm('¿Desea rechazar todas las Acciones pendientes?');" />--%>
+                                        <asp:Button ID="btnRechazarTodo" Text="Rechazar Pends." runat="server" CssClass="btn btn-danger btn-block"
+                                            data-toggle="modal" data-target="#mRechazarTodasAcciones"/>
                                     </div>
                                 </div>
                             </div>
@@ -172,7 +174,7 @@
                         <div class="panel-heading">Acciones</div>
                         <div class="panel-body">
                             <div class="row">
-                                <div class="col-md-12" style="overflow: auto; height: 100%">
+                                <div class="col-md-12" style="height: 100%">
                                     <asp:GridView ID="gvListadoAcciones" runat="server" DataKeyNames="Correlativo"
                                         AllowPaging="true" OnPageIndexChanging="gvListadoAcciones_PageIndexChanging" PageSize="3"
                                         BackColor="#fdffe6" CssClass="table table-hover table-bordered" AutoGenerateColumns="false" Width="100%"
@@ -304,14 +306,14 @@
                                                 <label>&nbsp;</label>
                                             </div>
                                             <asp:LinkButton ID="btnRechazar" CssClass="btn btn-danger" runat="server"
-                                                data-toggle="modal" data-target="#myModalAccion"><span class="glyphicon glyphicon-remove"/></asp:LinkButton>
+                                                data-toggle="modal" data-target="#mRechazarUnaAccion"><span class="glyphicon glyphicon-remove"/></asp:LinkButton>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Modal -->
-                            <div class="modal fade" id="myModalAccion" role="dialog">
+                            <div class="modal fade" id="mRechazarUnaAccion" role="dialog">
                                 <div class="modal-dialog">
                                     <!-- Modal content-->
                                     <div class="modal-content">
@@ -331,7 +333,29 @@
                                     </div>
                                 </div>
                             </div>
-                                                        
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="mRechazarTodasAcciones" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">¿Desea rechazar la Acción?</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <label>Observaciones: </label>
+                                            <asp:TextBox ID="txtRechazoAccionTodo" Enabled="true" Width="100%" CssClass="form-control" TextMode="MultiLine" Style="height: 205px" runat="server"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RFVtxtRechazarAccionTodo" ValidationGroup="rechazarAccionTodo" Style="color: red;" SetFocusOnError="true" ControlToValidate="txtRechazoAccionTodo" InitialValue="" runat="server" ErrorMessage="Por favor agregue una observación." Display="Dynamic" />
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                            <asp:Button ID="btnRechazoAccionTodo" ValidationGroup="rechazarAccion" Text="Rechazar" runat="server" CssClass="btn btn-danger" OnClientClick="return closeMaccion();" OnClick="btnRechazarTodo_Click" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>

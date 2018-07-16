@@ -10,7 +10,7 @@
 namespace SistemaGdC.Verificaciones.Fuentes {
     
     
-    public partial class VerificacionInformeEI {
+    public partial class VerificacionQuejaReclamo {
         
         /// <summary>
         /// Control update1.
@@ -166,58 +166,40 @@ namespace SistemaGdC.Verificaciones.Fuentes {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl panel4;
         
         /// <summary>
-        /// Control ddlAccionGenerada.
+        /// Control ddlFadn.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlAccionGenerada;
+        protected global::System.Web.UI.WebControls.DropDownList ddlFadn;
         
         /// <summary>
-        /// Control RFVddlAccionGenerada.
+        /// Control RFVddlFadn.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVddlAccionGenerada;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVddlFadn;
         
         /// <summary>
-        /// Control txtHallazgo.
+        /// Control txtInstalacion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtHallazgo;
+        protected global::System.Web.UI.WebControls.TextBox txtInstalacion;
         
         /// <summary>
-        /// Control RFVtxtHallazgo.
+        /// Control RFVtxtInstalacion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVtxtHallazgo;
-        
-        /// <summary>
-        /// Control txtPuntoNorma.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPuntoNorma;
-        
-        /// <summary>
-        /// Control RFVtxtPuntoNorma.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVtxtPuntoNorma;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVtxtInstalacion;
         
         /// <summary>
         /// Control ddlProceso.
@@ -407,33 +389,6 @@ namespace SistemaGdC.Verificaciones.Fuentes {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnRechazoAccion;
-        
-        /// <summary>
-        /// Control txtRechazoAccionTodo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtRechazoAccionTodo;
-        
-        /// <summary>
-        /// Control RFVtxtRechazarAccionTodo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVtxtRechazarAccionTodo;
-        
-        /// <summary>
-        /// Control btnRechazoAccionTodo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRechazoAccionTodo;
         
         /// <summary>
         /// Control UpdateProgress1.

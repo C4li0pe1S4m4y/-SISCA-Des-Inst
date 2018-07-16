@@ -9,15 +9,15 @@ using System.Web.UI.HtmlControls;
 
 namespace SistemaGdC.Verificaciones.Fuentes
 {    
-    public partial class VerificacionInformeEI : System.Web.UI.Page
+    public partial class VerificacionInformeEE : System.Web.UI.Page
     {
-        cFuente cInformeEI = new cFuente();
+        cFuente cInformeEE = new cFuente();
         cGeneral cGen = new cGeneral();
         cAcciones cAcciones = new cAcciones();
         cEmpleado cEmpleado = new cEmpleado();
         cCorreo cCorreo = new cCorreo();
 
-        mFuente mInformeEI = new mFuente();
+        mFuente mInformeEE = new mFuente();
         mAccionesGeneradas mAccionG = new mAccionesGeneradas();
         mEmpleado mEmpleado = new mEmpleado();
         mAprobados aprobados = new mAprobados();
@@ -34,7 +34,7 @@ namespace SistemaGdC.Verificaciones.Fuentes
                 this.Session["pagina1"] = 0;
                 this.Session["pagina2"] = 0;
                 gvListadoInformes.Columns[0].Visible = true;
-                gvListadoInformes.DataSource = cInformeEI.ListadoFuentes(1,1);
+                gvListadoInformes.DataSource = cInformeEE.ListadoFuentes(1,2);
                 gvListadoInformes.DataBind();
                 gvListadoInformes.Columns[0].Visible = false;
                 
@@ -44,7 +44,7 @@ namespace SistemaGdC.Verificaciones.Fuentes
                 ddlAccionGenerada.Items.Add("<< Elija Accion >>");
                 ddlAccionGenerada.Items[0].Value = "0";
 
-                ddlAccionGenerada.DataSource = cInformeEI.dropAcciones();
+                ddlAccionGenerada.DataSource = cInformeEE.dropAcciones();
                 ddlAccionGenerada.DataTextField = "Accion";
                 ddlAccionGenerada.DataValueField = "id_acciones";
                 ddlAccionGenerada.DataBind();
@@ -151,7 +151,7 @@ namespace SistemaGdC.Verificaciones.Fuentes
         {
             gvListadoInformes.PageIndex = e.NewPageIndex;
             gvListadoInformes.Columns[0].Visible = true;
-            gvListadoInformes.DataSource = cInformeEI.ListadoFuentes(1,1);
+            gvListadoInformes.DataSource = cInformeEE.ListadoFuentes(1,1);
             gvListadoInformes.DataBind();
             gvListadoInformes.Columns[0].Visible = false;
         }
@@ -161,7 +161,7 @@ namespace SistemaGdC.Verificaciones.Fuentes
             this.Session["pagina1"] = e.NewPageIndex;
             gvListadoInformes.PageIndex = e.NewPageIndex;
             gvListadoInformes.Columns[0].Visible = true;
-            gvListadoInformes.DataSource = cInformeEI.ListadoFuentes(1,1);
+            gvListadoInformes.DataSource = cInformeEE.ListadoFuentes(1,2);
             gvListadoInformes.DataBind();
             gvListadoInformes.Columns[0].Visible = false;
         }
@@ -217,8 +217,8 @@ namespace SistemaGdC.Verificaciones.Fuentes
             aprobados.aprob = 0;
             aprobados.rech = 0;
             aprobados.pend = 0;
-            mInformeEI = cInformeEI.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "1");
-            DataTable todos = cInformeEI.ListadoAcciones(mInformeEI.id_fuente, 0, "todos", 1);
+            mInformeEE = cInformeEE.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "2");
+            DataTable todos = cInformeEE.ListadoAcciones(mInformeEE.id_fuente, 0, "todos", 2);
             foreach (DataRow row in todos.Rows)
                 switch(row["aprobado"].ToString())
                 {
@@ -261,7 +261,7 @@ namespace SistemaGdC.Verificaciones.Fuentes
         protected void actualizarListadoAcciones() //carga y actualiza el Listado de Acciones
         {
             verColumnas(true);
-            gvListadoAcciones.DataSource = cInformeEI.ListadoAcciones(int.Parse(Session["idFuente"].ToString()), 0, "todos", 1);
+            gvListadoAcciones.DataSource = cInformeEE.ListadoAcciones(int.Parse(Session["idFuente"].ToString()), 0, "todos", 2);
             gvListadoAcciones.DataBind();
             verColumnas(false);
         }
@@ -286,7 +286,7 @@ namespace SistemaGdC.Verificaciones.Fuentes
                     mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(Session["Accion"].ToString()));
                     mEmpleado = cEmpleado.Obtner_Empleado(mAccionG.id_analista, "analista");
 
-                    string fuente = cInformeEI.nombreFuente(Session["Accion"].ToString());
+                    string fuente = cInformeEE.nombreFuente(Session["Accion"].ToString());
                     string asunto = "Acción Asignada (" + Session["Accion"].ToString() + "), " + fuente;
 
                     if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, asunto, mAccionG.descripcion);
@@ -308,7 +308,7 @@ namespace SistemaGdC.Verificaciones.Fuentes
                 if (int.Parse(Session["id_tipo_usuario"].ToString()) == 1)
                 {
                     DataTable ListadoAcciones = new DataTable();
-                    ListadoAcciones = cInformeEI.ListadoAcciones(int.Parse(Session["idFuente"].ToString()), 0, "todos", 1);
+                    ListadoAcciones = cInformeEE.ListadoAcciones(int.Parse(Session["idFuente"].ToString()), 0, "todos", 2);
 
                     foreach (DataRow Row in ListadoAcciones.Rows)
                         if (Row[13].ToString() != "2" && Row[13].ToString() != "-2")
@@ -318,7 +318,7 @@ namespace SistemaGdC.Verificaciones.Fuentes
                             mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(Row[0].ToString()));
                             mEmpleado = cEmpleado.Obtner_Empleado(mAccionG.id_enlace, "enlace");
 
-                            string fuente = cInformeEI.nombreFuente(Row[0].ToString());
+                            string fuente = cInformeEE.nombreFuente(Row[0].ToString());
                             string asunto = "Acción Asignada (" + Row[0].ToString() + "), " + fuente;
 
                             if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, asunto, mAccionG.descripcion);
@@ -347,7 +347,7 @@ namespace SistemaGdC.Verificaciones.Fuentes
                 mostrarBotones(false);                
                 mEmpleado = cEmpleado.Obtner_Empleado(0, "administrador");
 
-                string fuente = cInformeEI.nombreFuente(Session["Accion"].ToString());
+                string fuente = cInformeEE.nombreFuente(Session["Accion"].ToString());
                 string asunto = "Rechazo de Acción (" + Session["Accion"].ToString() + "), " + fuente;
 
                 RechazarAccion(Session["Accion"].ToString());               
@@ -372,7 +372,7 @@ namespace SistemaGdC.Verificaciones.Fuentes
                 if (int.Parse(Session["id_tipo_usuario"].ToString()) == 1)
                 {
                     DataTable ListadoAcciones = new DataTable();
-                    ListadoAcciones = cInformeEI.ListadoAcciones(int.Parse(Session["idFuente"].ToString()), 0, "todos", 1);
+                    ListadoAcciones = cInformeEE.ListadoAcciones(int.Parse(Session["idFuente"].ToString()), 0, "todos", 2);
 
                     string asunto = "Rechazo de acciones (";
                     foreach (DataRow Row in ListadoAcciones.Rows)
@@ -384,7 +384,7 @@ namespace SistemaGdC.Verificaciones.Fuentes
 
                     mEmpleado = cEmpleado.Obtner_Empleado(0, "administrador");
 
-                    string fuente = cInformeEI.nombreFuente(Session["Accion"].ToString());
+                    string fuente = cInformeEE.nombreFuente(Session["Accion"].ToString());
                     asunto = asunto.Remove(asunto.Length - 2);
                     asunto += "), " + fuente;
 

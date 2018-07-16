@@ -10,7 +10,7 @@
 namespace SistemaGdC.Verificaciones.Fuentes {
     
     
-    public partial class VerificacionInformeEI {
+    public partial class VerificacionInformeEE {
         
         /// <summary>
         /// Control update1.

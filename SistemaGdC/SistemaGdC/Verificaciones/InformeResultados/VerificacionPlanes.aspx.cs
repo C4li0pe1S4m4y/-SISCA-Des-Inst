@@ -169,7 +169,7 @@ namespace SistemaGdC.Verificaciones.InformeResultados
             //string rechazo = txtRechazo.Text;
 
             mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(Session["noAccion"].ToString()));
-            mEmpleado = cEmpleado.Obtner_Empleado(mAccionG.id_enlace);
+            mEmpleado = cEmpleado.Obtner_Empleado(mAccionG.id_enlace, "enlace");
             
 
             switch (int.Parse(Session["id_tipo_usuario"].ToString()))

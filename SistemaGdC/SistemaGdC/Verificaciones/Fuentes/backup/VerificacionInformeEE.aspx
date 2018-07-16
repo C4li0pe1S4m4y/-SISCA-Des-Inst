@@ -8,10 +8,10 @@
     <style type="text/css">
         .chart {
             width: 100%;
-            panel1.Visible = false;
-            panel2.Visible = true;
-            panel3.Visible = true;
-            panel4.Visible = false;
+            panel1 .Visible = false;
+            panel2 .Visible = true;
+            panel3 .Visible = true;
+            panel4 .Visible = false;
             mostrarBotones(false);
             height: 100%;
             min-height: 100%;
@@ -49,6 +49,7 @@
             height: 20%;
             width: 50%;
             z-index: 100001;
+
             background-image: url(../Content/loading.gif);
             background-repeat: no-repeat;
             background-position: center;
@@ -59,7 +60,7 @@
         function closeMaccion() {
             $(".modal-fade").modal("hide");
             $(".modal-backdrop").remove();
-
+            
             $('#mRechazarUnaAccion').modal('hide');
             $('#mRechazarTodasAcciones').modal('hide');
         }
@@ -86,7 +87,6 @@
                                                     <asp:Button ID="btnRevisar" runat="server" ControlStyle-CssClass="btn btn-info"
                                                         CommandName="Revisar" CommandArgument="<%# Container.DataItemIndex %>"
                                                         Text="Revisar" />
-                                                    
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="anio" HeaderText="Año" />
@@ -157,7 +157,7 @@
                                         <%--<asp:Button ID="btnRechazarTodo" Text="Rechazar Pends." runat="server" CssClass="btn btn-danger btn-block"
                                             OnClick="btnRechazarTodo_Click" OnClientClick="return confirm('¿Desea rechazar todas las Acciones pendientes?');" />--%>
                                         <asp:Button ID="btnRechazarTodo" Text="Rechazar Pends." runat="server" CssClass="btn btn-danger btn-block"
-                                            data-toggle="modal" data-target="#mRechazarTodasAcciones" />
+                                            data-toggle="modal" data-target="#mRechazarTodasAcciones"/>
                                     </div>
                                 </div>
                             </div>

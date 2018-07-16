@@ -18,13 +18,12 @@ namespace SistemaGdC.Verificaciones.Fuentes
         cCorreo cCorreo = new cCorreo();
 
         mFuente mInformeEE = new mFuente();
-        mAccionesGeneradas mAccionGenerada = new mAccionesGeneradas();
+        mAccionesGeneradas mAccionG = new mAccionesGeneradas();
         mEmpleado mEmpleado = new mEmpleado();
         mAprobados aprobados = new mAprobados();
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
             if (!IsPostBack)
             {
                 panel2.Visible = false;
@@ -39,7 +38,6 @@ namespace SistemaGdC.Verificaciones.Fuentes
                 gvListadoInformes.DataBind();
                 gvListadoInformes.Columns[0].Visible = false;
                 
-                //cResultados = new cInformeEI();
                 ddlAccionGenerada.ClearSelection();
                 ddlAccionGenerada.Items.Clear();
                 ddlAccionGenerada.AppendDataBoundItems = true;
@@ -53,8 +51,6 @@ namespace SistemaGdC.Verificaciones.Fuentes
                 cAcciones.dropProceso(ddlProceso);
                 cAcciones.dropUnidad(ddlUnidad);
                 cAcciones.dropTipoAccion(dllTipoAccion);
-                //cGen = new cGeneral();
-                
 
                 pn1.Visible = true;
             }
@@ -63,7 +59,6 @@ namespace SistemaGdC.Verificaciones.Fuentes
         protected void ddlUnidad_SelectedIndexChanged(object sender, EventArgs e)
         {
             string id_unidad = ddlUnidad.SelectedItem.Value;
-
             int idUnidad = 0;
             int.TryParse(ddlUnidad.SelectedValue, out idUnidad);
             if (idUnidad > 0)
@@ -79,16 +74,11 @@ namespace SistemaGdC.Verificaciones.Fuentes
         {
             if (e.CommandName == "Ver")
             {
-                mAccionesGeneradas mAccionG = new mAccionesGeneradas();
-
                 panel4.Visible = true;
 
                 int index = Convert.ToInt16(e.CommandArgument);
                 int pag = Convert.ToInt16(Session["pagina2"]);
                 int psize = gvListadoAcciones.PageSize;
-
-                //string prueba = gvListadoAcciones.Rows[index].Cells[0].Text;
-
 
                 GridViewRow selectedRow = gvListadoAcciones.Rows[index - (pag * psize)];
 
@@ -134,7 +124,6 @@ namespace SistemaGdC.Verificaciones.Fuentes
             btnValidar.Visible = ver;
             btnRechazar.Visible = ver;
 
-            
             ddlAccionGenerada.Enabled = ver;
             txtHallazgo.Enabled = ver;
             txtPuntoNorma.Enabled = ver;
@@ -144,8 +133,7 @@ namespace SistemaGdC.Verificaciones.Fuentes
             ddlEnlace.Enabled = ver;
             ddlLider.Enabled = ver;
             dllTipoAccion.Enabled = ver;
-            txtDescripcion.Enabled = ver;
-            
+            txtDescripcion.Enabled = ver;            
         }
 
         protected void gvListado_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -159,12 +147,11 @@ namespace SistemaGdC.Verificaciones.Fuentes
             }
         }
 
-
         protected void OnPaging(Object sender, GridViewPageEventArgs e)
         {
             gvListadoInformes.PageIndex = e.NewPageIndex;
             gvListadoInformes.Columns[0].Visible = true;
-            gvListadoInformes.DataSource = cInformeEE.ListadoFuentes(1,1);
+            gvListadoInformes.DataSource = cInformeEE.ListadoFuentes(1,2);
             gvListadoInformes.DataBind();
             gvListadoInformes.Columns[0].Visible = false;
         }
@@ -267,7 +254,6 @@ namespace SistemaGdC.Verificaciones.Fuentes
 
         protected void verColumnas(bool ver)
         {
-            //gvListadoAcciones.Columns[0].Visible = ver;
             gvListadoAcciones.Columns[4].Visible = ver;
             gvListadoAcciones.Columns[11].Visible = ver;
         }
@@ -297,17 +283,19 @@ namespace SistemaGdC.Verificaciones.Fuentes
                 {
                     ValidarAccion(Session["Accion"].ToString());
 
-                    mAccionGenerada = cAcciones.Obtner_AccionGenerada(int.Parse(Session["Accion"].ToString()));
-                    mEmpleado = cEmpleado.Obtner_Empleado(mAccionGenerada.id_analista);
+                    mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(Session["Accion"].ToString()));
+                    mEmpleado = cEmpleado.Obtner_Empleado(mAccionG.id_analista, "analista");
 
-                    if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, "Acción Asignada", "Descripción de la acción");
-                    txtRechazoAccion.Text = "";
+                    string fuente = cInformeEE.nombreFuente(Session["Accion"].ToString());
+                    string asunto = "Acción Asignada (" + Session["Accion"].ToString() + "), " + fuente;
+
+                    if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, asunto, mAccionG.descripcion);
 
                     ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Acción validada correctamente', '', 'success');", true);
                 }
                 else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No tiene permisos para validar acciones', '', 'warning');", true);                
             }
-            finally
+            catch
             {
                 ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Hubo un problema al validar Acción', 'Intente de nuevo', 'warning');", true);
             }           
@@ -323,25 +311,24 @@ namespace SistemaGdC.Verificaciones.Fuentes
                     ListadoAcciones = cInformeEE.ListadoAcciones(int.Parse(Session["idFuente"].ToString()), 0, "todos", 2);
 
                     foreach (DataRow Row in ListadoAcciones.Rows)
-                    {
                         if (Row[13].ToString() != "2" && Row[13].ToString() != "-2")
                         {
                             ValidarAccion(Row[0].ToString());
 
-                            mAccionGenerada = cAcciones.Obtner_AccionGenerada(int.Parse(Row[0].ToString()));
-                            mEmpleado = cEmpleado.Obtner_Empleado(mAccionGenerada.id_enlace);
-                            if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, "Acción Asignada", "Descripción de la acción");
-                            txtRechazoAccion.Text = "";
-                        }
-                    }
-                    ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Acciones validadas correctamente', '', 'success');", true);
+                            mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(Row[0].ToString()));
+                            mEmpleado = cEmpleado.Obtner_Empleado(mAccionG.id_enlace, "enlace");
 
-                    //botonesTodos();
-                    //actualizarListadoAcciones();
+                            string fuente = cInformeEE.nombreFuente(Row[0].ToString());
+                            string asunto = "Acción Asignada (" + Row[0].ToString() + "), " + fuente;
+
+                            if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, asunto, mAccionG.descripcion);
+                        }
+
+                    ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Acciones validadas correctamente', '', 'success');", true);
                 }
                 else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No tiene permisos para validar Acciones', '', 'warning');", true);
             }
-            finally { }
+            catch { }
         }
 
         protected void RechazarAccion(string idAccion)
@@ -357,13 +344,15 @@ namespace SistemaGdC.Verificaciones.Fuentes
         {
             if (int.Parse(Session["id_tipo_usuario"].ToString()) == 1)
             {
-                mostrarBotones(false);
-                mAccionGenerada = cAcciones.Obtner_AccionGenerada(int.Parse(Session["Accion"].ToString()));
-                mEmpleado = cEmpleado.Obtner_Empleado(mAccionGenerada.id_analista);
+                mostrarBotones(false);                
+                mEmpleado = cEmpleado.Obtner_Empleado(0, "administrador");
 
-                cAcciones.aprobar_Accion(int.Parse(Session["Accion"].ToString()), -2);
+                string fuente = cInformeEE.nombreFuente(Session["Accion"].ToString());
+                string asunto = "Rechazo de Acción (" + Session["Accion"].ToString() + "), " + fuente;
 
-                if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Accion", txtRechazoAccion.Text);
+                RechazarAccion(Session["Accion"].ToString());               
+
+                if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, asunto, txtRechazoAccion.Text);
                 txtRechazoAccion.Text = "";
 
                 actualizarListadoAcciones();
@@ -376,34 +365,66 @@ namespace SistemaGdC.Verificaciones.Fuentes
             else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No tiene permisos para validar Informe', '', 'warning');", true);
         }
 
+        protected void btnRechazarTodo_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (int.Parse(Session["id_tipo_usuario"].ToString()) == 1)
+                {
+                    DataTable ListadoAcciones = new DataTable();
+                    ListadoAcciones = cInformeEE.ListadoAcciones(int.Parse(Session["idFuente"].ToString()), 0, "todos", 2);
+
+                    string asunto = "Rechazo de acciones (";
+                    foreach (DataRow Row in ListadoAcciones.Rows)
+                        if (Row[13].ToString() != "2" && Row[13].ToString() != "-2")
+                        {
+                            RechazarAccion(Row[0].ToString());
+                            asunto += Row[0].ToString() + ", ";
+                        }
+
+                    mEmpleado = cEmpleado.Obtner_Empleado(0, "administrador");
+
+                    string fuente = cInformeEE.nombreFuente(Session["Accion"].ToString());
+                    asunto = asunto.Remove(asunto.Length - 2);
+                    asunto += "), " + fuente;
+
+                    if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, asunto, txtRechazoAccionTodo.Text);
+                    txtRechazoAccionTodo.Text = "";
+
+                    ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Acciones rechazadas correctamente', '', 'error');", true);
+                }
+                else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No tiene permisos para rechazar Acciones', '', 'warning');", true);
+            }
+            catch { }            
+        }
+
         protected void btnActualizar_Click(object sender, EventArgs e)
         {
             try
             {
-                mAccionGenerada = cAcciones.Obtner_AccionGenerada(int.Parse(Session["Accion"].ToString()));
+                mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(Session["Accion"].ToString()));
 
                 bool existeHallazgo = false;
                 foreach (GridViewRow Row in gvListadoAcciones.Rows)
                     if (Row.Cells[3].Text == txtHallazgo.Text) existeHallazgo = true;
 
                 if (!existeHallazgo
-                    ||mAccionGenerada.correlativo_hallazgo==int.Parse(txtHallazgo.Text))
+                    || mAccionG.correlativo_hallazgo==int.Parse(txtHallazgo.Text))
                 {
-                    mAccionesGeneradas ag = new mAccionesGeneradas();
-                    ag.id_accion_generada = int.Parse(Session["Accion"].ToString());
-                    ag.norma = txtPuntoNorma.Text;
-                    ag.descripcion = txtDescripcion.Text;
-                    ag.id_lider = int.Parse(ddlLider.SelectedValue);
-                    ag.id_enlace = int.Parse(ddlEnlace.SelectedValue);
-                    ag.id_unidad = int.Parse(ddlUnidad.SelectedValue);
-                    ag.id_dependencia = int.Parse(ddlDependencia.SelectedValue);
-                    ag.id_ccl_accion_generada = int.Parse(ddlAccionGenerada.SelectedValue);
-                    ag.id_proceso = int.Parse(ddlProceso.SelectedValue);
-                    ag.id_tipo_accion = int.Parse(dllTipoAccion.SelectedValue);
-                    ag.correlativo_hallazgo = int.Parse(txtHallazgo.Text);
+                    mAccionesGeneradas nuevaAG = new mAccionesGeneradas();
+                    nuevaAG.id_accion_generada = int.Parse(Session["Accion"].ToString());
+                    nuevaAG.norma = txtPuntoNorma.Text;
+                    nuevaAG.descripcion = txtDescripcion.Text;
+                    nuevaAG.id_lider = int.Parse(ddlLider.SelectedValue);
+                    nuevaAG.id_enlace = int.Parse(ddlEnlace.SelectedValue);
+                    nuevaAG.id_unidad = int.Parse(ddlUnidad.SelectedValue);
+                    nuevaAG.id_dependencia = int.Parse(ddlDependencia.SelectedValue);
+                    nuevaAG.id_ccl_accion_generada = int.Parse(ddlAccionGenerada.SelectedValue);
+                    nuevaAG.id_proceso = int.Parse(ddlProceso.SelectedValue);
+                    nuevaAG.id_tipo_accion = int.Parse(dllTipoAccion.SelectedValue);
+                    nuevaAG.correlativo_hallazgo = int.Parse(txtHallazgo.Text);
 
-                    cAcciones.actualizar_Accion(ag);
-
+                    cAcciones.actualizar_Accion(nuevaAG);
                     actualizarListadoAcciones();
 
                     ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('La Acción ha sido actualizada correctamente', '', 'success');", true);
@@ -416,35 +437,6 @@ namespace SistemaGdC.Verificaciones.Fuentes
             }            
         }
 
-        
-
-        protected void btnRechazarTodo_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (int.Parse(Session["id_tipo_usuario"].ToString()) == 1)
-                {
-                    mostrarBotones(false);
-                    mInformeEE = cInformeEE.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "2");
-                    cAcciones.aprobarTodo_Accion(mInformeEE.id_fuente, "rechazado");
-                    ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Acciones rechazadas correctamente', '', 'error');", true);
-
-                    botonesTodos();
-
-                    //if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Varias Acciones", txtRechazoAccionTodo.Text);
-                    //txtRechazoAccionTodo.Text = "";
-
-                    actualizarListadoAcciones();
-                }
-                else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No tiene permisos para rechazar Acciones', '', 'warning');", true);
-            }
-            catch
-            {
-                ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Ha ocurrido un error', 'Intente de nuevo', 'error');", true);
-            }
-            
-        }
-
         protected void ddlDependencia_SelectedIndexChanged(object sender, EventArgs e)
         {
             int idDependencia = 0;
@@ -453,7 +445,6 @@ namespace SistemaGdC.Verificaciones.Fuentes
             {
                 txtAnalista.Text = cEmpleado.ObtenerAnalistaUnidad(idDependencia);
             }
-
         }
     }
 }

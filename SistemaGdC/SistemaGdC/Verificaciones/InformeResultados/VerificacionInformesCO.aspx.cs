@@ -164,7 +164,7 @@ namespace SistemaGdC.Verificaciones.InformeResultados
         protected void btnRechazar_Click(object sender, EventArgs e)
         {
             mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(Session["noAccion"].ToString()));
-            mEmpleado = cEmpleado.Obtner_Empleado(mAccionG.id_enlace);
+            mEmpleado = cEmpleado.Obtner_Empleado(mAccionG.id_enlace, "enlace");
 
             switch (int.Parse(Session["id_tipo_usuario"].ToString()))
             {

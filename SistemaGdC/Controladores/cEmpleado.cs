@@ -13,14 +13,32 @@ namespace Controladores
     public class cEmpleado
     {
         DBConexion conectar = new DBConexion();
-
         mEmpleado mEmpleado = new mEmpleado();
-        public mEmpleado Obtner_Empleado(int id)
-        {            
+
+        public mEmpleado Obtner_Empleado(int id, string tipo_usuario)
+        {
+            string consulta = "";
+            switch(tipo_usuario)
+            {
+                case "enlace":
+                case "lider":
+                case "analista":
+                    consulta = "e.id_empleado = " + id.ToString();
+                    break;
+
+                case "administrador":
+                    consulta = "u.habilitado = 1 AND u.id_tipo_usuario = 2";
+                    break;
+
+                case "director":
+                    consulta = "u.habilitado = 1 AND u.id_tipo_usuario = 1";
+                    break;
+            }
             //conectar = new DBConexion();
-            string query = string.Format(" select * from sgc_empleados " +                
-                "where id_empleado = '{0}'; "
-            , id);
+            string query = string.Format("SELECT e.id_empleado, e.nombre, e.email " +
+                "FROM sgc_empleados e INNER JOIN sgc_usuario u ON e.id_empleado = u.id_empleado " +
+                "WHERE {0};"                
+            , consulta);
             conectar.AbrirConexion();
             MySqlCommand cmd = new MySqlCommand(query, conectar.conectar);
 
@@ -28,7 +46,7 @@ namespace Controladores
             while (dr.Read())
             {
                 mEmpleado.id_empleado = int.Parse(dr.GetString("id_empleado"));
-                mEmpleado.Nombre = dr.GetString("Nombre");
+                mEmpleado.Nombre = dr.GetString("nombre");
 
                 if (!dr.IsDBNull(dr.GetOrdinal("email")))
                     mEmpleado.email = dr.GetString("email");

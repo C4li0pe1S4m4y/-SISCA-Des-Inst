@@ -228,7 +228,7 @@ namespace SistemaGdC.Seguimientos
         {
             mPlanAccion = cPlanAccion.Obtner_PlanAccion(int.Parse(Session["noAccion"].ToString()));
             mAccionG = cAcciones.Obtner_AccionGenerada(mPlanAccion.id_accion_generada);
-            mEmpleado = cEmpleado.Obtner_Empleado(mAccionG.id_enlace);            
+            mEmpleado = cEmpleado.Obtner_Empleado(mAccionG.id_enlace, "enlace");            
 
             switch (int.Parse(Session["id_tipo_usuario"].ToString()))
             {
@@ -454,7 +454,7 @@ namespace SistemaGdC.Seguimientos
         {
             mPlanAccion = cPlanAccion.Obtner_PlanAccion(int.Parse(Session["noAccion"].ToString()));
             mAccionG = cAcciones.Obtner_AccionGenerada(mPlanAccion.id_accion_generada);
-            mEmpleado = cEmpleado.Obtner_Empleado(mAccionG.id_analista);
+            mEmpleado = cEmpleado.Obtner_Empleado(mAccionG.id_analista, "analista");
 
 
             switch (int.Parse(Session["id_tipo_usuario"].ToString()))
