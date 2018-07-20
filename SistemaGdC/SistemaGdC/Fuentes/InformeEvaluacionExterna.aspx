@@ -36,7 +36,7 @@
                                 <div class="col-md-1">
                                     <div class="form-group">
                                         <div>
-                                            <label visible="false">No.:</label>
+                                            <label visible="false">ID:</label>
                                         </div>
                                         <div style="margin-top: 0.3em">
                                             <asp:Label runat="server" ID="lblCorrelativo" CssClass="label label-info" Style="font-size: large"></asp:Label>
@@ -48,7 +48,7 @@
                                     <asp:TextBox ID="txtanio" CssClass="form-control input" runat="server" OnTextChanged="txtanio_TextChanged" AutoPostBack="true"></asp:TextBox>
                                 </div>
                                 <div class="col-md-3">
-                                    <label>No. de Evaluación:</label>
+                                    <label>No.:</label>
                                     <asp:TextBox ID="txtInforme" CssClass="form-control input" runat="server"></asp:TextBox>
                                 </div>
                                 <div class="col-md-3">
@@ -139,11 +139,6 @@
                                         <asp:DropDownList ID="dllTipoAccion" CssClass="form-control input" Width="100%" runat="server" Enabled="true"></asp:DropDownList>
                                         <asp:RequiredFieldValidator ValidationGroup="validar" ID="RFVdllTipoAccion" Style="color: red;" SetFocusOnError="true" ControlToValidate="dllTipoAccion" InitialValue="0" runat="server" ErrorMessage="Seleccione Tipo de Acción." Display="Dynamic" />
                                     </div>
-                                    <!--
-                                    <div class="form-group">
-                                        <label>No. Plan de Acción/Informe: </label>
-                                        <asp:TextBox ID="txtNoPlanAccion" CssClass="form-control input" runat="server"></asp:TextBox>
-                                    </div>-->
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">

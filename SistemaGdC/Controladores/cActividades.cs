@@ -61,9 +61,9 @@ namespace Controladores
             return result;
         }
 
-        public mAccionesRealizar Obtner_Actividad(int id)
+        public mActividad Obtner_Actividad(int id)
         {
-            mAccionesRealizar objActividad = new mAccionesRealizar();
+            mActividad objActividad = new mActividad();
             string query = string.Format("SELECT * FROM sgc_accion_realizar where id_accion_realizar = {0}; "
             , id);
             conectar.AbrirConexion();
@@ -96,7 +96,7 @@ namespace Controladores
             try
             {
                 command.CommandText = string.Format("UPDATE sgc_accion_realizar SET accion = '{1}', " +
-                    "resopnsable = '{2}', fecha_inicio = '{3}', fecha_fin = '{4}', observaciones = '{5}' " +
+                    "responsable = '{2}', fecha_inicio = '{3}', fecha_fin = '{4}', observaciones = '{5}' " +
                     "WHERE id_accion_realizar = '{0}'; ",
                 act.id_accion_realizar, act.accion, act.responsable, act.fecha_inicio, act.fecha_fin, act.observaciones);
                 command.ExecuteNonQuery();

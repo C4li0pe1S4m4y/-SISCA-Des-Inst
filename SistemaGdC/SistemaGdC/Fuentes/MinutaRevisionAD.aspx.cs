@@ -70,7 +70,7 @@ namespace SistemaGdC.Fuentes
 
                 if (mMinutaRevisionAD.id_status==0)
                 {
-                    if (cAcciones.ingresarAcción(mAccionG))
+                    if (cAcciones.ingresarAccion(mAccionG))
                     {
                         gvListadoAcciones.DataSource = cMinutaRevisionAD.ListadoAcciones(mMinutaRevisionAD.id_fuente, 0, "todos", 7);
                         gvListadoAcciones.DataBind();

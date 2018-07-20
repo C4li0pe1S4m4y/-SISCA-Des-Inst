@@ -17,8 +17,8 @@ namespace SistemaGdC.InformeResultados
         cPlanAcion cPlanAccion = new cPlanAcion();
         cActividades cActividades = new cActividades();
         mAccionesGeneradas mAccionG = new mAccionesGeneradas();
-        mPlanAccion mPlanAccion = new mPlanAccion();
-        mAccionesRealizar mAccionRealizar = new mAccionesRealizar();
+        mPlanAccion mPlanAccion = new mPlanAccion();        
+        mActividad mActividad = new mActividad();
         mFuente mFuente = new mFuente();
 
         int id_enlace;
@@ -35,6 +35,7 @@ namespace SistemaGdC.InformeResultados
 
                 id_enlace = mAccionG.id_enlace;
                 visibleAdjuntar(false);
+                visibleActividad(false);
                 cAcciones.dropUnidad(ddlunidad);
                 ddlunidad.SelectedValue = mAccionG.id_unidad.ToString();
                 cAcciones.dllDependencia(ddldependencia, mAccionG.id_unidad);
@@ -44,8 +45,6 @@ namespace SistemaGdC.InformeResultados
                 txtanio.Text = mFuente.anio.ToString();
                 txtHallazgo.Text = mAccionG.correlativo_hallazgo.ToString();
                 txtEvaluacion.Text = Session["noAccion"].ToString();
-                //txtEvaluacion.Text = mAccionG.no_informe_ei.ToString();
-                //txtHallazgo.Text = mAccionG.correlativo_hallazgo.ToString();
                 
                 cInfoCorrec.ddlTecnicaAnalisis(ddlTecnicaAnalisis);
 
@@ -65,6 +64,7 @@ namespace SistemaGdC.InformeResultados
                         enabledCausaRaiz(false);
                         enabledPlan(true);
                         visibleAdjuntar(false);
+                        
                         this.Session["noPlanAccion"] = mPlanAccion.id_plan;
                         break;
                 }
@@ -171,13 +171,13 @@ namespace SistemaGdC.InformeResultados
 
         protected void btnGuardarActividad_Click(object sender, EventArgs e)
         {
-            mAccionRealizar.id_plan = int.Parse(Session["noPlanAccion"].ToString());
-            mAccionRealizar.accion = txtAccionRealizar.Text;
-            mAccionRealizar.responsable = txtResponsable.Text;
-            mAccionRealizar.fecha_inicio = txtFechaInicio.Text;
-            mAccionRealizar.fecha_fin = txtFechaFin.Text;
+            mActividad.id_plan = int.Parse(Session["noPlanAccion"].ToString());
+            mActividad.accion = txtAccionRealizar.Text;
+            mActividad.responsable = txtResponsable.Text;
+            mActividad.fecha_inicio = txtFechaInicio.Text;
+            mActividad.fecha_fin = txtFechaFin.Text;
 
-            int result = cPlanAccion.IngresarAccionRealizar(mAccionRealizar);
+            int result = cPlanAccion.IngresarAccionRealizar(mActividad);
             if (result == 1)
             {
                 gvListado.DataSource = cPlanAccion.ListadoAccionesRealizar(int.Parse(Session["noPlanAccion"].ToString()));
@@ -189,6 +189,8 @@ namespace SistemaGdC.InformeResultados
 
         protected void btnNuevo_Click(object sender, EventArgs e)
         {
+            btnGuardar.Visible = true;
+            visibleActividad(false);
             limpiarActividad();
         }
 
@@ -286,6 +288,12 @@ namespace SistemaGdC.InformeResultados
             FileEvidencia.Visible = vis;
         }
 
+        void visibleActividad(bool vis)
+        {
+            btnEditar.Visible = vis;
+            btnEliminar.Visible = vis;
+        }
+
         protected void ddlTecnicaAnalisis_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ddlTecnicaAnalisis.SelectedItem.Value == "No aplica")
@@ -300,21 +308,56 @@ namespace SistemaGdC.InformeResultados
 
         protected void gvListado_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName == "Eliminar")
+            if (e.CommandName == "Ver")
             {
+                btnGuardar.Visible = false;
                 int index = Convert.ToInt16(e.CommandArgument);
                 int pag = Convert.ToInt16(Session["pagina"]);
                 int psize = gvListado.PageSize;
 
                 GridViewRow selectedRow = gvListado.Rows[index];
+                this.Session["Actividad"] = selectedRow.Cells[1].Text;
 
-                mAccionRealizar = cActividades.Obtner_Actividad(int.Parse(selectedRow.Cells[1].Text));
-                cActividades.EliminarAccion(int.Parse(selectedRow.Cells[1].Text));
-                gvListado.DataSource = cPlanAccion.ListadoAccionesRealizar(int.Parse(Session["noPlanAccion"].ToString()));
-                gvListado.DataBind();
+                mActividad = cActividades.Obtner_Actividad(int.Parse(selectedRow.Cells[1].Text));
+                txtAccionRealizar.Text = mActividad.accion;
+                txtResponsable.Text = mActividad.responsable;
+                txtFechaInicio.Text = mActividad.fecha_inicio;
+                txtFechaFin.Text = mActividad.fecha_fin;
 
-                ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Registro eliminado exitosamente!', '', 'error');", true);
+                visibleActividad(true);
+                //cActividades.EliminarAccion(int.Parse(selectedRow.Cells[1].Text));
+                //gvListado.DataSource = cPlanAccion.ListadoAccionesRealizar(int.Parse(Session["noPlanAccion"].ToString()));
+                //gvListado.DataBind();
+                //ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Registro eliminado exitosamente!', '', 'error');", true);
             }
+        }
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            cActividades.EliminarAccion(int.Parse(Session["Actividad"].ToString()));
+            btnGuardar.Visible = true;
+            limpiarActividad();
+            visibleActividad(false);
+            ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Registro eliminado exitosamente!', '', 'error');", true);
+        }
+
+        protected void btnEditar_Click(object sender, EventArgs e)
+        {
+            mActividad.id_accion_realizar = int.Parse(Session["Actividad"].ToString());
+            mActividad.accion = txtAccionRealizar.Text;
+            mActividad.responsable = txtResponsable.Text;
+            mActividad.fecha_inicio = txtFechaInicio.Text;
+            mActividad.fecha_fin = txtFechaFin.Text;
+            cActividades.actualizarActividad(mActividad);
+
+            btnGuardar.Visible = true;
+            limpiarActividad();
+            visibleActividad(false);
+
+            gvListado.DataSource = cPlanAccion.ListadoAccionesRealizar(int.Parse(Session["noPlanAccion"].ToString()));
+            gvListado.DataBind();
+            ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Actividad actualizada exitosamente!', '', 'success');", true);
+            
         }
     }
 }

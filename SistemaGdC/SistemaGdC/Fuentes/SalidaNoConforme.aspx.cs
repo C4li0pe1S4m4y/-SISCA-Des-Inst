@@ -156,7 +156,7 @@ namespace SistemaGdC.Fuentes
 
                 if (mSalidaNoConforme.id_status==0)
                 {
-                    if (cAcciones.ingresarAcción(mAccionG))
+                    if (cAcciones.ingresarAccion(mAccionG))
                     {
                         gvListadoAcciones.DataSource = cSalidaNoConforme.ListadoAcciones(mSalidaNoConforme.id_fuente, 0, "todos", 8);
                         gvListadoAcciones.DataBind();
@@ -230,7 +230,6 @@ namespace SistemaGdC.Fuentes
                 ddlLider.SelectedIndex = 0;
                 txtAnalista.Text = "";
                 dllTipoAccion.SelectedIndex = 0;
-                txtNoPlanAccion.Text = "";
             }
 
             catch
@@ -265,7 +264,6 @@ namespace SistemaGdC.Fuentes
                 ddlLider.SelectedValue = mAccionG.id_lider.ToString();
                 txtAnalista.Text = cEmpleado.ObtenerAnalistaUnidad(mAccionG.id_dependencia);
                 dllTipoAccion.SelectedValue = mAccionG.id_tipo_accion.ToString();
-                txtNoPlanAccion.Text = "";
 
                 this.Session["noAccion"] = mAccionG.id_accion_generada;
 

@@ -48,7 +48,6 @@
   <ItemGroup>
     <Compile Include="mAprobados.cs" />
     <Compile Include="mAccionesGeneradas.cs" />
-    <Compile Include="mAccionesRealizar.cs" />
     <Compile Include="mActividad.cs" />
     <Compile Include="mEmpleado.cs" />
     <Compile Include="mInformeOM.cs" />

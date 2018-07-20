@@ -39,7 +39,8 @@ namespace SistemaGdC
                     MenuItem mnuMenuItem = new MenuItem();
 
                     mnuMenuItem.Value = drMenuItem["id_menu"].ToString();
-                    mnuMenuItem.Text = drMenuItem["descripcion"].ToString();
+                    mnuMenuItem.Text = drMenuItem["descripcion"].ToString(); 
+                                       
                     //mnuMenuItem.NavigateUrl = drMenuItem["Url"].ToString();
                     MenuP.Items.Add(mnuMenuItem);
                  
@@ -55,9 +56,12 @@ namespace SistemaGdC
                 if ((drMenuItem["PadreId"].ToString().Equals(mnuMenuItem.Value)) && !(drMenuItem["id_menu"].Equals(drMenuItem["PadreId"])))
                 {
                     MenuItem mnuNewMenuItem = new MenuItem();
-
+                    //int cantidad = 15;
                     mnuNewMenuItem.Value = drMenuItem["id_menu"].ToString();
-                    mnuNewMenuItem.Text = drMenuItem["descripcion"].ToString();
+                    //if(drMenuItem["id_menu"].ToString()=="10") //para agregar cantidad de fuentes
+                    //    mnuNewMenuItem.Text = "<ul class=\"list - group\">" + drMenuItem["descripcion"].ToString() + " <span class=\"badge\">"+ cantidad +"</span></ul>";
+                    //else
+                        mnuNewMenuItem.Text = drMenuItem["descripcion"].ToString();
                     mnuNewMenuItem.NavigateUrl = drMenuItem["Url"].ToString();
                     
                     mnuMenuItem.ChildItems.Add(mnuNewMenuItem);

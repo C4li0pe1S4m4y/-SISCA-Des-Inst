@@ -20,21 +20,54 @@
             overflow: hidden;
             border: solid 1px #000000;
         }
-    </style>    
+
+        #Background {
+            position: fixed;
+            top: 0px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+            background-color: #F0F0F0;
+            filter: alpha(opacity=80);
+            opacity: 0.8;
+            z-index: 100000;
+        }
+
+        #Progress {
+            position: fixed;
+            top: 40%;
+            left: 25%;
+            height: 20%;
+            width: 50%;
+            z-index: 100001;
+            background-image: url(../Content/loading.gif);
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    </style>
+
     <script type="text/javascript">
         function closeMactividad() {
             console.log(document.getElementById("<%=RFVtxtRechazo.ClientID %>").isvalid)
             if (document.getElementById("<%=RFVtxtRechazo.ClientID %>").isvalid)
-            $('#myModalActividad').modal('hide');
+                $('#myModalActividad').modal('hide');
         }
 
         function closeMeficacia() {
             $('#myModalEficacia').modal('hide');
         }
+
+        function openInNewTab() {
+            window.document.forms[0].target = '_blank';
+            setTimeout(function () { window.document.forms[0].target = ''; }, 0);
+        }
     </script>
 
 
-    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+    <asp:UpdatePanel ID="update1" runat="server">
         <ContentTemplate>
             <div class="row">
                 <div class="col-md-12" id="pn1" runat="server">
@@ -99,16 +132,10 @@
                                                             Text="Ver" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:BoundField DataField="Acción" HeaderText="Acción" />
                                                 <asp:BoundField DataField="Correlativo" HeaderText="Correlativo" />
-                                                <asp:BoundField DataField="Status" HeaderText="Status" />
-                                                <asp:BoundField DataField="Punto de Norma" HeaderText="Punto de Norma" />
-                                                <asp:BoundField DataField="Proceso" HeaderText="Proceso" />
-
+                                                <asp:BoundField DataField="Fuente" HeaderText="Fuente" />
                                                 <asp:BoundField DataField="Dependencia" HeaderText="Dependencia" />
                                                 <asp:BoundField DataField="Descripción" HeaderText="Descripción" />
-                                                <asp:BoundField DataField="Enlace" HeaderText="Enlace" />
-
                                                 <asp:BoundField DataField="Tipo Acción" HeaderText="Tipo Acción" />
                                             </Columns>
                                             <HeaderStyle BackColor="#33CCFF" />
@@ -148,14 +175,18 @@
                                     <asp:FileUpload ID="FileEficacia" Visible="false" CssClass="btn btn-primary btn-sm" runat="server" Width="100%" />
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <br />
                                 <asp:Button ID="btnCancelar" OnClick="btnCancelar_Click" Text="Cancelar" CssClass="btn" runat="server" Width="100%" />
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
+                                <br />
+                                <asp:Button ID="btnAmpliacion" Visible="false" OnClick="btnAmpliacion_Click" Text="Ampliar" CssClass="btn btn-warning" runat="server" Width="100%" />
+                            </div>
+                            <div class="col-md-3">
                                 <br />
                                 <asp:Button ID="btnAdjuntarEficacia" OnClick="btnAdjuntarEficacia_Click" Text="Adj. Eficacia" CssClass="btn btn-primary" runat="server" Width="100%" />
-                                <asp:Button ID="btnDescargarEficacia" OnClick="btnDescargarEficacia_Click" Text="Eficacia" CssClass="btn btn-primary" runat="server" Width="100%" />
+                                <asp:Button ID="btnDescargarEficacia" OnClientClick="openInNewTab();" OnClick="btnDescargarEficacia_Click" Text="Eficacia" CssClass="btn btn-primary" runat="server" Width="100%" />
                             </div>
                             <div class="col-md-1">
                                 <br />
@@ -257,7 +288,7 @@
                                     <div class="row" id="panelBtAnalista" runat="server">
                                         <div class="col-md-4">
                                             <br />
-                                            <asp:Button ID="btnEvidencia" Text="Evidencia" CssClass="btn btn-primary" OnClick="btnDescargar_Click" runat="server" Width="100%" />
+                                            <asp:Button ID="btnEvidencia" Text="Evidencia" CssClass="btn btn-primary" OnClientClick="openInNewTab();" OnClick="btnDescargar_Click" runat="server" Width="100%" />
                                         </div>
                                         <div class="col-md-5"></div>
                                         <div class="col-md-1">
@@ -284,7 +315,7 @@
                                                 <div class="modal-body">
                                                     <label>Observaciones: </label>
                                                     <asp:TextBox ID="txtRechazo" Enabled="true" Width="100%" CssClass="form-control" TextMode="MultiLine" Style="height: 205px" runat="server"></asp:TextBox>
-                                                    <asp:RequiredFieldValidator ValidationGroup="rechazarActividad" ID="RFVtxtRechazo" Style="color: red;" SetFocusOnError="true" ControlToValidate="txtRechazo" InitialValue="" runat="server" ErrorMessage="Ingrese No. Hallazgo." Display="Dynamic" />                                                    
+                                                    <asp:RequiredFieldValidator ValidationGroup="rechazarActividad" ID="RFVtxtRechazo" Style="color: red;" SetFocusOnError="true" ControlToValidate="txtRechazo" InitialValue="" runat="server" ErrorMessage="Ingrese No. Hallazgo." Display="Dynamic" />
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -443,4 +474,18 @@
             <asp:PostBackTrigger ControlID="btnDescargarEficacia" />
         </Triggers>
     </asp:UpdatePanel>
+    <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="update1">
+        <ProgressTemplate>
+            <div id="Background"></div>
+            <div id="Progress">
+                <h6>
+                    <p style="text-align: center">
+                        <b>Cargando...
+                        <br />
+                        </b>
+                    </p>
+                </h6>
+            </div>
+        </ProgressTemplate>
+    </asp:UpdateProgress>
 </asp:Content>

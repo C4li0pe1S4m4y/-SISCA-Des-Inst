@@ -13,7 +13,7 @@ namespace SistemaGdC.Verificaciones.InformeResultados
         cAcciones cAcciones = new cAcciones();
         cCorreo cCorreo = new cCorreo();
         cEmpleado cEmpleado = new cEmpleado();
-        cFuente cResultados = new cFuente();
+        cFuente cFuente = new cFuente();
 
         cGeneral cGen = new cGeneral();
         cInformeCO cInfoCorrec = new cInformeCO();
@@ -68,7 +68,6 @@ namespace SistemaGdC.Verificaciones.InformeResultados
             int.TryParse(ddlunidad.SelectedValue, out idUnidad);
             if (idUnidad > 0)
             {
-                cResultados = new cFuente();
                 cAcciones.dllDependencia(ddldependencia, idUnidad);
             }
         }
@@ -89,6 +88,7 @@ namespace SistemaGdC.Verificaciones.InformeResultados
 
                 mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(selectedRow.Cells[0].Text));
 
+                lblFuente.InnerText = cFuente.nombreFuente(mAccionG.id_accion_generada.ToString());
                 ///////////////////////////////////////////////////////////////////////
                 //txtanio.Text = mAccionG.anio_informe_ei.ToString();
                 cAcciones.dropUnidad(ddlunidad);
@@ -199,11 +199,9 @@ namespace SistemaGdC.Verificaciones.InformeResultados
 
             if (file.Exists)
             {
-                Response.ClearContent();
-                Response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}", file.Name));
-                Response.AddHeader("Content-Length", file.Length.ToString());
+                Response.Clear();
                 Response.ContentType = "application/pdf";
-                Response.TransmitFile(file.FullName);
+                Response.WriteFile(file.FullName);
                 Response.End();
             }
             else

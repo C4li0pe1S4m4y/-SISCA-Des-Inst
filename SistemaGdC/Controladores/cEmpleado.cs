@@ -36,7 +36,7 @@ namespace Controladores
             }
             //conectar = new DBConexion();
             string query = string.Format("SELECT e.id_empleado, e.nombre, e.email " +
-                "FROM sgc_empleados e INNER JOIN sgc_usuario u ON e.id_empleado = u.id_empleado " +
+                "FROM sgc_empleados e LEFT JOIN sgc_usuario u ON e.id_empleado = u.id_empleado " +
                 "WHERE {0};"                
             , consulta);
             conectar.AbrirConexion();
@@ -50,6 +50,7 @@ namespace Controladores
 
                 if (!dr.IsDBNull(dr.GetOrdinal("email")))
                     mEmpleado.email = dr.GetString("email");
+                else mEmpleado.email = "";
             }
             return mEmpleado;
         }

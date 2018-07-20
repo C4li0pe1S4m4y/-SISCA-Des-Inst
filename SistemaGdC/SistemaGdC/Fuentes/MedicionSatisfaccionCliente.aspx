@@ -36,7 +36,7 @@
                                 <div class="col-md-1">
                                     <div class="form-group">
                                         <div>
-                                            <label visible="false">No.:</label>
+                                            <label visible="false">ID:</label>
                                         </div>
                                         <div style="margin-top: 0.3em">
                                             <asp:Label runat="server" ID="lblCorrelativo" CssClass="label label-info" Style="font-size: large"></asp:Label>

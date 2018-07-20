@@ -147,7 +147,7 @@ namespace Controladores
             ddl.DataBind();
         }
 
-        public bool ingresarAcción(mAccionesGeneradas accion)
+        public bool ingresarAccion(mAccionesGeneradas accion)
         {
             try
             {
@@ -289,8 +289,9 @@ namespace Controladores
 
             DataSet result = new DataSet();
             conectar.AbrirConexion();
-            string query2 = string.Format("SELECT ag.id_accion_generada as 'id',ca.Accion as 'Acción',ag.correlativo_hallazgo as 'Correlativo',ag.correlativo_compromiso as 'Compromiso', ag.norma as 'Punto de Norma', " +
-                "sag.nombre as 'Status', p.Proceso, u.Unidad, d.Unidad Dependencia, ag.descripcion as 'Descripción', ee.Nombre Enlace, "+
+            string query2 = string.Format("SELECT ag.id_accion_generada as 'id',ca.Accion as 'Acción',ag.correlativo_hallazgo as 'Correlativo', "+
+                "ag.correlativo_compromiso as 'Compromiso', ag.norma as 'Punto de Norma', sag.nombre as 'Status', " +
+                "p.Proceso, u.Unidad, d.Unidad Dependencia, ag.descripcion as 'Descripción', ee.Nombre Enlace, "+
                 "ea.Nombre Analista, Date_format(ag.fecha, '%d/%m/%Y') as 'Fecha', "+
                 "ta.accion as 'Tipo Acción', " +
                 "CASE f.id_tipo_fuente " +

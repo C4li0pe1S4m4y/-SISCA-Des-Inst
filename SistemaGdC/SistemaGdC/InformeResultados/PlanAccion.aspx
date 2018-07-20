@@ -88,7 +88,7 @@
                             <div class="col-md-4">
                                 <br />
                                 <asp:Button ID="btnCancelar" OnClick="btnCancelar_Click" Text="Cancelar" CssClass="btn" runat="server" Width="100%" />
-                            </div>
+                            </div>                            
                             <div class="col-md-4">
                                 <br />
                                 <asp:Button ID="btnDescargar" Visible="false" Text="Down" OnClick="btnDescargar_Click" CssClass="btn btn-info" runat="server" Width="100%" />
@@ -147,11 +147,12 @@
 
                                         </div>
                                         <div class="col-md-2">
+                                            <label>&nbsp</label>
                                             <br />
-                                            <label>&nbsp;</label>
-                                            <asp:Button ID="btnGuardar" ValidationGroup="validarActividad" Text="Guardar" OnClick="btnGuardarActividad_Click" CssClass="btn btn-success btn-block" runat="server" Width="100%" />
-                                            <br />
-                                            <asp:Button ID="btnNuevo" Text="Nuevo" OnClick="btnNuevo_Click" CssClass="btn btn-warning btn-block" runat="server" Width="100%" />
+                                            <asp:Button ID="btnGuardar" ValidationGroup="validarActividad" Text="Guardar" OnClick="btnGuardarActividad_Click" CssClass="btn btn-success btn-block" runat="server" Width="100%" />                                           
+                                            <asp:Button ID="btnEditar" ValidationGroup="validarActividad" Text="Editar" OnClick="btnEditar_Click" CssClass="btn btn-primary btn-block" runat="server" Width="100%" />                                            
+                                            <asp:Button ID="btnNuevo" Text="Nuevo" OnClick="btnNuevo_Click" CssClass="btn btn-warning btn-block" runat="server" Width="100%" />                                            
+                                            <asp:Button ID="btnEliminar" Text="Eliminar" OnClientClick="return confirm('¿Desea eliminar la actividad?');" OnClick="btnEliminar_Click" CssClass="btn btn-danger btn-block" runat="server" Width="100%" />
                                         </div>
                                     </div>
                                 </div>
@@ -174,10 +175,9 @@
                                         <Columns>
                                             <asp:TemplateField ItemStyle-Width="30px" HeaderText="">
                                                 <ItemTemplate>
-                                                    <asp:Button ID="btnEliminar" runat="server" CssClass="btn btn-danger"
-                                                        CommandName="Eliminar" CommandArgument="<%# Container.DataItemIndex %>"
-                                                        OnClientClick="return confirm('¿Desea eliminar esta Actividad?');"
-                                                        Text="Eliminar" />
+                                                    <asp:Button ID="btnVer" runat="server" CssClass="btn btn-info"
+                                                        CommandName="Ver" CommandArgument="<%# Container.DataItemIndex %>"                                                        
+                                                        Text="Ver" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>

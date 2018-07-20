@@ -12,7 +12,7 @@ namespace SistemaGdC.Verificaciones.InformeResultados
         cPlanAcion cPlanAccion = new cPlanAcion();
         cAcciones cAcciones = new cAcciones();
 
-        cFuente cResultados = new cFuente();
+        cFuente cFuente = new cFuente();
         mInformeOM mInformeOM = new mInformeOM();
         cEmpleado cEmpleado = new cEmpleado();
         cCorreo cCorreo = new cCorreo();
@@ -70,7 +70,6 @@ namespace SistemaGdC.Verificaciones.InformeResultados
             int.TryParse(ddlunidad.SelectedValue, out idUnidad);
             if (idUnidad > 0)
             {
-                cResultados = new cFuente();
                 cAcciones.dllDependencia(ddldependencia, idUnidad);
             }
         }
@@ -91,33 +90,26 @@ namespace SistemaGdC.Verificaciones.InformeResultados
 
                 mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(selectedRow.Cells[0].Text));
 
+                lblFuente.InnerText = cFuente.nombreFuente(mAccionG.id_accion_generada.ToString());
                 ///////////////////////////////////////////////////////////////////////
-                //txtanio.Text = mAccionG.anio_informe_ei.ToString();
                 cAcciones.dropUnidad(ddlunidad);
                 ddlunidad.SelectedValue = mAccionG.id_unidad.ToString();
                 cAcciones.dllDependencia(ddldependencia, mAccionG.id_unidad);
                 ddldependencia.SelectedValue = mAccionG.id_dependencia.ToString();
                 txtDescripcion.Text = mAccionG.descripcion.ToString();
-                //txtEvaluacion.Text = mAccionG.no_informe_ei.ToString();
                 txtHallazgo.Text = mAccionG.correlativo_hallazgo.ToString();
 
                 cAcciones.dropTipoAccion(ddlTipoAccionInforme);
                 ddlTipoAccionInforme.SelectedValue = mAccionG.id_tipo_accion.ToString();
                 //////////////////////////////////////////////////////////////////////
                 this.Session["noAccion"] = mAccionG.id_accion_generada;                
-
                 
                 mInformeOM = cInformeOM.Obtner_InformeOM(int.Parse(Session["noAccion"].ToString()));
                 this.Session["id_informe_correccion"] = mInformeOM.id_informe_om.ToString();
                 cInformeOM.ddlEstadoInforme(ddlEstado);
-                //string prueba = ddlEstado.SelectedValue;
                 ddlEstado.SelectedValue = mInformeOM.estado.ToString();
-                //ddlEstado.SelectedValue = "Se Atenderá";
-                //ddlLider.SelectedValue = mInformeOM.id_lider.ToString();
                 txtAccionRealizada.Text = mInformeOM.descripcion_accion;
                 txtDesEvidencia.Text = mInformeOM.descripcion_evidencia;
-
-                //ddlLider.Enabled = false;
             }
         }
 
@@ -195,11 +187,9 @@ namespace SistemaGdC.Verificaciones.InformeResultados
 
             if (file.Exists)
             {
-                Response.ClearContent();
-                Response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}", file.Name));
-                Response.AddHeader("Content-Length", file.Length.ToString());
+                Response.Clear();
                 Response.ContentType = "application/pdf";
-                Response.TransmitFile(file.FullName);
+                Response.WriteFile(file.FullName);
                 Response.End();
             }
             else

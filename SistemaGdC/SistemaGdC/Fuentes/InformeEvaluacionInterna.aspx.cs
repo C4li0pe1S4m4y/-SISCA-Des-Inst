@@ -82,7 +82,7 @@ namespace SistemaGdC.Fuentes
 
                 if (mInformeEI.id_status==0)
                 {
-                    if (cAcciones.ingresarAcción(mAccionG))
+                    if (cAcciones.ingresarAccion(mAccionG))
                     {
                         gvListadoAcciones.DataSource = cInformeEI.ListadoAcciones(mInformeEI.id_fuente, 0, "todos", 1);
                         gvListadoAcciones.DataBind();

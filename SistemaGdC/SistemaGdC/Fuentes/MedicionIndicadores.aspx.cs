@@ -160,7 +160,7 @@ namespace SistemaGdC.Fuentes
 
                 if (mMedicionInd.id_status==0)
                 {
-                    if (cAcciones.ingresarAcción(mAccionG))
+                    if (cAcciones.ingresarAccion(mAccionG))
                     {
                         gvListadoAcciones.DataSource = cMedicionInd.ListadoAcciones(mMedicionInd.id_fuente, 0, "todos", 5);
                         gvListadoAcciones.DataBind();

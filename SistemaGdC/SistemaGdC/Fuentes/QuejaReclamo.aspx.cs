@@ -65,7 +65,7 @@ namespace SistemaGdC.Fuentes
 
                 if (mQuejaReclamo.id_status==0)
                 {
-                    if (cAcciones.ingresarAcción(mAccionG))
+                    if (cAcciones.ingresarAccion(mAccionG))
                     {
                         gvListadoAcciones.DataSource = cQuejaReclamo.ListadoAcciones(mQuejaReclamo.id_fuente, 0, "todos", 3);
                         gvListadoAcciones.DataBind();

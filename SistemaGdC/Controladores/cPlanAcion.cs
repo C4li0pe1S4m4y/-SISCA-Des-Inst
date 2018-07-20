@@ -39,7 +39,7 @@ namespace Controladores
             }
         }
 
-        public int IngresarAccionRealizar(mAccionesRealizar obj)
+        public int IngresarAccionRealizar(mActividad obj)
         {
             try
             {
@@ -166,6 +166,7 @@ namespace Controladores
                     objPlanAccion.fecha_ingreso = fecha.ToString("yyyy-MM-dd");
                 objPlanAccion.id_accion_generada = int.Parse(dr.GetString("id_accion_generada"));
                 objPlanAccion.id_status = int.Parse(dr.GetString("id_status"));
+                objPlanAccion.no_ampliacion = int.Parse(dr.GetString("no_ampliacion"));
             }
             conectar.CerrarConexion();
             return objPlanAccion;
@@ -192,13 +193,13 @@ namespace Controladores
 
                 case "validarLider": //Plan de Acción
                     join = "inner join sgc_plan_accion pa on pa.id_accion_generada = ag.id_accion_generada ";
-                    condicion = "AND ag.id_lider = " + id +" AND ag.id_status = 11";
+                    condicion = "AND ag.id_lider = " + id + " AND ag.id_status = 11";
                     break;
 
-//////////// SEGUIMIENTO DE ACTIVIDADES ////////////////////////////////////////////////////////////////////
+                //////////// SEGUIMIENTO DE ACTIVIDADES ////////////////////////////////////////////////////////////////////
                 case "seguimientoEnlace": //Enlace
                     join = "inner join sgc_plan_accion pa on pa.id_accion_generada = ag.id_accion_generada ";
-                    condicion = "AND ag.id_enlace = " + id + " AND ag.id_status = 14 AND pa.id_status = 1";
+                    condicion = "AND ag.id_enlace = " + id + " AND ag.id_status = 14 AND (pa.id_status = 1 OR pa.id_status = 6)";
                     break;
 
                 case "seguimientoAnalista": //Analista
@@ -206,14 +207,14 @@ namespace Controladores
                     condicion = "AND ag.id_analista = " + id + " AND ag.id_status = 14 AND (pa.id_status = 1 OR pa.id_status = 2 OR pa.id_status = -3)";
                     break;
 
-                case "seguimientoLider": //Lider
-                    join = "inner join sgc_plan_accion pa on pa.id_accion_generada = ag.id_accion_generada ";
-                    condicion = "AND ag.id_lider = " + id + " AND ag.id_status = 14 AND pa.id_status = 3";
-                    break;
+                //case "seguimientoLider": //Lider
+                //    join = "inner join sgc_plan_accion pa on pa.id_accion_generada = ag.id_accion_generada ";
+                //    condicion = "AND ag.id_lider = " + id + " AND ag.id_status = 14 AND pa.id_status = 3";
+                //    break;
 
                 case "seguimientoDirector": //Director
                     join = "inner join sgc_plan_accion pa on pa.id_accion_generada = ag.id_accion_generada ";
-                    condicion = "AND ag.id_status = 14 AND pa.id_status = 4";
+                    condicion = "AND ag.id_status = 14 AND pa.id_status = 3";
                     break;
 
 //////////// VALIDAR INFORME DE CORRECCIÓN /////////////////////////////////////////////////////////////////
@@ -256,20 +257,34 @@ namespace Controladores
 
             DataSet result = new DataSet();
             conectar.AbrirConexion();
-            string query2 = string.Format("select ag.id_accion_generada as 'id',ca.Accion as 'Acción',ag.correlativo_hallazgo as 'Correlativo',ag.norma as 'Punto de Norma', sag.nombre as 'Status', " +
-                "p.Proceso,u.Unidad,d.Unidad Dependencia,ag.descripcion as 'Descripción', concat(ee.Nombre, ' ', ee.Apellido) Enlace, " +
-                "concat(ea.Nombre, ' ', ea.Apellido) Analista, Date_format(ag.fecha,'%d/%m/%Y') as 'Fecha', ta.accion as 'Tipo Acción' " +
+            string query2 = string.Format("SELECT ag.id_accion_generada as 'id',ca.Accion as 'Acción',ag.correlativo_hallazgo as 'Correlativo', " +
+                "ag.correlativo_compromiso as 'Compromiso', ag.norma as 'Punto de Norma', sag.nombre as 'Status', " +
+                "p.Proceso, u.Unidad, d.Unidad Dependencia, ag.descripcion as 'Descripción', ee.Nombre Enlace, " +
+                "ea.Nombre Analista, Date_format(ag.fecha, '%d/%m/%Y') as 'Fecha', " +
+                "ta.accion as 'Tipo Acción', " +
+                "CASE f.id_tipo_fuente " +
+                        "WHEN 1 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_informe_ei, ')') " +
+                        "WHEN 2 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_informe_ee, ')') " +
+                        "WHEN 3 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_queja, ')') " +
+                        "WHEN 4 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_iniciativa_pro, ')') " +
+                        "WHEN 5 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_medicion_ind, ')') " +
+                        "WHEN 6 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_medicion_satisfaccion, ')') " +
+                        "WHEN 7 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_minuta_rev_ad, ')') " +
+                        "WHEN 8 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_salida_no_conforme, ')') " +
+                        "WHEN 9 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_ineficacia, ')') " +
+                    "END AS Fuente " +
 
-                        "from sgc_accion_generada ag inner join sgc_ccl_accion_generada ca on ca.id_acciones = ag.id_ccl_accion_generada " +
-                        "inner join sgc_proceso p on p.id_proceso = ag.id_proceso " +
-                        "inner join sgc_unidad u on u.id_unidad = ag.id_unidad " +
-                        "inner join sgc_unidad d on d.id_unidad = ag.id_dependencia  " +
-                        "inner join sgc_empleados ea on ea.id_empleado = ag.id_analista " +
-                        "inner join sgc_empleados ee on ee.id_empleado = ag.id_enlace " +
-                        "inner join sgc_tipo_accion ta on ta.id_tipo_accion = ag.id_tipo_accion " +
-                        "inner join sgc_fuente f on f.id_fuente = ag.id_fuente " +
-                        //"inner join sgc_informe_ei iei on iei.anio = ag.anio_informe_ei and iei.no_informe = ag.no_informe_ei " +
-                        "left join sgc_status_accion_generada sag on sag.id_status = ag.id_status " +
+                        "FROM sgc_accion_generada ag " +
+                        "LEFT JOIN sgc_ccl_accion_generada ca on ca.id_acciones = ag.id_ccl_accion_generada " +
+                        "INNER JOIN sgc_proceso p on p.id_proceso = ag.id_proceso " +
+                        "INNER JOIN sgc_unidad u on u.id_unidad = ag.id_unidad " +
+                        "INNER JOIN sgc_unidad d on d.id_unidad = ag.id_dependencia  " +
+                        "INNER JOIN sgc_empleados ea on ea.id_empleado = ag.id_analista " +
+                        "INNER JOIN sgc_empleados ee on ee.id_empleado = ag.id_enlace " +
+                        "INNER JOIN sgc_tipo_accion ta on ta.id_tipo_accion = ag.id_tipo_accion " +
+                        "INNER JOIN sgc_fuente f on f.id_fuente = ag.id_fuente " +
+                        "INNER JOIN sgc_tipo_fuente tf ON f.id_tipo_fuente = tf.id_tipo_fuente " +
+                        "LEFT JOIN sgc_status_accion_generada sag on sag.id_status = ag.id_status " +
                         "{1} " +                        
                         "where ag.aprobado = '{0}' {2}; ", aprobAG, join, condicion);
 
@@ -318,6 +333,33 @@ namespace Controladores
             {
                 command.CommandText = string.Format("UPDATE sgc_plan_accion SET id_status = '{1}' WHERE id_plan = '{0}'; ",
                 id, status);
+                command.ExecuteNonQuery();
+                transaccion.Commit();
+                conectar.CerrarConexion();
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    transaccion.Rollback();
+                }
+                catch
+                { };
+                conectar.CerrarConexion();
+            };
+        }
+
+        public void agregar_Ampliacion(int id, int ampliacion)
+        {
+            ampliacion += 1;
+            conectar.AbrirConexion();
+            MySqlTransaction transaccion = conectar.conectar.BeginTransaction();
+            MySqlCommand command = conectar.conectar.CreateCommand();
+            command.Transaction = transaccion;
+            try
+            {
+                command.CommandText = string.Format("UPDATE sgc_plan_accion SET no_ampliacion = '{1}' WHERE id_plan = '{0}'; ",
+                id, ampliacion);
                 command.ExecuteNonQuery();
                 transaccion.Commit();
                 conectar.CerrarConexion();

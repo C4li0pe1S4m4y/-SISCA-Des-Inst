@@ -8,7 +8,7 @@ using System.Web.UI.HtmlControls;
 
 
 namespace SistemaGdC.Verificaciones.Fuentes
-{
+{    
     public partial class VerificacionQuejaReclamo : System.Web.UI.Page
     {
         cFuente cQuejaReclamo = new cFuente();
@@ -18,14 +18,12 @@ namespace SistemaGdC.Verificaciones.Fuentes
         cCorreo cCorreo = new cCorreo();
 
         mFuente mQuejaReclamo = new mFuente();
-        mAccionesGeneradas mAccionGenerada = new mAccionesGeneradas();
+        mAccionesGeneradas mAccionG = new mAccionesGeneradas();
         mEmpleado mEmpleado = new mEmpleado();
         mAprobados aprobados = new mAprobados();
-        
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
             if (!IsPostBack)
             {
                 panel2.Visible = false;
@@ -39,15 +37,11 @@ namespace SistemaGdC.Verificaciones.Fuentes
                 gvListadoInformes.DataSource = cQuejaReclamo.ListadoFuentes(1,3);
                 gvListadoInformes.DataBind();
                 gvListadoInformes.Columns[0].Visible = false;
-                
-                //cResultados = new cInformeEI();
 
                 cAcciones.dropProceso(ddlProceso);
                 cAcciones.dropUnidad(ddlUnidad);
                 cAcciones.dropTipoAccion(dllTipoAccion);
                 cAcciones.dropFadn(ddlFadn);
-                //cGen = new cGeneral();
-                
 
                 pn1.Visible = true;
             }
@@ -56,7 +50,6 @@ namespace SistemaGdC.Verificaciones.Fuentes
         protected void ddlUnidad_SelectedIndexChanged(object sender, EventArgs e)
         {
             string id_unidad = ddlUnidad.SelectedItem.Value;
-
             int idUnidad = 0;
             int.TryParse(ddlUnidad.SelectedValue, out idUnidad);
             if (idUnidad > 0)
@@ -72,16 +65,11 @@ namespace SistemaGdC.Verificaciones.Fuentes
         {
             if (e.CommandName == "Ver")
             {
-                mAccionesGeneradas mAccionG = new mAccionesGeneradas();
-
                 panel4.Visible = true;
 
                 int index = Convert.ToInt16(e.CommandArgument);
                 int pag = Convert.ToInt16(Session["pagina2"]);
                 int psize = gvListadoAcciones.PageSize;
-
-                //string prueba = gvListadoAcciones.Rows[index].Cells[0].Text;
-
 
                 GridViewRow selectedRow = gvListadoAcciones.Rows[index - (pag * psize)];
 
@@ -126,7 +114,6 @@ namespace SistemaGdC.Verificaciones.Fuentes
             btnValidar.Visible = ver;
             btnRechazar.Visible = ver;
 
-            
             ddlFadn.Enabled = ver;
             txtInstalacion.Enabled = ver;
             ddlProceso.Enabled = ver;
@@ -136,7 +123,6 @@ namespace SistemaGdC.Verificaciones.Fuentes
             ddlLider.Enabled = ver;
             dllTipoAccion.Enabled = ver;
             txtDescripcion.Enabled = ver;
-            
         }
 
         protected void gvListado_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -149,7 +135,6 @@ namespace SistemaGdC.Verificaciones.Fuentes
                 else (e.Row.FindControl("btnRevisar") as Button).ControlStyle.CssClass = "btn btn-info";
             }
         }
-
 
         protected void OnPaging(Object sender, GridViewPageEventArgs e)
         {
@@ -173,18 +158,18 @@ namespace SistemaGdC.Verificaciones.Fuentes
         protected void gvListadoInformes_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "Revisar")
-            {                                           
+            {
                 int index = Convert.ToInt16(e.CommandArgument);
                 int pag = Convert.ToInt16(Session["pagina1"]);
                 int psize = gvListadoInformes.PageSize;
 
-                GridViewRow selectedRow = gvListadoInformes.Rows[index-(pag*psize)];
+                GridViewRow selectedRow = gvListadoInformes.Rows[index - (pag * psize)];
 
                 lblCorrelativo.Text = selectedRow.Cells[0].Text;
                 txtanio.Text = selectedRow.Cells[2].Text;
                 txtInforme.Text = selectedRow.Cells[3].Text;
-                DateTime fecha = DateTime.Parse(selectedRow.Cells[4].Text);             
-                    txtFechaInforme.Text = fecha.ToString("yyyy-MM-dd");
+                DateTime fecha = DateTime.Parse(selectedRow.Cells[4].Text);
+                txtFechaInforme.Text = fecha.ToString("yyyy-MM-dd");
 
                 this.Session["idFuente"] = selectedRow.Cells[0].Text;
 
@@ -258,9 +243,8 @@ namespace SistemaGdC.Verificaciones.Fuentes
 
         protected void verColumnas(bool ver)
         {
-            //gvListadoAcciones.Columns[0].Visible = ver;
             gvListadoAcciones.Columns[2].Visible = ver;
-            gvListadoAcciones.Columns[8].Visible = ver;
+            gvListadoAcciones.Columns[10].Visible = ver;
         }
 
         protected void actualizarListadoAcciones() //carga y actualiza el Listado de Acciones
@@ -271,116 +255,180 @@ namespace SistemaGdC.Verificaciones.Fuentes
             verColumnas(false);
         }
 
-        protected void btnValidar_Click(object sender, EventArgs e)
+        protected void ValidarAccion(string idAccion)
         {
-            
-            if(int.Parse(Session["id_tipo_usuario"].ToString()) == 1)
-            {
-                mostrarBotones(false);
-                cAcciones.aprobar_Accion(int.Parse(Session["Accion"].ToString()), 2);
-                ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Acción validada correctamente', '', 'success');", true);
+            mostrarBotones(false);
+            cAcciones.aprobar_Accion(int.Parse(idAccion), 2);
 
-                actualizarListadoAcciones();
-
-                botonesTodos();
-            }
-
-            else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No tiene permisos para validar Informe', '', 'warning');", true);                      
+            actualizarListadoAcciones();
+            botonesTodos();            
         }
 
-        protected void btnRechazar_Click(object sender, EventArgs e)
+        protected void btnValidar_Click(object sender, EventArgs e)
         {
             try
             {
                 if (int.Parse(Session["id_tipo_usuario"].ToString()) == 1)
                 {
-                    mostrarBotones(false);
-                    mAccionGenerada = cAcciones.Obtner_AccionGenerada(int.Parse(Session["Accion"].ToString()));
-                    mEmpleado = cEmpleado.Obtner_Empleado(mAccionGenerada.id_analista, "analista");
+                    ValidarAccion(Session["Accion"].ToString());
 
-                    cAcciones.aprobar_Accion(int.Parse(Session["Accion"].ToString()), -2);
+                    mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(Session["Accion"].ToString()));
+                    mEmpleado = cEmpleado.Obtner_Empleado(mAccionG.id_analista, "analista");
 
-                    if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Accion", txtRechazoAccion.Text);
-                    txtRechazoAccion.Text = "";
+                    string fuente = cQuejaReclamo.nombreFuente(Session["Accion"].ToString());
+                    string asunto = "Acción Asignada (" + Session["Accion"].ToString() + "), " + fuente;
 
-                    actualizarListadoAcciones();
+                    if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, asunto, mAccionG.descripcion);
 
-                    ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Acción rechazada correctamente', '', 'error');", true);
-
-                    botonesTodos();
+                    ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Acción validada correctamente', '', 'success');", true);
                 }
-                else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No tiene permisos para validar Informe', '', 'warning');", true);
+                else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No tiene permisos para validar acciones', '', 'warning');", true);                
             }
             catch
             {
-                ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Hubo un problema', 'Por favor intente de nuevo', 'warning');", true);
-            }
-            
-        }
-
-        protected void btnActualizar_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                mAccionGenerada = cAcciones.Obtner_AccionGenerada(int.Parse(Session["Accion"].ToString()));
-
-                    mAccionesGeneradas ag = new mAccionesGeneradas();
-                    ag.id_accion_generada = int.Parse(Session["Accion"].ToString());
-                    ag.descripcion = txtDescripcion.Text;
-                    ag.id_lider = int.Parse(ddlLider.SelectedValue);
-                    ag.id_enlace = int.Parse(ddlEnlace.SelectedValue);
-                    ag.id_unidad = int.Parse(ddlUnidad.SelectedValue);
-                    ag.id_dependencia = int.Parse(ddlDependencia.SelectedValue);
-                    ag.id_fadn = int.Parse(ddlFadn.SelectedValue);
-                    ag.id_proceso = int.Parse(ddlProceso.SelectedValue);
-                    ag.id_tipo_accion = int.Parse(dllTipoAccion.SelectedValue);
-                    ag.instalacion = txtInstalacion.Text;
-
-                    cAcciones.actualizar_Accion(ag);
-
-                    actualizarListadoAcciones();
-
-                    ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('La Acción ha sido actualizada correctamente', '', 'success');", true);
-
-            }
-            catch
-            {
-                ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No fue posible actualizar Acción', 'Intente de nuevo', 'error');", true);
-            }            
+                ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Hubo un problema al validar Acción', 'Intente de nuevo', 'warning');", true);
+            }           
         }
 
         protected void btnValidarTodo_Click(object sender, EventArgs e)
         {
-            if (int.Parse(Session["id_tipo_usuario"].ToString()) == 1)
+            try
             {
-                mostrarBotones(false);
-                mQuejaReclamo = cQuejaReclamo.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "3");
-                cAcciones.aprobarTodo_Accion(mQuejaReclamo.id_fuente, "aprobado");
-                ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Acciones validadas correctamente', '', 'success');", true);
+                if (int.Parse(Session["id_tipo_usuario"].ToString()) == 1)
+                {
+                    DataTable ListadoAcciones = new DataTable();
+                    ListadoAcciones = cQuejaReclamo.ListadoAcciones(int.Parse(Session["idFuente"].ToString()), 0, "todos", 3);
 
-                botonesTodos();
+                    foreach (DataRow Row in ListadoAcciones.Rows)
+                        if (Row["aprobado"].ToString() != "2" && Row["aprobado"].ToString() != "-2")
+                        {
+                            ValidarAccion(Row[0].ToString());
+
+                            mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(Row[0].ToString()));
+                            mEmpleado = cEmpleado.Obtner_Empleado(mAccionG.id_enlace, "enlace");
+
+                            string fuente = cQuejaReclamo.nombreFuente(Row[0].ToString());
+                            string asunto = "Acción Asignada (" + Row[0].ToString() + "), " + fuente;
+
+                            if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, asunto, mAccionG.descripcion);
+                        }
+
+                    ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Acciones validadas correctamente', '', 'success');", true);
+                }
+                else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No tiene permisos para validar Acciones', '', 'warning');", true);
+            }
+            catch { }
+        }
+
+        protected void RechazarAccion(string idAccion)
+        {
+                mostrarBotones(false);
+                cAcciones.aprobar_Accion(int.Parse(idAccion), -2);
 
                 actualizarListadoAcciones();
+                botonesTodos();
+        }
+
+        protected void btnRechazar_Click(object sender, EventArgs e)
+        {
+            if (int.Parse(Session["id_tipo_usuario"].ToString()) == 1)
+            {
+                mostrarBotones(false);                
+                mEmpleado = cEmpleado.Obtner_Empleado(0, "administrador");
+
+                string fuente = cQuejaReclamo.nombreFuente(Session["Accion"].ToString());
+                string asunto = "Rechazo de Acción (" + Session["Accion"].ToString() + "), " + fuente;
+
+                RechazarAccion(Session["Accion"].ToString());               
+
+                if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, asunto, txtRechazoAccion.Text);
+                txtRechazoAccion.Text = "";
+
+                actualizarListadoAcciones();
+
+                ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Acción rechazada correctamente', '', 'error');", true);
+
+                botonesTodos();
             }
 
-            else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No tiene permisos para validar Acciones', '', 'warning');", true);
+            else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No tiene permisos para validar Informe', '', 'warning');", true);
         }
 
         protected void btnRechazarTodo_Click(object sender, EventArgs e)
         {
-            if (int.Parse(Session["id_tipo_usuario"].ToString()) == 1)
+            try
             {
-                mostrarBotones(false);
-                mQuejaReclamo = cQuejaReclamo.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "3");
-                cAcciones.aprobarTodo_Accion(mQuejaReclamo.id_fuente, "rechazado");
-                ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Acciones rechazadas correctamente', '', 'error');", true);
+                if (int.Parse(Session["id_tipo_usuario"].ToString()) == 1)
+                {
+                    DataTable ListadoAcciones = new DataTable();
+                    ListadoAcciones = cQuejaReclamo.ListadoAcciones(int.Parse(Session["idFuente"].ToString()), 0, "todos", 3);
 
-                botonesTodos();
+                    string asunto = "Rechazo de acciones (";
+                    foreach (DataRow Row in ListadoAcciones.Rows)
+                        if (Row["aprobado"].ToString() != "2" && Row["aprobado"].ToString() != "-2")
+                        {
+                            RechazarAccion(Row[0].ToString());
+                            asunto += Row[0].ToString() + ", ";
+                        }
 
-                actualizarListadoAcciones();
+                    mEmpleado = cEmpleado.Obtner_Empleado(0, "administrador");
+
+                    string fuente = cQuejaReclamo.nombreFuente(Session["Accion"].ToString());
+                    asunto = asunto.Remove(asunto.Length - 2);
+                    asunto += "), " + fuente;
+
+                    if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, asunto, txtRechazoAccionTodo.Text);
+                    txtRechazoAccionTodo.Text = "";
+
+                    ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Acciones rechazadas correctamente', '', 'error');", true);
+                }
+                else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No tiene permisos para rechazar Acciones', '', 'warning');", true);
             }
+            catch { }            
+        }
 
-            else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No tiene permisos para rechazar Acciones', '', 'warning');", true);
+        protected void btnActualizar_Click(object sender, EventArgs e)
+        {
+
+                mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(Session["Accion"].ToString()));
+
+                bool editada = false;
+
+                mAccionesGeneradas ag = new mAccionesGeneradas();
+
+                mAccionG.id_fuente = mQuejaReclamo.id_fuente;
+                mAccionG.instalacion = txtInstalacion.Text;
+                mAccionG.id_fadn = int.Parse(ddlFadn.SelectedValue);
+                mAccionG.descripcion = txtDescripcion.Text;
+                mAccionG.id_unidad = int.Parse(ddlUnidad.SelectedValue);
+                mAccionG.id_dependencia = int.Parse(ddlDependencia.SelectedValue);
+                mAccionG.id_proceso = int.Parse(ddlProceso.SelectedValue);
+                mAccionG.id_tipo_accion = int.Parse(dllTipoAccion.SelectedValue);
+                mAccionG.id_lider = int.Parse(ddlLider.SelectedValue);
+                mAccionG.id_enlace = int.Parse(ddlEnlace.SelectedValue);
+
+                ag.id_accion_generada = int.Parse(Session["fAccion"].ToString());
+                ag.instalacion = txtInstalacion.Text;
+                ag.id_fadn = int.Parse(ddlFadn.SelectedValue);
+                ag.descripcion = txtDescripcion.Text;
+                ag.id_lider = int.Parse(ddlLider.SelectedValue);
+                ag.id_enlace = int.Parse(ddlEnlace.SelectedValue);
+                ag.id_unidad = int.Parse(ddlUnidad.SelectedValue);
+                ag.id_dependencia = int.Parse(ddlDependencia.SelectedValue);
+                ag.id_proceso = int.Parse(ddlProceso.SelectedValue);
+                ag.id_tipo_accion = int.Parse(dllTipoAccion.SelectedValue);
+
+                editada = cAcciones.actualizar_Accion(ag);
+                cAcciones.aprobar_Accion(ag.id_accion_generada, 0);
+                verColumnas(true);
+                mQuejaReclamo = cQuejaReclamo.BuscarEncabezado(txtInforme.Text, int.Parse(txtanio.Text), "3");
+                gvListadoAcciones.DataSource = cQuejaReclamo.ListadoAcciones(mQuejaReclamo.id_fuente, 0, "todos", 3);
+                gvListadoAcciones.DataBind();
+                verColumnas(false);
+
+                if (editada) ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('La Acción ha sido actualizada correctamente', '', 'success');", true);
+                else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No fue posible actualizar Acción', 'Intente de nuevo', 'error');", true);
+
         }
 
         protected void ddlDependencia_SelectedIndexChanged(object sender, EventArgs e)
@@ -391,7 +439,6 @@ namespace SistemaGdC.Verificaciones.Fuentes
             {
                 txtAnalista.Text = cEmpleado.ObtenerAnalistaUnidad(idDependencia);
             }
-
         }
     }
 }

@@ -31,6 +31,15 @@ namespace SistemaGdC.Verificaciones.InformeResultados {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl pn1;
         
         /// <summary>
+        /// Control lblFuente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblFuente;
+        
+        /// <summary>
         /// Control panel1.
         /// </summary>
         /// <remarks>

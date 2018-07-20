@@ -18,14 +18,15 @@ namespace SistemaGdC.Seguimientos
         cActividades cActividades = new cActividades();
         cGeneral cGen = new cGeneral();
         cInformeCO cInfoCorrec = new cInformeCO();
-        cFuente cResultados = new cFuente();
+        cFuente cIneficacia = new cFuente();
         cEmpleado cEmpleado = new cEmpleado();
         cCorreo cCorreo = new cCorreo();        
         
         mPlanAccion mPlanAccion = new mPlanAccion();
         mAccionesGeneradas mAccionG = new mAccionesGeneradas();
-        mAccionesRealizar mAccionesRealizar = new mAccionesRealizar();
+        mActividad mAccionesRealizar = new mActividad();
         mEmpleado mEmpleado = new mEmpleado();
+        mFuente mIneficacia = new mFuente();
         int id_enlace;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -47,9 +48,6 @@ namespace SistemaGdC.Seguimientos
                 panel1.Visible = false;
                 panel3.Visible = false;
                 panel4.Visible = false;
-
-                mAccionG = cAcciones.Obtner_AccionGenerada(40);
-                id_enlace = mAccionG.id_enlace;
 
                 cInfoCorrec.ddlTecnicaAnalisis(ddlTecnicaAnalisis);
 
@@ -98,6 +96,11 @@ namespace SistemaGdC.Seguimientos
 
         protected void gvListadoAcciones_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            int index = Convert.ToInt16(e.CommandArgument);
+            GridViewRow selectedRow = gvListadoAcciones.Rows[index];
+
+            mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(selectedRow.Cells[0].Text));
+
             if (e.CommandName == "Ver")
             {
                 panel1.Visible = true;
@@ -105,38 +108,9 @@ namespace SistemaGdC.Seguimientos
                 panel3.Visible = true;
                 panel4.Visible = true;
 
-                switch (Session["id_tipo_usuario"].ToString())
-                {
-                    case "1":
-                    case "4":
-                        btnDescargarEficacia.Visible = true;
-                        FileEficacia.Visible = false;
-                        btnAdjuntarEficacia.Visible = false;
-                        btnValidarEficacia.Visible = true;
-                        btnRechazarEficacia.Visible = true;
-                        break;
+                
 
-                    case "5":
-                        FileEficacia.Visible = false;
-                        btnAdjuntarEficacia.Visible = false;
-                        btnDescargarEficacia.Visible = false;
-                        btnValidarEficacia.Visible = false;
-                        btnRechazarEficacia.Visible = false;
-                        break;
-
-                    case "3":
-                        FileEficacia.Visible = true;
-                        btnAdjuntarEficacia.Visible = true;
-                        btnDescargarEficacia.Visible = false;
-                        btnValidarEficacia.Visible = false;
-                        btnRechazarEficacia.Visible = false;
-                        break;
-                }
-
-                int index = Convert.ToInt16(e.CommandArgument);
-                GridViewRow selectedRow = gvListadoAcciones.Rows[index];
-
-                mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(selectedRow.Cells[0].Text));
+                
 
                 ///////////////////////////////////////////////////////////////////////
                 //txtanio.Text = mAccionG.anio_informe_ei.ToString();
@@ -158,7 +132,39 @@ namespace SistemaGdC.Seguimientos
                 txtCausa.Text = mPlanAccion.causa_raiz;
 
                 this.Session["noAccion"] = mAccionG.id_accion_generada;
-                
+
+                ////////////////////////////////////////////////
+                switch (Session["id_tipo_usuario"].ToString())
+                {
+                    case "1": //director
+                    case "4": //lídeer
+                        btnDescargarEficacia.Visible = true;
+                        FileEficacia.Visible = false;
+                        btnAdjuntarEficacia.Visible = false;
+                        btnValidarEficacia.Visible = true;
+                        btnRechazarEficacia.Visible = true;
+                        break;
+
+                    case "5": //enlace
+                        if(mPlanAccion.id_status==6) Response.Redirect("~/InformeResultados/Ampliacion.aspx");
+                        FileEficacia.Visible = false;
+                        btnAdjuntarEficacia.Visible = false;
+                        btnDescargarEficacia.Visible = false;
+                        btnValidarEficacia.Visible = false;
+                        btnRechazarEficacia.Visible = false;
+                        btnAmpliacion.Visible = true;
+                        break;
+
+                    case "3": //analista
+                        FileEficacia.Visible = true;
+                        btnAdjuntarEficacia.Visible = true;
+                        btnDescargarEficacia.Visible = false;
+                        btnValidarEficacia.Visible = false;
+                        btnRechazarEficacia.Visible = false;
+                        break;
+                }
+                ////////////////////////////////////////////////
+
 
                 ddlTecnicaAnalisis.Enabled = false;
                 txtCausa.Enabled = false;
@@ -352,11 +358,9 @@ namespace SistemaGdC.Seguimientos
 
             if (file.Exists)
             {
-                Response.ClearContent();
-                Response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}", file.Name));
-                Response.AddHeader("Content-Length", file.Length.ToString());
+                Response.Clear();
                 Response.ContentType = "application/pdf";
-                Response.TransmitFile(file.FullName);
+                Response.WriteFile(file.FullName);
                 Response.End();
             }
             else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No hay evidencia adjunta', '', 'info');", true);            
@@ -417,11 +421,9 @@ namespace SistemaGdC.Seguimientos
 
                 if (file.Exists)
                 {
-                    Response.ClearContent();
-                    Response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}", file.Name));
-                    Response.AddHeader("Content-Length", file.Length.ToString());
+                    Response.Clear();
                     Response.ContentType = "application/pdf";
-                    Response.TransmitFile(file.FullName);
+                    Response.WriteFile(file.FullName);
                     Response.End();
                 }
                 else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No hay eficacia adjunta', '', 'info');", true);
@@ -432,13 +434,14 @@ namespace SistemaGdC.Seguimientos
         {
             switch (int.Parse(Session["id_tipo_usuario"].ToString()))
             {                
-                case 4: //Lider
-                    cPlanAccion.actualizar_statusPlan(int.Parse(Session["noPlanAccion"].ToString()), 4);
-                    Response.Redirect("~/Seguimientos/SeguimientoPlanAccion.aspx");
-                    break;
+                //case 4: //Lider
+                //    cPlanAccion.actualizar_statusPlan(int.Parse(Session["noPlanAccion"].ToString()), 4);
+                //    Response.Redirect("~/Seguimientos/SeguimientoPlanAccion.aspx");
+                //    break;
 
                 case 1: //Director
-                    cPlanAccion.actualizar_statusPlan(int.Parse(Session["noPlanAccion"].ToString()), 5);
+                    //cPlanAccion.actualizar_statusPlan(int.Parse(Session["noPlanAccion"].ToString()), 5);
+                    cPlanAccion.actualizar_statusPlan(int.Parse(Session["noPlanAccion"].ToString()), 4);
                     cAcciones.actualizarStatus_Accion(int.Parse(this.Session["noAccion"].ToString()), 15);
                     //cambiar status acción
                     Response.Redirect("~/Seguimientos/SeguimientoPlanAccion.aspx");
@@ -452,17 +455,31 @@ namespace SistemaGdC.Seguimientos
 
         protected void btnRechazarEficacia_Click(object sender, EventArgs e)
         {
+            //mEmpleado mAnalista = new mEmpleado();
+            mEmpleado mEnlace = new mEmpleado();
+
             mPlanAccion = cPlanAccion.Obtner_PlanAccion(int.Parse(Session["noAccion"].ToString()));
             mAccionG = cAcciones.Obtner_AccionGenerada(mPlanAccion.id_accion_generada);
-            mEmpleado = cEmpleado.Obtner_Empleado(mAccionG.id_analista, "analista");
+            //mAnalista = cEmpleado.Obtner_Empleado(mAccionG.id_analista, "analista");
+            mEnlace = cEmpleado.Obtner_Empleado(mAccionG.id_enlace, "enlace");
 
+            string fuente = cIneficacia.nombreFuente(Session["noAccion"].ToString());
+            string asunto = "Plan de Acción RECHAZADO (" + Session["noAccion"].ToString() + "), " + fuente;
 
             switch (int.Parse(Session["id_tipo_usuario"].ToString()))
             {
                 case 1: //Director
-                case 4: //Lider
-                    cPlanAccion.actualizar_statusPlan(int.Parse(Session["noPlanAccion"].ToString()), -3);
-                    if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Eficacia", txtRechazOEficacia.Text);
+                    mIneficacia = cIneficacia.ObtenerFuente(mAccionG.id_fuente);
+                    mIneficacia.no_fuente = int.Parse(Session["noAccion"].ToString());
+                    mIneficacia.fecha = DateTime.Today.ToString("yyyy-MM-dd");
+                    mIneficacia.id_tipo_fuente = 9;
+                    int idIneficacia = cIneficacia.AlmacenarEncabezado(mIneficacia);
+                    mAccionG.id_fuente = idIneficacia;
+                    mAccionG.aprobado = 2;
+                    cAcciones.ingresarAccion(mAccionG);
+
+                    cPlanAccion.actualizar_statusPlan(int.Parse(Session["noPlanAccion"].ToString()), -4);
+                    if (mEnlace.email != null) cCorreo.enviarCorreo(mEnlace.email, asunto, txtRechazOEficacia.Text);
                     Response.Redirect("~/Seguimientos/SeguimientoPlanAccion.aspx");
                     break;
 
@@ -470,6 +487,11 @@ namespace SistemaGdC.Seguimientos
                     ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No tiene permisos para validar Actividad', '', 'warning');", true);
                     break;
             }
+        }
+
+        protected void btnAmpliacion_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/InformeResultados/Ampliacion.aspx");
         }
     }
 }

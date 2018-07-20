@@ -157,7 +157,7 @@ namespace SistemaGdC.Fuentes
 
                 if (mIniciativaPropia.id_status==0)
                 {
-                    if (cAcciones.ingresarAcción(mAccionG))
+                    if (cAcciones.ingresarAccion(mAccionG))
                     {
                         gvListadoAcciones.DataSource = cIniciativaPropia.ListadoAcciones(mIniciativaPropia.id_fuente, 0, "todos", 4);
                         gvListadoAcciones.DataBind();

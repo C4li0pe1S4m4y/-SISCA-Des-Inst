@@ -82,7 +82,7 @@ namespace SistemaGdC.Fuentes
 
                 if (mInformeEE.id_status==0)
                 {
-                    if (cAcciones.ingresarAcción(mAccionG))
+                    if (cAcciones.ingresarAccion(mAccionG))
                     {
                         gvListadoAcciones.DataSource = cInformeEE.ListadoAcciones(mInformeEE.id_fuente, 0, "todos", 2);
                         gvListadoAcciones.DataBind();
@@ -259,8 +259,6 @@ namespace SistemaGdC.Fuentes
                 ddlLider.SelectedIndex = 0;
                 txtAnalista.Text = "";
                 dllTipoAccion.SelectedIndex = 0;
-                //txtFechaRecepcion.Text = "";
-                txtNoPlanAccion.Text = "";
             }
 
             catch
@@ -304,7 +302,6 @@ namespace SistemaGdC.Fuentes
                 ddlLider.SelectedValue = mAccionG.id_lider.ToString();
                 txtAnalista.Text = cEmpleado.ObtenerAnalistaUnidad(mAccionG.id_dependencia);
                 dllTipoAccion.SelectedValue = mAccionG.id_tipo_accion.ToString();
-                txtNoPlanAccion.Text = "";
 
                 this.Session["noAccion"] = mAccionG.id_accion_generada;
 
@@ -430,8 +427,6 @@ namespace SistemaGdC.Fuentes
                     mAccionG.correlativo_hallazgo = int.Parse(txtHallazgo.Text);
                     mAccionG.norma = txtPuntoNorma.Text;
                     mAccionG.descripcion = txtDescripcion.Text;
-                    //mAccionG.anio_informe_ei = int.Parse(txtanio.Text);
-                    //mAccionG.no_informe_ei = int.Parse(txtInforme.Text);
                     mAccionG.id_unidad = int.Parse(ddlUnidad.SelectedValue);
                     mAccionG.id_dependencia = int.Parse(ddlDependencia.SelectedValue);
                     mAccionG.id_ccl_accion_generada = int.Parse(ddlAccionGenerada.SelectedValue);

@@ -16,7 +16,7 @@ namespace SistemaGdC.Verificaciones.InformeResultados
         cPlanAcion cPlanAccion = new cPlanAcion();
         cAcciones cAcciones = new cAcciones();
         cCorreo cCorreo = new cCorreo();
-        cFuente cResultados = new cFuente();
+        cFuente cFuente = new cFuente();
         cUsuarios cUsuario = new cUsuarios();
         cGeneral cGen = new cGeneral();
         cInformeCO cInfoCorrec = new cInformeCO();
@@ -31,6 +31,7 @@ namespace SistemaGdC.Verificaciones.InformeResultados
         {            
             if (!IsPostBack)
             {
+                //lblFuente.InnerText = "Encabezado";
                 this.Session["noPlanAccion"] = 0;
 
                 gvListadoAcciones.DataSource = cPlanAccion.ListadoAcciones(int.Parse(Session["id_empleado"].ToString()), "2", tipoConsulta());
@@ -76,7 +77,6 @@ namespace SistemaGdC.Verificaciones.InformeResultados
             int.TryParse(ddlunidad.SelectedValue, out idUnidad);
             if (idUnidad > 0)
             {
-                cResultados = new cFuente();
                 cAcciones.dllDependencia(ddldependencia, idUnidad);
             }
         }
@@ -98,6 +98,7 @@ namespace SistemaGdC.Verificaciones.InformeResultados
 
                 mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(selectedRow.Cells[0].Text));
 
+                lblFuente.InnerText = cFuente.nombreFuente(mAccionG.id_accion_generada.ToString());
                 ///////////////////////////////////////////////////////////////////////
                 //txtanio.Text = mAccionG.anio_informe_ei.ToString();
                 cAcciones.dropUnidad(ddlunidad);

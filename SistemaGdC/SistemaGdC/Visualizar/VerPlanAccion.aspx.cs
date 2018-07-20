@@ -17,7 +17,6 @@ namespace SistemaGdC.Visualizar
         cActividades cActividades = new cActividades();
         mAccionesGeneradas mAccionG = new mAccionesGeneradas();
         mPlanAccion mPlanAccion = new mPlanAccion();
-        mAccionesRealizar mAccionRealizar = new mAccionesRealizar();
         mActividad mActividad = new mActividad();
 
         int id_enlace;
@@ -99,13 +98,13 @@ namespace SistemaGdC.Visualizar
         protected void gvListado_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.Session["idActividad"] = gvListado.SelectedValue.ToString();
-            mAccionRealizar = cActividades.Obtner_Actividad(int.Parse(gvListado.SelectedValue.ToString().ToString()));
+            mActividad = cActividades.Obtner_Actividad(int.Parse(gvListado.SelectedValue.ToString().ToString()));
 
-            txtAccionRealizar.Value = mAccionRealizar.accion.ToString();
-            txtResponsable.Text = mAccionRealizar.responsable;
-            txtFechaInicio.Text = mAccionRealizar.fecha_inicio.ToString();
-            txtFechaFin.Text = mAccionRealizar.fecha_fin.ToString();
-            txtObservaciones.Value = mAccionRealizar.observaciones.ToString();
+            txtAccionRealizar.Value = mActividad.accion.ToString();
+            txtResponsable.Text = mActividad.responsable;
+            txtFechaInicio.Text = mActividad.fecha_inicio.ToString();
+            txtFechaFin.Text = mActividad.fecha_fin.ToString();
+            txtObservaciones.Value = mActividad.observaciones.ToString();
 
             btnDescargarEvidencia.Visible = true;
 

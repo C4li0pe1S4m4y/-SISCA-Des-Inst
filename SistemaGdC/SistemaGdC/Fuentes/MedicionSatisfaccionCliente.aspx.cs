@@ -159,7 +159,7 @@ namespace SistemaGdC.Fuentes
 
                 if (mSatisfaccionCliente.id_status==0)
                 {
-                    if (cAcciones.ingresarAcción(mAccionG))
+                    if (cAcciones.ingresarAccion(mAccionG))
                     {
                         gvListadoAcciones.DataSource = cSatisfaccionCliente.ListadoAcciones(mSatisfaccionCliente.id_fuente, 0, "todos", 6);
                         gvListadoAcciones.DataBind();

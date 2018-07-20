@@ -35,7 +35,7 @@
                 <div class="col-md-12" id="pn1" runat="server">
 
                     <div class="panel panel-default">
-                        <div class="panel-heading">Encabezado</div>
+                        <div class="panel-heading"><label id="lblFuente" runat="server"></label></div>
                         <div class="panel-body">
                             <div class="row" id="panel1" runat="server">
                                 <div class="col-md-8">
@@ -93,15 +93,11 @@
                                                             Text="Ver" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:BoundField DataField="Acción" HeaderText="Acción" />
                                                 <asp:BoundField DataField="Correlativo" HeaderText="Correlativo" />
-                                                <asp:BoundField DataField="Status" HeaderText="Status" />
-                                                <asp:BoundField DataField="Punto de Norma" HeaderText="Punto de Norma" />
-                                                <asp:BoundField DataField="Proceso" HeaderText="Proceso" />
-                                                <asp:BoundField DataField="Dependencia" HeaderText="Dependencia" />
-                                                <asp:BoundField DataField="Descripción" HeaderText="Descripción" />
-                                                <asp:BoundField DataField="Enlace" HeaderText="Enlace" />
-                                                <asp:BoundField DataField="Tipo Acción" HeaderText="Tipo Acción" />
+                                            <asp:BoundField DataField="Fuente" HeaderText="Fuente" />
+                                            <asp:BoundField DataField="Dependencia" HeaderText="Dependencia" />
+                                            <asp:BoundField DataField="Descripción" HeaderText="Descripción" />
+                                            <asp:BoundField DataField="Tipo Acción" HeaderText="Tipo Acción" />
                                             </Columns>
                                             <HeaderStyle BackColor="#33CCFF" />
                                         </asp:GridView>

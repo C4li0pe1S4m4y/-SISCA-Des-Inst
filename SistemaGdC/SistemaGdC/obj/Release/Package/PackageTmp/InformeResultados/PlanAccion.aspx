@@ -4,13 +4,15 @@
 
     <link href="~/Content/bootstrap.css" rel="stylesheet" media="screen" />
     <h2>&nbsp;</h2>
-    <h2 style="color:white"><b>Plan de Acción</b></h2>
+    <h2 style="color: white"><b>Plan de Acción</b></h2>
     <asp:UpdatePanel ID="updatepanel1" runat="server">
         <ContentTemplate>
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">Encabezado</div>
+                        <div class="panel-heading">
+                            <label id="lblFuente" runat="server"></label>
+                        </div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-8">
@@ -69,18 +71,11 @@
                                         <asp:RequiredFieldValidator ID="RFVddlTecnicaAnalisis" ValidationGroup="validarCausa" Style="color: red;" SetFocusOnError="true" ControlToValidate="ddlTecnicaAnalisis" InitialValue="0" runat="server" ErrorMessage="Seleccione Técnica de Análisis." Display="Dynamic" />
                                     </div>
                                 </div>
-                                <div class="col-md-7">
-                                    <div class="form-group">
-                                        <label>Lider</label>
-                                        <asp:DropDownList ID="ddlLider" runat="server" CssClass="form-control input"></asp:DropDownList>
-                                        <asp:RequiredFieldValidator ID="RFVddlLider" ValidationGroup="validarCausa" Style="color: red;" SetFocusOnError="true" ControlToValidate="ddlLider" InitialValue="0" runat="server" ErrorMessage="Seleccione Líder." Display="Dynamic" />
-                                    </div>
-                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <label>Causa Raíz:</label>
-                                    <textarea id="txtCausa" type="text" TextMode="MultiLine" class="form-control" name="option" runat="server" Style="height: 100px" onkeypress="return descripcion(event);"/>                                    
+                                    <asp:TextBox ID="txtCausa" Width="100%" CssClass="form-control" TextMode="MultiLine" Style="height: 100px" runat="server"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="RFVtxtCausa" ValidationGroup="validarCausa" Style="color: red;" SetFocusOnError="true" ControlToValidate="txtCausa" InitialValue="" runat="server" ErrorMessage="Ingrese Causa." Display="Dynamic" />
                                 </div>
                             </div>
@@ -115,7 +110,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Actividad a Realizar:</label>
-                                                <input id="txtAccionRealizar" type="text" class="form-control" name="option" runat="server" onkeypress="return descripcion(event);"/>
+                                                <asp:TextBox ID="txtAccionRealizar" runat="server" CssClass="form-control"></asp:TextBox>
                                                 <asp:RequiredFieldValidator ID="RFVtxtAccionRealizar" ValidationGroup="validarActividad" Style="color: red;" SetFocusOnError="true" ControlToValidate="txtAccionRealizar" InitialValue="" runat="server" ErrorMessage="Ingrese Acción a Realizar." Display="Dynamic" />
                                             </div>
                                         </div>
@@ -123,37 +118,38 @@
                                     <div class="row">
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-10">
+
                                             <div class="form-group">
                                                 <label>Responsable:</label>
-                                                <asp:DropDownList ID="ddlResponsable" runat="server" CssClass="form-control"></asp:DropDownList>
-                                                <asp:RequiredFieldValidator ID="RFVddlResponsable" ValidationGroup="validarActividad" Style="color: red;" SetFocusOnError="true" ControlToValidate="ddlResponsable" InitialValue="0" runat="server" ErrorMessage="Seleccione Responsable." Display="Dynamic" />
+                                                <asp:TextBox ID="txtResponsable" runat="server" CssClass="form-control"></asp:TextBox>
+                                                <asp:DropDownList ID="ddlResponsable" Visible="false" runat="server" CssClass="form-control"></asp:DropDownList>
+                                                <asp:RequiredFieldValidator ID="RFVddlResponsable" ValidationGroup="validarActividad" Style="color: red;" SetFocusOnError="true" ControlToValidate="txtResponsable" InitialValue="" runat="server" ErrorMessage="Seleccione Responsable." Display="Dynamic" />
                                             </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Fecha Inicio:</label>
-                                                <asp:TextBox ID="txtFechaInicio" TextMode="Date" runat="server" CssClass="form-control"></asp:TextBox>
-                                                <asp:RequiredFieldValidator ID="RFVtxtFechaInicio" ValidationGroup="validarActividad" Style="color: red;" SetFocusOnError="true" ControlToValidate="txtFechaInicio" InitialValue="" runat="server" ErrorMessage="Ingrese Fecha." Display="Dynamic" />
+
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Fecha Inicio:</label>
+                                                        <asp:TextBox ID="txtFechaInicio" TextMode="Date" runat="server" CssClass="form-control"></asp:TextBox>
+                                                        <asp:RequiredFieldValidator ID="RFVtxtFechaInicio" ValidationGroup="validarActividad" Style="color: red;" SetFocusOnError="true" ControlToValidate="txtFechaInicio" InitialValue="" runat="server" ErrorMessage="Ingrese Fecha." Display="Dynamic" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Fecha Final:</label>
+                                                        <asp:TextBox ID="txtFechaFin" TextMode="Date" runat="server" CssClass="form-control"></asp:TextBox>
+                                                        <asp:RequiredFieldValidator ID="RFVtxtFechaFin" ValidationGroup="validarActividad" Style="color: red;" SetFocusOnError="true" ControlToValidate="txtFechaFin" InitialValue="" runat="server" ErrorMessage="Ingrese Fecha." Display="Dynamic" />
+                                                    </div>
+                                                </div>
                                             </div>
+
+
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Fecha Final:</label>
-                                                <asp:TextBox ID="txtFechaFin" TextMode="Date" runat="server" CssClass="form-control"></asp:TextBox>
-                                                <asp:RequiredFieldValidator ID="RFVtxtFechaFin" ValidationGroup="validarActividad" Style="color: red;" SetFocusOnError="true" ControlToValidate="txtFechaFin" InitialValue="" runat="server" ErrorMessage="Ingrese Fecha." Display="Dynamic" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-9">
-                                            <label>Observaciones:</label>
-                                            <textarea id="txtObservaciones" type="text" TextMode="MultiLine" class="form-control" name="option" runat="server" Style="height: 120px" onkeypress="return descripcion(event);"/>
-                                        </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <br />
-                                            <br />
-                                            <asp:Button ID="btnGuardar" ValidationGroup="validarActividad" Text="Guardar" OnClick="btnGuardar_Click" CssClass="btn btn-success btn-block" runat="server" Width="100%" />
+                                            <label>&nbsp;</label>
+                                            <asp:Button ID="btnGuardar" ValidationGroup="validarActividad" Text="Guardar" OnClick="btnGuardarActividad_Click" CssClass="btn btn-success btn-block" runat="server" Width="100%" />
                                             <br />
                                             <asp:Button ID="btnNuevo" Text="Nuevo" OnClick="btnNuevo_Click" CssClass="btn btn-warning btn-block" runat="server" Width="100%" />
                                         </div>
@@ -197,9 +193,9 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     </div>
                 </div>
-            </div>
         </ContentTemplate>
         <Triggers>
             <asp:PostBackTrigger ControlID="btnDescargar" />

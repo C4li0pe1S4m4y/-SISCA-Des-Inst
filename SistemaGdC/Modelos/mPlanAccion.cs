@@ -15,5 +15,6 @@ namespace Modelos
         public string fecha_ingreso { get; set; }
         public int id_accion_generada { get; set; }
         public int id_status { get; set; }
+        public int no_ampliacion { get; set; }
     }
 }
