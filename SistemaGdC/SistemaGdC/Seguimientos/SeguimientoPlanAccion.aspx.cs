@@ -491,7 +491,10 @@ namespace SistemaGdC.Seguimientos
 
         protected void btnAmpliacion_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/InformeResultados/Ampliacion.aspx");
+            mPlanAccion = cPlanAccion.Obtner_PlanAccion(int.Parse(Session["noAccion"].ToString()));
+            if(mPlanAccion.no_ampliacion==2)
+                ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No es posible realizar la ampliación del Plan', 'Ha excedido el máximo de ampliaciones', 'warning');", true);
+            else Response.Redirect("~/InformeResultados/Ampliacion.aspx");
         }
     }
 }

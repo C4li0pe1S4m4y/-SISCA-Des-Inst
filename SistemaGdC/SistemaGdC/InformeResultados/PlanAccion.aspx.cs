@@ -212,7 +212,9 @@ namespace SistemaGdC.InformeResultados
             try
             {
                 cPlanAccion.fechaRecepcion_plan(int.Parse(Session["noPlanAccion"].ToString()));
+                cPlanAccion.asignarTiempoPlan(int.Parse(Session["noPlanAccion"].ToString()));
                 cAcciones.validarCausaRaiz_Accion(int.Parse(Session["noAccion"].ToString()), 11);
+
                 Response.Redirect("~/InformeResultados/Acciones/ListadoAcciones.aspx");
             }
 

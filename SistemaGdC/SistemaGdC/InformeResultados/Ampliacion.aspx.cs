@@ -128,9 +128,10 @@ namespace SistemaGdC.InformeResultados
         }
 
         protected void btnNuevo_Click(object sender, EventArgs e)
-        {
+        {            
             btnGuardar.Visible = true;
             visibleActividad(false);
+            enabledActividad(true);
             limpiarActividad();
         }
 
@@ -154,6 +155,7 @@ namespace SistemaGdC.InformeResultados
                 mPlanAccion = cPlanAccion.Obtner_PlanAccion(int.Parse(Session["noAccion"].ToString()));
                 cPlanAccion.actualizar_statusPlan(mPlanAccion.id_plan, 1);
                 cPlanAccion.agregar_Ampliacion(mPlanAccion.id_plan, mPlanAccion.no_ampliacion);
+                cPlanAccion.asignarTiempoPlan(int.Parse(Session["noPlanAccion"].ToString()));
                 Response.Redirect("~/Seguimientos/SeguimientoPlanAccion.aspx");
             }
 
@@ -232,6 +234,15 @@ namespace SistemaGdC.InformeResultados
         {
             btnEditar.Visible = vis;
             btnEliminar.Visible = vis;
+            enabledActividad(vis);
+        }
+
+        void enabledActividad(bool en)
+        {
+            txtAccionRealizar.Enabled = en;
+            txtResponsable.Enabled = en;
+            txtFechaInicio.Enabled = en;
+            txtFechaFin.Enabled = en;
         }
 
         protected void ddlTecnicaAnalisis_SelectedIndexChanged(object sender, EventArgs e)
@@ -264,7 +275,12 @@ namespace SistemaGdC.InformeResultados
                 txtFechaInicio.Text = mActividad.fecha_inicio;
                 txtFechaFin.Text = mActividad.fecha_fin;
 
-                visibleActividad(true);
+                if(mActividad.id_status==2)
+                {
+                    visibleActividad(false);
+                    ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Actividad revisada y validad!', 'No podrá editarse ni borrarse', 'info');", true);
+                }
+                else visibleActividad(true);
                 //cActividades.EliminarAccion(int.Parse(selectedRow.Cells[1].Text));
                 //gvListado.DataSource = cPlanAccion.ListadoAccionesRealizar(int.Parse(Session["noPlanAccion"].ToString()));
                 //gvListado.DataBind();
@@ -274,30 +290,57 @@ namespace SistemaGdC.InformeResultados
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
-            cActividades.EliminarAccion(int.Parse(Session["Actividad"].ToString()));
-            btnGuardar.Visible = true;
-            limpiarActividad();
-            visibleActividad(false);
-            ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Registro eliminado exitosamente!', '', 'error');", true);
+            mActividad = cActividades.Obtner_Actividad(int.Parse(Session["Actividad"].ToString()));
+            if (mActividad.id_status == 2)
+            {
+                ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No es posible eliminar la actividad!', 'La actividad ya ha sido revisada y validad', 'warning');", true);
+            }
+            else
+            {
+                cActividades.EliminarAccion(int.Parse(Session["Actividad"].ToString()));
+                btnGuardar.Visible = true;
+                limpiarActividad();
+                visibleActividad(false);
+                ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Registro eliminado exitosamente!', '', 'error');", true);
+            }            
         }
 
         protected void btnEditar_Click(object sender, EventArgs e)
         {
+            cGeneral cGeneral = new cGeneral();
+
             mActividad.id_accion_realizar = int.Parse(Session["Actividad"].ToString());
             mActividad.accion = txtAccionRealizar.Text;
             mActividad.responsable = txtResponsable.Text;
             mActividad.fecha_inicio = txtFechaInicio.Text;
             mActividad.fecha_fin = txtFechaFin.Text;
-            cActividades.actualizarActividad(mActividad);
-            cPlanAccion.actualizar_statusPlan(int.Parse(Session["noPlanAccion"].ToString()), 6);
-            btnGuardar.Visible = true;
-            limpiarActividad();
-            visibleActividad(false);
 
-            gvListado.DataSource = cPlanAccion.ListadoAccionesRealizar(int.Parse(Session["noPlanAccion"].ToString()));
-            gvListado.DataBind();
-            ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Actividad actualizada exitosamente!', '', 'success');", true);
-            
+            mPlanAccion = cPlanAccion.Obtner_PlanAccion(int.Parse(Session["noAccion"].ToString()));
+
+            DateTime fecha = Convert.ToDateTime(mPlanAccion.final_actividades);
+
+            if (cGeneral.rangoFechas(mPlanAccion.final_actividades, txtFechaFin.Text,false) >= 60)
+                ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Fecha inválida!','No puede exceder 60 días a partir del " + fecha.ToString("d 'de' MMMM 'de' yyyy") + "', 'error');", true);
+
+            else
+            {
+                if(mActividad.id_status==2)
+                {
+                    ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No es posible editar la actividad!', 'La actividad ya ha sido revisada y validad', 'warning');", true);
+                }
+                else
+                {
+                    cActividades.actualizarActividad(mActividad);
+                    cPlanAccion.actualizar_statusPlan(int.Parse(Session["noPlanAccion"].ToString()), 6);
+                    btnGuardar.Visible = true;
+                    limpiarActividad();
+                    visibleActividad(false);
+
+                    gvListado.DataSource = cPlanAccion.ListadoAccionesRealizar(int.Parse(Session["noPlanAccion"].ToString()));
+                    gvListado.DataBind();
+                    ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Actividad actualizada exitosamente!', '', 'success');", true);
+                }                
+            }                       
         }
     }
 }

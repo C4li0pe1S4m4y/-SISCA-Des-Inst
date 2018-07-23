@@ -61,11 +61,11 @@ namespace Controladores
             return result;
         }
 
-        public mActividad Obtner_Actividad(int id)
+        public mActividad Obtner_Actividad(int idActividad)
         {
             mActividad objActividad = new mActividad();
             string query = string.Format("SELECT * FROM sgc_accion_realizar where id_accion_realizar = {0}; "
-            , id);
+            , idActividad);
             conectar.AbrirConexion();
             MySqlCommand cmd = new MySqlCommand(query, conectar.conectar);
 

@@ -111,8 +111,8 @@ namespace Controladores
             DataSet result = new DataSet();
             conectar = new DBConexion();
             conectar.AbrirConexion();
-            string query = string.Format("select id_accion_realizar as 'No.',accion,responsable,date_format(fecha_inicio,'%d/%m/%Y')  as 'Fecha Inicio',date_format(fecha_fin,'%d/%m/%Y') "+
-                " as 'Fecha Fin',observaciones from sgc_accion_realizar where id_plan={0}", id_plan);
+            string query = string.Format("select id_accion_realizar as 'No.',accion as 'Actividad a realizar',Responsable,date_format(fecha_inicio,'%d/%m/%Y')  as 'Fecha Inicio',date_format(fecha_fin,'%d/%m/%Y') "+
+                " as 'Fecha Fin',Observaciones from sgc_accion_realizar where id_plan={0}", id_plan);
             MySqlDataAdapter consulta = new MySqlDataAdapter(query, conectar.conectar);
             consulta.Fill(result);
             conectar.CerrarConexion();
@@ -145,12 +145,12 @@ namespace Controladores
             return result;
         }
 
-        public mPlanAccion Obtner_PlanAccion(int id) //ok
+        public mPlanAccion Obtner_PlanAccion(int idAccion) //ok
         {
             mPlanAccion objPlanAccion = new mPlanAccion();
             conectar = new DBConexion();
             string query = string.Format(" select * from sgc_plan_accion where id_accion_generada = {0}; "
-            , id);
+            , idAccion);
             conectar.AbrirConexion();
             MySqlCommand cmd = new MySqlCommand(query, conectar.conectar);
 
@@ -162,11 +162,26 @@ namespace Controladores
                 objPlanAccion.tecnica_analisis = dr.GetString("tecnica_analisis");
                 //objPlanAccion.id_lider = int.Parse(dr.GetString("id_lider"));
                 objPlanAccion.usuario_ingreso = dr.GetString("usur_ingreso");
-                DateTime fecha = DateTime.Parse(dr.GetString("fecha_ingreso"));
-                    objPlanAccion.fecha_ingreso = fecha.ToString("yyyy-MM-dd");
+                DateTime fecha_ingreso = DateTime.Parse(dr.GetString("fecha_ingreso"));
+                    objPlanAccion.fecha_ingreso = fecha_ingreso.ToString("yyyy-MM-dd");
+                if (!dr.IsDBNull(dr.GetOrdinal("fecha_recepcion")))
+                {
+                    DateTime fecha_recepcion = DateTime.Parse(dr.GetString("fecha_recepcion"));
+                    objPlanAccion.fecha_recepcion = fecha_recepcion.ToString("yyyy-MM-dd");
+                }                
                 objPlanAccion.id_accion_generada = int.Parse(dr.GetString("id_accion_generada"));
                 objPlanAccion.id_status = int.Parse(dr.GetString("id_status"));
                 objPlanAccion.no_ampliacion = int.Parse(dr.GetString("no_ampliacion"));
+                if (!dr.IsDBNull(dr.GetOrdinal("inicio_actividades")))
+                {
+                    DateTime inicio_actividades = DateTime.Parse(dr.GetString("inicio_actividades"));
+                    objPlanAccion.inicio_actividades = inicio_actividades.ToString("yyyy-MM-dd");
+                }
+                if (!dr.IsDBNull(dr.GetOrdinal("final_actividades")))
+                {
+                    DateTime final_actividades = DateTime.Parse(dr.GetString("final_actividades"));
+                    objPlanAccion.final_actividades = final_actividades.ToString("yyyy-MM-dd");
+                }
             }
             conectar.CerrarConexion();
             return objPlanAccion;
@@ -400,6 +415,67 @@ namespace Controladores
                 { };
                 conectar.CerrarConexion();
             };
+        }
+
+        public void asignarTiempoPlan(int idPlan)
+        {
+            conectar.AbrirConexion();
+            MySqlTransaction transaccion = conectar.conectar.BeginTransaction();
+            MySqlCommand command = conectar.conectar.CreateCommand();
+            command.Transaction = transaccion;
+            try
+            {
+                command.CommandText = string.Format("UPDATE sgc_plan_accion " +
+                    "SET inicio_actividades = (SELECT MIN(fecha_inicio) " +
+                        "FROM sgc_accion_realizar WHERE id_plan = '{0}'), " +
+                    "final_actividades = (SELECT MAX(fecha_fin) " +
+                        "FROM sgc_accion_realizar WHERE id_plan = '{0}') " +
+                    "WHERE id_plan = '{0}'; ", idPlan);
+                command.ExecuteNonQuery();
+                transaccion.Commit();
+                conectar.CerrarConexion();
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    transaccion.Rollback();
+                }
+                catch
+                { };
+                conectar.CerrarConexion();
+            };
+        }
+
+        public int calcularTiempoPlan(string idPlan)
+        {
+            try
+            {
+                cGeneral cGeneral = new cGeneral();
+                int resultado = 0;
+                string inicio = "";
+                string final = "";
+                conectar = new DBConexion();
+                conectar.AbrirConexion();
+
+            string query1 = string.Format("SELECT inicio_actividades inicio, final_actividades final " +
+                "FROM sgc_plan_accion WHERE id_plan = '{0}'; ", idPlan);
+            MySqlCommand cmd = new MySqlCommand(query1, conectar.conectar);
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                inicio = (DateTime.Parse(reader.GetString("inicio"))).ToString("yyyy-MM-dd");
+                final = (DateTime.Parse(reader.GetString("final"))).ToString("yyyy-MM-dd");
+            }
+            conectar.CerrarConexion();
+                resultado = cGeneral.rangoFechas(inicio, final,true);
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }
