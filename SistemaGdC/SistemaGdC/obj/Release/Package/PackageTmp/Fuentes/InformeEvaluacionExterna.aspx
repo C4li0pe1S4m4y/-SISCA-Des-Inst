@@ -90,7 +90,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>No. de Hallazgo: </label>
+                                                <label>No. Hallazgo: </label>
                                                 <asp:TextBox ID="txtHallazgo" CssClass="form-control input" runat="server"></asp:TextBox>
                                                 <asp:RequiredFieldValidator ValidationGroup="validar" ID="RFVtxtHallazgo" Style="color: red;" SetFocusOnError="true" ControlToValidate="txtHallazgo" InitialValue="" runat="server" ErrorMessage="Ingrese No. Hallazgo." Display="Dynamic" />
                                             </div>
@@ -134,11 +134,20 @@
                                         <label>Analista: </label>
                                         <asp:TextBox ID="txtAnalista" Enabled="false" CssClass="form-control input" runat="server"></asp:TextBox>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-group">
                                         <label>Tipo Acción/Informe: </label>
-                                        <asp:DropDownList ID="dllTipoAccion" CssClass="form-control input" Width="100%" runat="server" Enabled="true"></asp:DropDownList>
+                                        <asp:DropDownList ID="dllTipoAccion" CssClass="form-control input" Width="100%" OnSelectedIndexChanged="dllTipoAccion_SelectedIndexChanged" AutoPostBack="true" runat="server" Enabled="true"></asp:DropDownList>
                                         <asp:RequiredFieldValidator ValidationGroup="validar" ID="RFVdllTipoAccion" Style="color: red;" SetFocusOnError="true" ControlToValidate="dllTipoAccion" InitialValue="0" runat="server" ErrorMessage="Seleccione Tipo de Acción." Display="Dynamic" />
                                     </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>No. Acción: </label>
+                                            <asp:TextBox ID="txtNoAccion" CssClass="form-control input" runat="server"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ValidationGroup="validar" ID="RFVtxtNoAccion" Style="color: red;" SetFocusOnError="true" ControlToValidate="txtNoAccion" InitialValue="" runat="server" ErrorMessage="Ingrese No. Acción." Display="Dynamic" />
+                                        </div>
+                                    </div>                                    
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">

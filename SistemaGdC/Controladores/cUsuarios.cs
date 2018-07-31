@@ -161,5 +161,20 @@ namespace Controladores
             conectar.CerrarConexion();
             return result;
         }
+
+        public DataSet ListadoUsuariosDS(string tipoUsuario) //crear consulta por tipo de fuente
+        {
+            DataSet result = new DataSet();
+            conectar.AbrirConexion();
+            string query2 = string.Format("SELECT u.idusuario id, u.usuario 'Usuario', e.nombre 'Nombre', tu.nombre 'Tipo Usuario', e.email 'Correo' " +
+                "FROM sgc_usuario u " +
+                    "INNER JOIN sgc_empleados e ON e.id_empleado = u.id_empleado " +
+                    "INNER JOIN sgc_tipo_usuario tu ON tu.id_tipo_usuario = u.id_tipo_usuario; ");
+
+            MySqlDataAdapter consulta = new MySqlDataAdapter(query2, conectar.conectar);
+            consulta.Fill(result,"Reporte");
+            conectar.CerrarConexion();
+            return result;
+        }
     }
 }

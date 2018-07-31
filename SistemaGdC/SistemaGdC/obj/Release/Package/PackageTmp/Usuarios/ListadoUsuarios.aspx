@@ -23,9 +23,9 @@
             border: solid 1px #000000;
         }
     </style>
-    <CR:CrystalReportViewer ID="CrystalReportViewer1" runat="server" AutoDataBind="true" />
+
     <div>
-           </div>
+    </div>
 
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
@@ -108,7 +108,10 @@
                     </div>
                 </div>
             </div>
-            <asp:Button ID="btnReporte" Text="Reporte" OnClick="btnReporte_Click" CssClass="btn btn-success btn-lg" runat="server"/>
+            <div>
+                <CR:CrystalReportViewer ID="CrystalReportViewer2" runat="server" AutoDataBind="true" />
+            </div>
+            <asp:Button ID="btnReporte" Text="Reporte" OnClick="btnReporte_Click" CssClass="btn btn-success btn-lg" runat="server" />
         </ContentTemplate>
     </asp:UpdatePanel>
 

@@ -18,6 +18,8 @@
     <link href="~/Content/bootstrap.css" rel="stylesheet" media="screen" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <script src="../Content/sweetalert.min.js"></script>
+    <script src="../crystalreportviewers13/js/crviewer/crv.js"></script>
+
 
 </head>
 <body style="background-image: url(../SISCA/Content/fondo7.jpg); background-repeat: no-repeat; background-attachment: fixed">

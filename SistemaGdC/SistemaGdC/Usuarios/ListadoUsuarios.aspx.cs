@@ -102,9 +102,49 @@ namespace SistemaGdC.InformeResultados.Acciones
 
         protected void btnReporte_Click(object sender, EventArgs e)
         {
-            DataTable dt = new DataTable();
-            dt = cGen.informacionGeneral();
-            ExportToExcel(dt);
+            reporteUsuario objRpt = new reporteUsuario();
+            objRpt.SetDataSource(cUsuarios.ListadoUsuariosDS("todos"));            
+            CrystalReportViewer2.ReportSource = objRpt;
+
+
+            //string archivo = "BaseLegal";
+            //string extension = ".pdf";
+            //string formato = "pdf";
+
+            //ExportOptions CrExportOptions;
+            //DiskFileDestinationOptions CrDiskFileDestinationOptions = new DiskFileDestinationOptions();
+            //PdfFormatOptions CrFormatTypeOptions = new PdfFormatOptions();
+            ////imprimirBaseLegal objRpt = new imprimirBaseLegal();
+            ////objRpt.SetDataSource(clase.imprimirIntroducionBaseLegal(Session["Federacion"].ToString(), year));
+
+            //CrDiskFileDestinationOptions.DiskFileName = "D:\\Reportes\\" + archivo + extension;
+
+            //CrExportOptions = objRpt.ExportOptions;
+            //{
+            //    CrExportOptions.ExportDestinationType = ExportDestinationType.DiskFile;
+            //    CrExportOptions.ExportFormatType = ExportFormatType.PortableDocFormat;
+            //    CrExportOptions.DestinationOptions = CrDiskFileDestinationOptions;
+            //    CrExportOptions.FormatOptions = CrFormatTypeOptions;
+            //}
+            //objRpt.Export();
+            //FileInfo file = new FileInfo("D:\\Reportes\\" + archivo + extension);
+            //if (file.Exists)
+            //{
+            //    Response.Clear();
+            //    Response.ClearHeaders();
+            //    Response.ClearContent();
+            //    Response.AddHeader("content-disposition", "attachment; filename=" + archivo + extension);
+            //    Response.AddHeader("Content-Type", "application/" + formato);
+            //    Response.ContentType = "application/vnd." + extension;
+            //    Response.AddHeader("Content-Length", file.Length.ToString());
+            //    Response.WriteFile(file.FullName);
+            //    Response.End();
+            //}
+            //else
+            //{
+            //    ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('¡Adevertencia!', 'No se pudo descargar el Archivo', 'warning');", true);
+            //}
+
         }
     }
 }

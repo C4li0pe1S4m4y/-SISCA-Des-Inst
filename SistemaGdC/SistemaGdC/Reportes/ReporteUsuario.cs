@@ -16,14 +16,14 @@ namespace SistemaGdC.Reportes {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class ReporteUsuario : ReportClass {
+    public class reporteUsuario : ReportClass {
         
-        public ReporteUsuario() {
+        public reporteUsuario() {
         }
         
         public override string ResourceName {
             get {
-                return "ReporteUsuario.rpt";
+                return "reporteUsuario.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace SistemaGdC.Reportes {
         
         public override string FullResourceName {
             get {
-                return "SistemaGdC.Reportes.ReporteUsuario.rpt";
+                return "SistemaGdC.Reportes.reporteUsuario.rpt";
             }
             set {
                 // Do nothing
@@ -90,9 +90,9 @@ namespace SistemaGdC.Reportes {
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedReporteUsuario : Component, ICachedReport {
+    public class CachedreporteUsuario : Component, ICachedReport {
         
-        public CachedReporteUsuario() {
+        public CachedreporteUsuario() {
         }
         
         [Browsable(false)]
@@ -129,7 +129,7 @@ namespace SistemaGdC.Reportes {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            ReporteUsuario rpt = new ReporteUsuario();
+            reporteUsuario rpt = new reporteUsuario();
             rpt.Site = this.Site;
             return rpt;
         }

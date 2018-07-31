@@ -68,3 +68,6 @@ D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\bin\CrystalDecisi
 D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\bin\CrystalDecisions.ReportAppServer.ObjectFactory.dll
 D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\bin\CrystalDecisions.ReportAppServer.CommonControls.dll
 D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\bin\stdole.dll
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\bin\CrystalDecisions.CrystalReports.Design.dll
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\bin\CrystalDecisions.Data.AdoDotNetInterop.dll
+D:\OTROS\CDAG\1 SISTEMAS\-SISCA-Des-Inst\SistemaGdC\SistemaGdC\bin\CrystalDecisions.Web.dll
