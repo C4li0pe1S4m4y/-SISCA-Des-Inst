@@ -27,7 +27,7 @@ namespace SistemaGdC.InformeResultados
         {
             if (!IsPostBack)
             {
-                lblFuente.InnerText = cFuente.nombreFuente(Session["noAccion"].ToString());
+                lblFuente.InnerText = cFuente.nombreFuenteA(Session["noAccion"].ToString());
                 this.Session["noPlanAccion"] = 0;
 
                 mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(Session["noAccion"].ToString()));
@@ -109,8 +109,8 @@ namespace SistemaGdC.InformeResultados
 
         protected void ddlHallazgo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
-            DataSet tabla = cInfoCorrec.InformacionInformeResultados(txtHallazgo.Text);
+
+            System.Data.DataSet tabla = cInfoCorrec.InformacionInformeResultados(txtHallazgo.Text);
             ddlTipoAccionInforme.SelectedIndex = int.Parse(tabla.Tables[0].Rows[0]["id_tipo_accion"].ToString());
             txtDescripcion.Text = tabla.Tables[0].Rows[0]["descripcion"].ToString();
         }
@@ -214,7 +214,7 @@ namespace SistemaGdC.InformeResultados
                 cPlanAccion.fechaRecepcion_plan(int.Parse(Session["noPlanAccion"].ToString()));
                 cPlanAccion.asignarTiempoPlan(int.Parse(Session["noPlanAccion"].ToString()));
                 cAcciones.validarCausaRaiz_Accion(int.Parse(Session["noAccion"].ToString()), 11);
-
+                cAcciones.ingresarFecha_Solicitud(int.Parse(Session["noAccion"].ToString()));
                 Response.Redirect("~/InformeResultados/Acciones/ListadoAcciones.aspx");
             }
 

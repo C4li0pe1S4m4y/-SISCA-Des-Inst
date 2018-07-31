@@ -98,7 +98,7 @@ namespace SistemaGdC.Verificaciones.InformeResultados
 
                 mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(selectedRow.Cells[0].Text));
 
-                lblFuente.InnerText = cFuente.nombreFuente(mAccionG.id_accion_generada.ToString());
+                lblFuente.InnerText = cFuente.nombreFuenteA(mAccionG.id_accion_generada.ToString());
                 ///////////////////////////////////////////////////////////////////////
                 //txtanio.Text = mAccionG.anio_informe_ei.ToString();
                 cAcciones.dropUnidad(ddlunidad);
@@ -220,6 +220,18 @@ namespace SistemaGdC.Verificaciones.InformeResultados
             else
             {
                 ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No hay evidencia adjunta', '', 'info');", true);
+            }
+        }
+
+        protected void gvListadoAcciones_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                int colDescrip = 5;
+                e.Row.Cells[colDescrip].Text =
+                    e.Row.Cells[colDescrip].Text.Length > 50 ?
+                    (e.Row.Cells[colDescrip].Text.Substring(0, 50) + "...") :
+                    e.Row.Cells[colDescrip].Text;
             }
         }
     }

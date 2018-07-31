@@ -265,6 +265,24 @@ namespace SistemaGdC.Fuentes {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVdllTipoAccion;
         
         /// <summary>
+        /// Control txtNoAccion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNoAccion;
+        
+        /// <summary>
+        /// Control RFVtxtNoAccion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVtxtNoAccion;
+        
+        /// <summary>
         /// Control txtDescripcion.
         /// </summary>
         /// <remarks>

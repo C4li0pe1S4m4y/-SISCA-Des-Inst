@@ -5470,6 +5470,7 @@ a.thumbnail:focus {
     margin-bottom: 20px;
 }
 
+
 .list-group-item {
     position: relative;
     display: block;
@@ -5478,7 +5479,6 @@ a.thumbnail:focus {
     background-color: #ffffff;
     border: 1px solid #dddddd;
 }
-
     .list-group-item:first-child {
         border-top-right-radius: 4px;
         border-top-left-radius: 4px;

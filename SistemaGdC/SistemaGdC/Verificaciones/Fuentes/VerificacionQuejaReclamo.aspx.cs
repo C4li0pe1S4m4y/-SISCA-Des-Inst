@@ -133,6 +133,12 @@ namespace SistemaGdC.Verificaciones.Fuentes
                 if (aprobado == "2") (e.Row.FindControl("btnRevisar") as Button).ControlStyle.CssClass = "btn btn-success";
                 else if (aprobado == "-2") (e.Row.FindControl("btnRevisar") as Button).ControlStyle.CssClass = "btn btn-danger";
                 else (e.Row.FindControl("btnRevisar") as Button).ControlStyle.CssClass = "btn btn-info";
+
+                int colDescrip = 7;
+                e.Row.Cells[colDescrip].Text =
+                    e.Row.Cells[colDescrip].Text.Length > 50 ?
+                    (e.Row.Cells[colDescrip].Text.Substring(0, 50) + "...") :
+                    e.Row.Cells[colDescrip].Text;
             }
         }
 
@@ -261,6 +267,15 @@ namespace SistemaGdC.Verificaciones.Fuentes
             cAcciones.aprobar_Accion(int.Parse(idAccion), 2);
 
             actualizarListadoAcciones();
+
+            int totalAprobados = 0;
+            DataTable aprobados = new DataTable();
+            aprobados = cAcciones.ListadoAccionesAprob(Session["idFuente"].ToString());
+            foreach (DataRow row in aprobados.Rows)
+                if (row["aprobado"].ToString() == "2") totalAprobados += 1;
+            if (aprobados.Rows.Count == totalAprobados)
+                cQuejaReclamo.actualizarStatusFuente(int.Parse(Session["idFuente"].ToString()), 2);
+
             botonesTodos();            
         }
 
@@ -275,7 +290,7 @@ namespace SistemaGdC.Verificaciones.Fuentes
                     mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(Session["Accion"].ToString()));
                     mEmpleado = cEmpleado.Obtner_Empleado(mAccionG.id_analista, "analista");
 
-                    string fuente = cQuejaReclamo.nombreFuente(Session["Accion"].ToString());
+                    string fuente = cQuejaReclamo.nombreFuenteA(Session["Accion"].ToString());
                     string asunto = "Acción Asignada (" + Session["Accion"].ToString() + "), " + fuente;
 
                     if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, asunto, mAccionG.descripcion);
@@ -307,7 +322,7 @@ namespace SistemaGdC.Verificaciones.Fuentes
                             mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(Row[0].ToString()));
                             mEmpleado = cEmpleado.Obtner_Empleado(mAccionG.id_enlace, "enlace");
 
-                            string fuente = cQuejaReclamo.nombreFuente(Row[0].ToString());
+                            string fuente = cQuejaReclamo.nombreFuenteA(Row[0].ToString());
                             string asunto = "Acción Asignada (" + Row[0].ToString() + "), " + fuente;
 
                             if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, asunto, mAccionG.descripcion);
@@ -336,7 +351,7 @@ namespace SistemaGdC.Verificaciones.Fuentes
                 mostrarBotones(false);                
                 mEmpleado = cEmpleado.Obtner_Empleado(0, "administrador");
 
-                string fuente = cQuejaReclamo.nombreFuente(Session["Accion"].ToString());
+                string fuente = cQuejaReclamo.nombreFuenteA(Session["Accion"].ToString());
                 string asunto = "Rechazo de Acción (" + Session["Accion"].ToString() + "), " + fuente;
 
                 RechazarAccion(Session["Accion"].ToString());               
@@ -373,7 +388,7 @@ namespace SistemaGdC.Verificaciones.Fuentes
 
                     mEmpleado = cEmpleado.Obtner_Empleado(0, "administrador");
 
-                    string fuente = cQuejaReclamo.nombreFuente(Session["Accion"].ToString());
+                    string fuente = cQuejaReclamo.nombreFuenteA(Session["Accion"].ToString());
                     asunto = asunto.Remove(asunto.Length - 2);
                     asunto += "), " + fuente;
 

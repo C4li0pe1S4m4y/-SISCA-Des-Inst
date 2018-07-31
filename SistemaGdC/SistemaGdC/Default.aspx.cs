@@ -12,6 +12,7 @@ namespace SistemaGdC
 {
     public partial class _Default : System.Web.UI.Page
     {
+        cGeneral cGen = new cGeneral();
         cDashboard dasboard = new cDashboard();
         cPlanAcion cPlanAccion = new cPlanAcion();
         cInformeCO cInformeCO = new cInformeCO();
@@ -28,7 +29,7 @@ namespace SistemaGdC
                     Thread informesVencidos = new Thread(cInformeOM.buscarIOMvencidos);
                     informesVencidos.Start();
 
-                    
+
                     gvListadoPlanes.DataSource = cPlanAccion.ListadoPlanesAccion("todos");
                     gvListadoInformesCO.DataSource = cInformeCO.ListadoInformesCO("todos");
                     gvListadoInformesOM.DataSource = cInformeOM.ListadoInformesOM("todos");
@@ -60,14 +61,14 @@ namespace SistemaGdC
                 {
                     Response.Redirect("~/login.aspx");
                 }
-                
+
             }
         }
-        
+
         protected void buscarInformesVencidos()
         {
             cInformeOM.buscarIOMvencidos();
-        }                     
+        }
 
         protected string graficaAcciones()
         {
@@ -112,12 +113,12 @@ namespace SistemaGdC
                 strDatos = strDatos + "'" + dr[0] + "'" + ",";
 
                 //for(int i=1;i<=3;i++)
-                for(int i=1;i<=2;i++)
+                for (int i = 1; i <= 2; i++)
                 {
                     if (dr[i].ToString() == "0") strDatos = strDatos + dr[i] + ",'',";
                     else strDatos = strDatos + dr[i] + ",'" + dr[i] + "',";
                 }
-               
+
                 strDatos = strDatos + "],";
             }
             strDatos = strDatos + "]";
@@ -140,7 +141,7 @@ namespace SistemaGdC
                     {
                         quitar = true;
                         continue;
-                    }                       
+                    }
                 }
                 if (quitar) continue;
 
@@ -171,7 +172,7 @@ namespace SistemaGdC
         protected void gvListadoPlanes_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvListadoPlanes.Columns[0].Visible = true;
-                     
+
             //this.Session["pagina"] = e.NewPageIndex;
             gvListadoPlanes.PageIndex = e.NewPageIndex;
 
@@ -204,7 +205,7 @@ namespace SistemaGdC
             }
         }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         protected void gvListadoInformesCO_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvListadoInformesCO.Columns[0].Visible = true;
@@ -237,11 +238,11 @@ namespace SistemaGdC
 
         protected void gvListadoInformesCO_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.Session["noAccion"] = int.Parse(gvListadoInformesCO.SelectedValue.ToString()); 
-            Response.Redirect("~/Visualizar/VerInformeCO.aspx");            
+            this.Session["noAccion"] = int.Parse(gvListadoInformesCO.SelectedValue.ToString());
+            Response.Redirect("~/Visualizar/VerInformeCO.aspx");
         }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         protected void gvListadoInformesOM_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvListadoInformesOM.Columns[0].Visible = true;
@@ -281,15 +282,46 @@ namespace SistemaGdC
         protected void actualizarCkeckbox_Click(object sender, EventArgs e)
         {
             checkboxPAccion.DataBind();
-            checkboxPAccionAbiertos.DataBind(); 
-            
-            
+            checkboxPAccionAbiertos.DataBind();
+
+
             /*string script = @"<script type='text/javascript'>
                             drawChart3();
                             </script>";*/
 
             ScriptManager.RegisterStartupScript(this, typeof(string), "grafica", "drawChart3();", true);
             //ScriptManager.RegisterStartupScript(this, typeof(Page), "grafica", script, true);
+        }
+
+        protected void btnReporte_Click(object sender, EventArgs e)
+        {
+
+            DataTable dt = new DataTable();
+            dt = cGen.informacionGeneral();
+            ExportToExcel(dt);
+        }
+
+        public void ExportToExcel(DataTable dt)
+        {
+            if (dt.Rows.Count > 0)
+            {
+                string filename = "Reporte.xls";
+                System.IO.StringWriter tw = new System.IO.StringWriter();
+                System.Web.UI.HtmlTextWriter hw = new System.Web.UI.HtmlTextWriter(tw);
+                DataGrid dgGrid = new DataGrid();
+                dgGrid.DataSource = dt;
+                dgGrid.DataBind();
+
+                dgGrid.RenderControl(hw);
+
+                Response.ContentType = "application/vnd.ms-excel";
+                Response.AppendHeader("Content-Disposition", "attachment; filename=" + filename + "");
+                Response.ContentEncoding = System.Text.Encoding.UTF8;
+                Response.BinaryWrite(System.Text.Encoding.UTF8.GetPreamble());
+                this.EnableViewState = false;
+                Response.Write(tw.ToString());
+                Response.End();
+            }
         }
     }
 }

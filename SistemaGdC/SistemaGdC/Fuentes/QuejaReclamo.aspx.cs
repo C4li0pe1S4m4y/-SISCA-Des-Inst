@@ -329,6 +329,12 @@ namespace SistemaGdC.Fuentes
                 if (aprobado == "2") (e.Row.FindControl("btIngresar") as Button).ControlStyle.CssClass = "btn btn-success";
                 else if (aprobado == "-2") (e.Row.FindControl("btIngresar") as Button).ControlStyle.CssClass = "btn btn-danger";
                 else (e.Row.FindControl("btIngresar") as Button).ControlStyle.CssClass = "btn btn-info";
+
+                int colDescrip = 7;
+                e.Row.Cells[colDescrip].Text =
+                    e.Row.Cells[colDescrip].Text.Length > 50 ?
+                    (e.Row.Cells[colDescrip].Text.Substring(0, 50) + "...") :
+                    e.Row.Cells[colDescrip].Text;
             }
         }
 
@@ -343,7 +349,13 @@ namespace SistemaGdC.Fuentes
 
         protected void btnFinalizar_Click(object sender, EventArgs e)
         {
-            cQuejaReclamo.actualizarInforme(int.Parse(Session["idFuente"].ToString()), 1);
+            mEmpleado = cEmpleado.Obtner_Empleado(1, "director");
+            string fuente = cQuejaReclamo.nombreFuenteF(Session["idFuente"].ToString());
+            string asunto = "NUEVA FUENTE: " + fuente;
+            string descripcion = "Se ha creado una neuva fuenta en la cual deberá revisar y validar todas sus acciones.";
+            if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, asunto, descripcion);
+
+            cQuejaReclamo.actualizarStatusFuente(int.Parse(Session["idFuente"].ToString()), 1);
             ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Ha finalizado correctamente el Informe', '', 'success');", true);
             Response.Redirect("~/Fuentes/QuejaReclamo.aspx");
         }
@@ -409,8 +421,20 @@ namespace SistemaGdC.Fuentes
                     gvListadoAcciones.DataBind();
                     verColumnas(false);
 
-                    if(editada) ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('La Acción ha sido actualizada correctamente', '', 'success');", true);
-                    else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No fue posible actualizar Acción', 'Intente de nuevo', 'error');", true);
+                if (editada)
+                {
+                    if(mAccionG.aprobado==-2)
+                    {
+                        mEmpleado = cEmpleado.Obtner_Empleado(1, "director");
+                        string fuente = cQuejaReclamo.nombreFuenteF(Session["idFuente"].ToString());
+                        string asunto = "ACCIÓN CORREGIDA: " + mAccionG.id_accion_generada + " " + fuente;
+                        string descripcion = "Se corrigió la acción para nueva revisión. Por favor revisar.";
+                        if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, asunto, descripcion);
+                    }
+
+                    ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('La Acción ha sido actualizada correctamente', '', 'success');", true);
+                }
+                else ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No fue posible actualizar Acción', 'Intente de nuevo', 'error');", true);
             }
             catch
             {

@@ -1,4 +1,5 @@
 ﻿using Controladores;
+using Modelos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace SistemaGdC.Usuarios
     {
         cGeneral cgDatos = new cGeneral();
         cUsuarios cUsuarios = new cUsuarios();
+
+        mUsuario mUsuario = new mUsuario();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -52,8 +55,13 @@ namespace SistemaGdC.Usuarios
             {
                 if (txtUsuario.Text !="")
                 {
-                   // objUsuarios = new cUsuarios();
-                   if(cUsuarios.IngresoNuevoUsuario(txtUsuario.Text, txtcontra.Text, ddlEmpleado.SelectedValue, ddlTipoUsuario.SelectedValue, txtCorreo.Text))
+                    mUsuario.usuario = txtUsuario.Text;
+                    mUsuario.id_empleado = int.Parse(ddlEmpleado.SelectedValue);
+                    mUsuario.id_tipo_usuario = int.Parse(ddlTipoUsuario.SelectedValue);
+                    mUsuario.correo = txtCorreo.Text;
+
+                    // objUsuarios = new cUsuarios();
+                    if (cUsuarios.IngresoNuevoUsuario(mUsuario, txtcontra.Text))
                     {
                         limpiarCampos();
                         ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Usuario ingresado exitosamente!', '', 'success');", true);

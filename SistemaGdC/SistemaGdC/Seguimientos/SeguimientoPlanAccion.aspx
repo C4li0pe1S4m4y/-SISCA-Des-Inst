@@ -119,9 +119,9 @@
                             <div class="row" id="panel2" runat="server">
                                 <div class="col-md-12">
                                     <div class="col-md-12" style="overflow: auto; height: 100%">
-                                        <asp:GridView ID="gvListadoAcciones" runat="server" DataKeyNames="Correlativo"
+                                        <asp:GridView ID="gvListadoAcciones" runat="server" DataKeyNames="Correlativo" CellPadding="4" 
                                             BackColor="#fdffe6" CssClass="table table-hover table-bordered" AutoGenerateColumns="false" Width="100%"
-                                            OnRowCommand="gvListadoAcciones_RowCommand">
+                                            OnRowCommand="gvListadoAcciones_RowCommand" OnRowDataBound="gvListadoAcciones_RowDataBound">
                                             <AlternatingRowStyle BackColor="#f2fffc" />
                                             <Columns>
                                                 <asp:BoundField DataField="id" HeaderText="ID" />

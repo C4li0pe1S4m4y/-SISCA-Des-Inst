@@ -21,6 +21,7 @@ namespace SistemaGdC.InformeResultados.Acciones
 
             if (!IsPostBack)
             {
+
                 lblFuente.InnerText = "control de acciones"; //Para mostrar el # de Informe
 
                 this.Session["pagina"] = 0;
@@ -95,7 +96,7 @@ namespace SistemaGdC.InformeResultados.Acciones
                 Session["noAccion"]= selectedRow.Cells[0].Text;
                 Session["noHallazgo"] = mAccionG.correlativo_hallazgo.ToString();
 
-                lblFuente.InnerText = cFuente.nombreFuente(Session["noAccion"].ToString());
+                lblFuente.InnerText = cFuente.nombreFuenteA(Session["noAccion"].ToString());
 
                 ddlAccionGenerada.SelectedValue = mAccionG.id_ccl_accion_generada.ToString();
                 txtHallazgo.Text = mAccionG.correlativo_hallazgo.ToString();
@@ -138,7 +139,16 @@ namespace SistemaGdC.InformeResultados.Acciones
 
         protected void gvListadoAcciones_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            e.Row.Cells[0].Visible = false;
+            //e.Row.Cells[0].Visible = false;
+
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                int colDescrip = 5;
+                e.Row.Cells[colDescrip].Text =
+                    e.Row.Cells[colDescrip].Text.Length > 50 ?
+                    (e.Row.Cells[colDescrip].Text.Substring(0, 50) + "...") :
+                    e.Row.Cells[colDescrip].Text;
+            }
         }
 
         protected void gvListadoAcciones_PageIndexChanging(object sender, GridViewPageEventArgs e)

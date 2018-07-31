@@ -18,7 +18,7 @@ namespace SistemaGdC.Seguimientos
         cActividades cActividades = new cActividades();
         cGeneral cGen = new cGeneral();
         cInformeCO cInfoCorrec = new cInformeCO();
-        cFuente cIneficacia = new cFuente();
+        cFuente cFuente = new cFuente();
         cEmpleado cEmpleado = new cEmpleado();
         cCorreo cCorreo = new cCorreo();        
         
@@ -27,7 +27,6 @@ namespace SistemaGdC.Seguimientos
         mActividad mAccionesRealizar = new mActividad();
         mEmpleado mEmpleado = new mEmpleado();
         mFuente mIneficacia = new mFuente();
-        int id_enlace;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -196,19 +195,24 @@ namespace SistemaGdC.Seguimientos
             panel4.Visible = false;
         }
 
+        protected int finPlan()
+        {
+            int finPlan = int.Parse(gvListadoActividadesPendientes.Rows.Count.ToString());
+            finPlan += int.Parse(gvListadoActividadesTerminadas.Rows.Count.ToString());
+            finPlan += int.Parse(gvListadoActividadesRechazadas.Rows.Count.ToString());
+
+            return finPlan;
+        }
+
         protected void btnValidar_Click(object sender, EventArgs e)
         {
             switch (int.Parse(Session["id_tipo_usuario"].ToString()))
             {
                 case 3: //Analista
                     cActividades.actualizarStatusActividad(int.Parse(Session["idActividad"].ToString()), 2);
-                    actualizarListadosActiviades();
+                    actualizarListadosActiviades();                
 
-                    int finPlan = int.Parse(gvListadoActividadesPendientes.Rows.Count.ToString());
-                    finPlan += int.Parse(gvListadoActividadesTerminadas.Rows.Count.ToString());
-                    finPlan += int.Parse(gvListadoActividadesRechazadas.Rows.Count.ToString());                    
-
-                    if (finPlan==0)
+                    if (finPlan()==0)
                     {
                         FileEficacia.Visible = true;
                         FileEficacia.Enabled = true;
@@ -241,7 +245,10 @@ namespace SistemaGdC.Seguimientos
                 case 3: //Analista
                     cActividades.actualizarStatusActividad(int.Parse(Session["idActividad"].ToString()), -2);
                     actualizarListadosActiviades();
-                    if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, "Rechazo de Actividad", txtRechazo.Text);
+
+                    string fuente = cFuente.nombreFuenteA(Session["noAccion"].ToString());
+                    string asunto = "ACTIVIDAD RECHAZADA (" + Session["idActividad"].ToString() + "), " + fuente;
+                    if (mEmpleado.email != null) cCorreo.enviarCorreo(mEmpleado.email, asunto, txtRechazo.Text);
                     txtRechazo.Text = "";
                     ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Actividad rechazada correctamente', '', 'error');", true);
                     break;
@@ -332,6 +339,11 @@ namespace SistemaGdC.Seguimientos
                             cActividades.actualizarStatusActividad(int.Parse(Session["idActividad"].ToString()), 1);
                             cActividades.actualizarObsActividad(int.Parse(Session["idActividad"].ToString()), txtObservacionAct.Text);
                             actualizarListadosActiviades();
+
+                            if(int.Parse(gvListadoActividadesPendientes.Rows.Count.ToString())==0)
+                            {
+                                cPlanAccion.finalizarPlan(int.Parse(Session["noPlanAccion"].ToString()));
+                            }
 
                             FileEvidencia.PostedFile.SaveAs(Server.MapPath("~/Archivos/EvidenciasPlanesAccion/") + Session["idActividad"].ToString() + ".pdf");
                             btnFinalizar.Visible = false;
@@ -463,17 +475,17 @@ namespace SistemaGdC.Seguimientos
             //mAnalista = cEmpleado.Obtner_Empleado(mAccionG.id_analista, "analista");
             mEnlace = cEmpleado.Obtner_Empleado(mAccionG.id_enlace, "enlace");
 
-            string fuente = cIneficacia.nombreFuente(Session["noAccion"].ToString());
+            string fuente = cFuente.nombreFuenteA(Session["noAccion"].ToString());
             string asunto = "Plan de Acción RECHAZADO (" + Session["noAccion"].ToString() + "), " + fuente;
 
             switch (int.Parse(Session["id_tipo_usuario"].ToString()))
             {
                 case 1: //Director
-                    mIneficacia = cIneficacia.ObtenerFuente(mAccionG.id_fuente);
+                    mIneficacia = cFuente.ObtenerFuente(mAccionG.id_fuente);
                     mIneficacia.no_fuente = int.Parse(Session["noAccion"].ToString());
                     mIneficacia.fecha = DateTime.Today.ToString("yyyy-MM-dd");
                     mIneficacia.id_tipo_fuente = 9;
-                    int idIneficacia = cIneficacia.AlmacenarEncabezado(mIneficacia);
+                    int idIneficacia = cFuente.AlmacenarEncabezado(mIneficacia);
                     mAccionG.id_fuente = idIneficacia;
                     mAccionG.aprobado = 2;
                     cAcciones.ingresarAccion(mAccionG);
@@ -495,6 +507,18 @@ namespace SistemaGdC.Seguimientos
             if(mPlanAccion.no_ampliacion==2)
                 ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No es posible realizar la ampliación del Plan', 'Ha excedido el máximo de ampliaciones', 'warning');", true);
             else Response.Redirect("~/InformeResultados/Ampliacion.aspx");
+        }
+
+        protected void gvListadoAcciones_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                int colDescrip = 5;
+                e.Row.Cells[colDescrip].Text =
+                    e.Row.Cells[colDescrip].Text.Length > 50 ?
+                    (e.Row.Cells[colDescrip].Text.Substring(0, 50) + "...") :
+                    e.Row.Cells[colDescrip].Text;
+            }                
         }
     }
 }

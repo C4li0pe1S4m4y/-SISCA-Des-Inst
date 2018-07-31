@@ -111,7 +111,7 @@
                                     <asp:GridView ID="gvListadoAcciones" runat="server" DataKeyNames="Correlativo"
                                         AllowPaging="true" OnPageIndexChanging="gvListadoAcciones_PageIndexChanging" PageSize="5"
                                         BackColor="#fdffe6" CssClass="table table-hover table-bordered" AutoGenerateColumns="false" Width="100%"
-                                        OnRowCommand="gvListadoAcciones_RowCommand">
+                                        OnRowCommand="gvListadoAcciones_RowCommand" OnRowDataBound="gvListadoAcciones_RowDataBound">
                                         <AlternatingRowStyle BackColor="#f2fffc" />
                                         <Columns>
                                             <asp:BoundField DataField="id" HeaderText="ID" />

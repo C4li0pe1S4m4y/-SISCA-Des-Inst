@@ -35,7 +35,7 @@
                 <div class="col-md-12" id="pn1" runat="server">
 
                     <div class="panel panel-default">
-                        <div class="panel-heading">Encabezado</div>
+                        <div class="panel-heading"><label id="lblFuente" runat="server"></label></div>
                         <div class="panel-body">
                             <div class="row" id="panel1" runat="server">
                                 <div class="col-md-8">
@@ -82,7 +82,7 @@
                                     <div class="col-md-12" style="overflow: auto; height: 100%">
                                         <asp:GridView ID="gvListadoAcciones" runat="server" DataKeyNames="Correlativo"
                                             BackColor="#fdffe6" CssClass="table table-hover table-bordered" AutoGenerateColumns="false" Width="100%"
-                                            OnRowCommand="gvListadoAcciones_RowCommand">
+                                            OnRowCommand="gvListadoAcciones_RowCommand" OnRowDataBound="gvListadoAcciones_RowDataBound">
                                             <AlternatingRowStyle BackColor="#f2fffc" />
                                             <Columns>
                                                 <asp:BoundField DataField="id" HeaderText="ID" />
@@ -110,7 +110,7 @@
                 </div>
             </div>
             <div class="row" id="panel3" runat="server">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <div class="panel panel-default">
                         <div class="panel-heading">Causa Raíz</div>
                         <div class="panel-body">
@@ -137,14 +137,13 @@
                                     <div class="col-md-4">
                                         <br />
                                         <asp:Button ID="btnEvidencia" Text="Evidencia" CssClass="btn btn-primary" OnClientClick="openInNewTab();" OnClick="btnDescargar_Click" runat="server" Width="100%" />
-                                    </div>
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-1">
+                                    </div>                                    
+                                    <div class="col-md-2">
                                         <br />
                                         <asp:LinkButton ID="btnValidar" OnClick="btnValidar_Click" CssClass="btn btn-success" runat="server"
                                             OnClientClick="return confirm('¿Desea validar el Plan de Acción?');"><span class="glyphicon glyphicon-ok"/></asp:LinkButton>
                                     </div>
-                                    <div class="col-md-1">
+                                    <div class="col-md-2">
                                         <br />
                                         <asp:LinkButton ID="btnRechazar" CssClass="btn btn-danger" runat="server"
                                             data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-remove"/></asp:LinkButton>
@@ -177,7 +176,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-7">
                     <div class="panel panel-default">
                         <div class="panel-heading">Lista de Actividades </div>
                         <div class="panel-body">

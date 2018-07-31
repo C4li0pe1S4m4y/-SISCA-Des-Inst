@@ -12,22 +12,23 @@ namespace Controladores
     {
         public void enviarCorreo(string direccion, string asunto, string mensaje)
         {
-            var origen = new MailAddress("cdag.soporte@gmail.com", "SISCA");
-            var destino = new MailAddress(direccion, "To Name");
-            const string fromPassword = "SopTec2o18";
-
-            var smtp = new SmtpClient
-            {
-                Host = "smtp.gmail.com",
-                Port = 587,
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(origen.Address, fromPassword)
-            };
-
             try
             {
+                var origen = new MailAddress("cdag.soporte@gmail.com", "SISCA");
+                var destino = new MailAddress(direccion, "To Name");
+                const string fromPassword = "SopTec2o18";
+
+                var smtp = new SmtpClient
+                {
+                    Host = "smtp.gmail.com",
+                    Port = 587,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(origen.Address, fromPassword)
+                };
+
+
                 using (var message = new MailMessage(origen, destino)
                 {
                     Subject = asunto,
@@ -38,11 +39,8 @@ namespace Controladores
                 }
                 //return true;
             }
-            catch
-            {
-                //return false;
-            }
-            
+            catch { }
+
         }
     }
 }

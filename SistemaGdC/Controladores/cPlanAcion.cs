@@ -391,6 +391,58 @@ namespace Controladores
             };
         }
 
+        public void fechaAnterior_Ampliacion(int id)
+        {            
+            conectar.AbrirConexion();
+            MySqlTransaction transaccion = conectar.conectar.BeginTransaction();
+            MySqlCommand command = conectar.conectar.CreateCommand();
+            command.Transaction = transaccion;
+            try
+            {
+                command.CommandText = string.Format("UPDATE sgc_plan_accion SET fecha_modificada = final_actividades WHERE id_plan = '{0}'; ",
+                id);
+                command.ExecuteNonQuery();
+                transaccion.Commit();
+                conectar.CerrarConexion();
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    transaccion.Rollback();
+                }
+                catch
+                { };
+                conectar.CerrarConexion();
+            };
+        }
+
+        public void finalizarPlan(int idPlan)
+        {
+            conectar.AbrirConexion();
+            MySqlTransaction transaccion = conectar.conectar.BeginTransaction();
+            MySqlCommand command = conectar.conectar.CreateCommand();
+            command.Transaction = transaccion;
+            try
+            {
+                command.CommandText = string.Format("UPDATE sgc_plan_accion SET fecha_finalizado = now() WHERE id_plan = '{0}'; ",
+                idPlan);
+                command.ExecuteNonQuery();
+                transaccion.Commit();
+                conectar.CerrarConexion();
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    transaccion.Rollback();
+                }
+                catch
+                { };
+                conectar.CerrarConexion();
+            };
+        }
+
         public void fechaRecepcion_plan(int id)
         {
             conectar.AbrirConexion();

@@ -75,7 +75,7 @@ namespace SistemaGdC.Visualizar
         protected void ddlHallazgo_SelectedIndexChanged(object sender, EventArgs e)
         {
             cInfoCorrec = new cInformeCO();
-            DataSet tabla = cInfoCorrec.InformacionInformeResultados(txtHallazgo.Text);
+            System.Data.DataSet tabla = cInfoCorrec.InformacionInformeResultados(txtHallazgo.Text);
             ddlTipoAccionInforme.SelectedIndex = int.Parse(tabla.Tables[0].Rows[0]["id_tipo_accion"].ToString());
             txtDescripcion.Text = tabla.Tables[0].Rows[0]["descripcion"].ToString();
         }

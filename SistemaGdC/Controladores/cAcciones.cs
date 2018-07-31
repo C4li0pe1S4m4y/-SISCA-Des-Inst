@@ -155,14 +155,14 @@ namespace Controladores
                 string query = string.Format("INSERT INTO sgc_accion_generada (" +
                 "correlativo_hallazgo, norma, descripcion, id_status, " +
                 "id_fuente, id_analista, id_lider, id_enlace, id_unidad, " +
-                "id_dependencia, id_ccl_accion_generada, id_proceso, id_tipo_accion, fecha, id_fadn, instalacion, id_periodo, correlativo_compromiso) " +
+                "id_dependencia, id_ccl_accion_generada, id_proceso, id_tipo_accion, fecha, id_fadn, instalacion, id_periodo, correlativo_compromiso, id_accion_anual) " +
 
-                "VALUES({0},'{1}','{2}',0,{3},(SELECT id_analista FROM sgc_unidad WHERE id_unidad = '{7}'),{4},{5},{6},{7},{8},{9},{10},now(),'{11}','{12}','{13}','{14}');",
+                "VALUES({0},'{1}','{2}',0,{3},(SELECT id_analista FROM sgc_unidad WHERE id_unidad = '{7}'),{4},{5},{6},{7},{8},{9},{10},now(),'{11}','{12}','{13}','{14}','{15}');",
 
                 accion.correlativo_hallazgo, accion.norma, accion.descripcion,
                 accion.id_fuente, accion.id_lider, accion.id_enlace, accion.id_unidad,
                 accion.id_dependencia, accion.id_ccl_accion_generada, accion.id_proceso, accion.id_tipo_accion,
-                accion.id_fadn,accion.instalacion,accion.id_periodo, accion.correlativo_compromiso);
+                accion.id_fadn,accion.instalacion,accion.id_periodo, accion.correlativo_compromiso, accion.id_accion_anual);
 
                 MySqlCommand cmd = new MySqlCommand(query, conectar.conectar);
 
@@ -238,6 +238,7 @@ namespace Controladores
                     objAccionGenerada.aprobado = int.Parse(dr.GetString("aprobado"));
                 if (!dr.IsDBNull(dr.GetOrdinal("correlativo_compromiso")))
                     objAccionGenerada.correlativo_compromiso = int.Parse(dr.GetString("correlativo_compromiso"));
+                objAccionGenerada.id_accion_anual = int.Parse(dr.GetString("id_accion_anual"));
             }
             return objAccionGenerada;
         }
@@ -325,6 +326,33 @@ namespace Controladores
             return result;
         }
 
+        public DataTable ListadoAccionesAprob(string idFuente) //crear consulta por tipo de fuente
+        {
+            DataTable result = new DataTable();
+            conectar.AbrirConexion();
+            string query2 = string.Format("SELECT aprobado FROM sgc_accion_generada WHERE id_fuente = '{0}'; ", idFuente);
+
+            MySqlDataAdapter consulta = new MySqlDataAdapter(query2, conectar.conectar);
+            consulta.Fill(result);
+            conectar.CerrarConexion();
+            return result;
+        }
+
+        public DataTable ListadoCorrelativoAcciones(string anio, string tipoAccion) //crear consulta por tipo de fuente
+        {
+            DataTable result = new DataTable();
+            conectar.AbrirConexion();
+            string query2 = string.Format("SELECT ag.id_accion_anual correlativo "+
+                "FROM sgc_accion_generada ag "+
+                "INNER JOIN sgc_fuente f ON ag.id_fuente = f.id_fuente "+
+                "WHERE f.anio = '{0}' AND ag.id_tipo_accion = '{1}'; ", anio, tipoAccion);
+
+            MySqlDataAdapter consulta = new MySqlDataAdapter(query2, conectar.conectar);
+            consulta.Fill(result);
+            conectar.CerrarConexion();
+            return result;
+        }
+
         public bool actualizar_Accion(mAccionesGeneradas ag) //ok
         {
             conectar.AbrirConexion();
@@ -337,11 +365,11 @@ namespace Controladores
                     "descripcion = '{2}', id_analista = (SELECT id_analista FROM sgc_unidad WHERE id_unidad = '{6}'), id_lider = '{3}', id_enlace = '{4}', " +
                     "id_unidad = '{5}', id_dependencia = '{6}', id_ccl_accion_generada = '{7}', "+
                     "id_proceso = '{8}', id_tipo_accion = '{9}', correlativo_hallazgo = '{10}', " +
-                    "id_fadn = '{11}', instalacion = '{12}', id_periodo = '{13}', correlativo_compromiso = '{14}' " +
+                    "id_fadn = '{11}', instalacion = '{12}', id_periodo = '{13}', correlativo_compromiso = '{14}', id_accion_anual = '{15}' " +
                     "WHERE id_accion_generada = '{0}'; ",
                 ag.id_accion_generada,ag.norma,ag.descripcion, ag.id_lider, ag.id_enlace,ag.id_unidad,
                 ag.id_dependencia,ag.id_ccl_accion_generada,ag.id_proceso,ag.id_tipo_accion,ag.correlativo_hallazgo,
-                ag.id_fadn,ag.instalacion,ag.id_periodo, ag.correlativo_compromiso);
+                ag.id_fadn,ag.instalacion,ag.id_periodo, ag.correlativo_compromiso, ag.id_accion_anual);
                 command.ExecuteNonQuery();
                 transaccion.Commit();
                 conectar.CerrarConexion();
@@ -370,6 +398,32 @@ namespace Controladores
             {
                 command.CommandText = string.Format("UPDATE sgc_accion_generada SET id_status = '{1}' WHERE id_accion_generada = '{0}'; ",
                 id, status);
+                command.ExecuteNonQuery();
+                transaccion.Commit();
+                conectar.CerrarConexion();
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    transaccion.Rollback();
+                }
+                catch
+                { };
+                conectar.CerrarConexion();
+            };
+        }
+
+        public void ingresarFecha_Solicitud(int id)
+        {
+            conectar.AbrirConexion();
+            MySqlTransaction transaccion = conectar.conectar.BeginTransaction();
+            MySqlCommand command = conectar.conectar.CreateCommand();
+            command.Transaction = transaccion;
+            try
+            {
+                command.CommandText = string.Format("UPDATE sgc_accion_generada SET fecha_solicitud = now() WHERE id_accion_generada = '{0}'; ",
+                id);
                 command.ExecuteNonQuery();
                 transaccion.Commit();
                 conectar.CerrarConexion();

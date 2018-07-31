@@ -27,7 +27,7 @@ namespace SistemaGdC.InformeResultados
         {
             if (!IsPostBack)
             {
-                lblFuente.InnerText = cFuente.nombreFuente(Session["noAccion"].ToString());
+                lblFuente.InnerText = cFuente.nombreFuenteA(Session["noAccion"].ToString());
                 //this.Session["noPlanAccion"] = 0;
 
                 mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(Session["noAccion"].ToString()));
@@ -53,14 +53,20 @@ namespace SistemaGdC.InformeResultados
 
                 enabledPlan(false);
                 //if (mAccionG.id_status == 1)
-                        mPlanAccion = cPlanAccion.Obtner_PlanAccion(mAccionG.id_accion_generada);
-                        ddlTecnicaAnalisis.SelectedValue = mPlanAccion.tecnica_analisis;
-                        txtCausa.Text = mPlanAccion.causa_raiz;
+                mPlanAccion = cPlanAccion.Obtner_PlanAccion(mAccionG.id_accion_generada);
+                ddlTecnicaAnalisis.SelectedValue = mPlanAccion.tecnica_analisis;
+                txtCausa.Text = mPlanAccion.causa_raiz;
 
-                        enabledCausaRaiz(false);
-                        enabledPlan(true);
-                        visibleAdjuntar(false);
-                        this.Session["noPlanAccion"] = mPlanAccion.id_plan;
+                enabledCausaRaiz(false);
+                enabledPlan(true);
+                visibleAdjuntar(false);
+
+                if (mPlanAccion.id_status != 6)
+                    btnFinalizar.Enabled = false;
+                else btnFinalizar.Enabled = true;
+
+
+                this.Session["noPlanAccion"] = mPlanAccion.id_plan;
 
                 gvListado.DataSource = cPlanAccion.ListadoAccionesRealizar(int.Parse(Session["noPlanAccion"].ToString()));                
                 gvListado.DataBind();
@@ -103,8 +109,8 @@ namespace SistemaGdC.InformeResultados
 
         protected void ddlHallazgo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
-            DataSet tabla = cInfoCorrec.InformacionInformeResultados(txtHallazgo.Text);
+
+            System.Data.DataSet tabla = cInfoCorrec.InformacionInformeResultados(txtHallazgo.Text);
             ddlTipoAccionInforme.SelectedIndex = int.Parse(tabla.Tables[0].Rows[0]["id_tipo_accion"].ToString());
             txtDescripcion.Text = tabla.Tables[0].Rows[0]["descripcion"].ToString();
         }
@@ -120,8 +126,13 @@ namespace SistemaGdC.InformeResultados
             int result = cPlanAccion.IngresarAccionRealizar(mActividad);
             if (result == 1)
             {
+                cPlanAccion.actualizar_statusPlan(int.Parse(Session["noPlanAccion"].ToString()), 6);
+
                 gvListado.DataSource = cPlanAccion.ListadoAccionesRealizar(int.Parse(Session["noPlanAccion"].ToString()));
                 gvListado.DataBind();
+
+                btnFinalizar.Enabled = true;
+
                 ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Actividad almacenada exitosamente!', '', 'success');", true);
                 limpiarActividad();
             }
@@ -150,16 +161,17 @@ namespace SistemaGdC.InformeResultados
 
         protected void btnFinalizar_Click(object sender, EventArgs e)
         {
-            try
-            {
-                mPlanAccion = cPlanAccion.Obtner_PlanAccion(int.Parse(Session["noAccion"].ToString()));
+            mPlanAccion = cPlanAccion.Obtner_PlanAccion(int.Parse(Session["noAccion"].ToString()));
+            if(mPlanAccion.id_status==6)
+            {                
                 cPlanAccion.actualizar_statusPlan(mPlanAccion.id_plan, 1);
                 cPlanAccion.agregar_Ampliacion(mPlanAccion.id_plan, mPlanAccion.no_ampliacion);
+                cPlanAccion.fechaAnterior_Ampliacion(mPlanAccion.id_plan);
                 cPlanAccion.asignarTiempoPlan(int.Parse(Session["noPlanAccion"].ToString()));
                 Response.Redirect("~/Seguimientos/SeguimientoPlanAccion.aspx");
             }
 
-            catch
+            else
             {
                 ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('No fue posible finalizar el Plan de Acción', 'Intente de nuevo', 'error');", true);
             }
@@ -274,11 +286,12 @@ namespace SistemaGdC.InformeResultados
                 txtResponsable.Text = mActividad.responsable;
                 txtFechaInicio.Text = mActividad.fecha_inicio;
                 txtFechaFin.Text = mActividad.fecha_fin;
+                txtObservacionAct.Text = mActividad.observaciones;
 
-                if(mActividad.id_status==2)
+                if(mActividad.id_status!=0)
                 {
                     visibleActividad(false);
-                    ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Actividad revisada y validad!', 'No podrá editarse ni borrarse', 'info');", true);
+                    ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Actividad validada o en revisión!', 'No es posible editarse ni borrarse', 'info');", true);
                 }
                 else visibleActividad(true);
                 //cActividades.EliminarAccion(int.Parse(selectedRow.Cells[1].Text));
@@ -301,6 +314,14 @@ namespace SistemaGdC.InformeResultados
                 btnGuardar.Visible = true;
                 limpiarActividad();
                 visibleActividad(false);
+
+                cPlanAccion.actualizar_statusPlan(int.Parse(Session["noPlanAccion"].ToString()), 6);
+
+                gvListado.DataSource = cPlanAccion.ListadoAccionesRealizar(int.Parse(Session["noPlanAccion"].ToString()));
+                gvListado.DataBind();
+
+                btnFinalizar.Enabled = true;
+
                 ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Registro eliminado exitosamente!', '', 'error');", true);
             }            
         }
@@ -335,9 +356,13 @@ namespace SistemaGdC.InformeResultados
                     btnGuardar.Visible = true;
                     limpiarActividad();
                     visibleActividad(false);
+                    enabledActividad(true);
 
                     gvListado.DataSource = cPlanAccion.ListadoAccionesRealizar(int.Parse(Session["noPlanAccion"].ToString()));
                     gvListado.DataBind();
+
+                    btnFinalizar.Enabled = true;
+
                     ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Actividad actualizada exitosamente!', '', 'success');", true);
                 }                
             }                       

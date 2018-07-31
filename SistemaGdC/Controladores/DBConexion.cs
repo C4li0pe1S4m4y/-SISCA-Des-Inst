@@ -11,7 +11,7 @@ namespace Controladores
     public class DBConexion
     {
         private String contenido = "server=localhost; database =dbcdagsgc3;user=root; password =123456; Allow User Variables=True";
-        //private String contenido = "server=localhost; database =dbcdagsgc2;user=root; password =1234; Allow User Variables=True";
+        //private String contenido = "server=localhost; database =dbcdagsgc3;user=root; password =1234; Allow User Variables=True";
         
         public MySqlConnection conectar = new MySqlConnection();
         public MySqlDataAdapter adaptador = new MySqlDataAdapter();

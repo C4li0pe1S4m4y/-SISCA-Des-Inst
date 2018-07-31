@@ -22,6 +22,33 @@
             overflow: hidden;
             border: solid 1px #000000;
         }
+
+        #Background {
+            position: fixed;
+            top: 0px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+            background-color: #F0F0F0;
+            filter: alpha(opacity=80);
+            opacity: 0.8;
+            z-index: 100000;
+        }
+
+        #Progress {
+            position: fixed;
+            top: 40%;
+            left: 25%;
+            height: 20%;
+            width: 50%;
+            z-index: 100001;
+            background-image: url(../Content/loading.gif);
+            background-repeat: no-repeat;
+            background-position: center;
+        }
     </style>
 
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -211,4 +238,18 @@
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>
+    <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="UpdatePanel1">
+        <ProgressTemplate>
+            <div id="Background"></div>
+            <div id="Progress">
+                <h6>
+                    <p style="text-align: center">
+                        <b>Cargando...
+                        <br />
+                        </b>
+                    </p>
+                </h6>
+            </div>
+        </ProgressTemplate>
+    </asp:UpdateProgress>
 </asp:Content>

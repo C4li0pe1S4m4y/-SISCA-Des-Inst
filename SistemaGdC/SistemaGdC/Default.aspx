@@ -200,7 +200,9 @@
 
     <h2>&nbsp;</h2>    
     <h2 style="color:white"><b>Panel Principal</b></h2>
+    
     <div class="row">
+        
         <div class="col-md-12">
             <div class="panel panel-default" data-toggle="collapse" data-target=".navbar-collapse">
                 <div class="panel-heading">

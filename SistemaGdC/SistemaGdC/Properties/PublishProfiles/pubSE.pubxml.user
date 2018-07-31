@@ -34,7 +34,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>02/16/2018 09:42:17</publishTime>
     </File>
     <File Include="bin/Controladores.dll">
-      <publishTime>07/18/2018 10:14:21</publishTime>
+      <publishTime>07/26/2018 11:30:18</publishTime>
     </File>
     <File Include="bin/Controladores.exe">
       <publishTime>10/11/2017 23:43:19</publishTime>
@@ -133,7 +133,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>02/16/2018 09:42:17</publishTime>
     </File>
     <File Include="bin/Modelos.dll">
-      <publishTime>07/18/2018 10:14:20</publishTime>
+      <publishTime>07/26/2018 11:18:24</publishTime>
     </File>
     <File Include="bin/Modelos.exe">
       <publishTime>10/11/2017 23:42:43</publishTime>
@@ -184,7 +184,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>02/16/2018 09:42:17</publishTime>
     </File>
     <File Include="bin/SistemaGdC.dll">
-      <publishTime>07/18/2018 10:14:27</publishTime>
+      <publishTime>07/26/2018 11:33:32</publishTime>
     </File>
     <File Include="bin/SistemaGdC.pdb">
       <publishTime>12/18/2017 11:31:52</publishTime>
@@ -217,7 +217,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>02/16/2018 09:42:16</publishTime>
     </File>
     <File Include="Content/bootstrap.css">
-      <publishTime>07/05/2018 09:25:11</publishTime>
+      <publishTime>07/19/2018 14:33:52</publishTime>
     </File>
     <File Include="Content/bootstrap.min.css">
       <publishTime>02/16/2018 09:42:16</publishTime>
@@ -227,6 +227,9 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
     </File>
     <File Include="Content/fondo7.jpg">
       <publishTime>02/09/2018 12:10:38</publishTime>
+    </File>
+    <File Include="Content/fondoLogin.png">
+      <publishTime>07/26/2018 11:33:07</publishTime>
     </File>
     <File Include="Content/Site.css">
       <publishTime>02/16/2018 09:42:16</publishTime>
@@ -267,6 +270,12 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
     <File Include="Dashboard/Dashboard.aspx">
       <publishTime>05/16/2018 16:30:04</publishTime>
     </File>
+    <File Include="DataSet/DataUsuario.xsc">
+      <publishTime>07/25/2018 15:46:23</publishTime>
+    </File>
+    <File Include="DataSet/DataUsuario.xss">
+      <publishTime>07/25/2018 15:46:23</publishTime>
+    </File>
     <File Include="datasetsisca.xsc">
       <publishTime>05/29/2018 09:31:50</publishTime>
     </File>
@@ -300,38 +309,44 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
     <File Include="fonts/logoCdag.png">
       <publishTime>02/16/2018 09:42:16</publishTime>
     </File>
+    <File Include="fonts/logoCdagNuevo.png">
+      <publishTime>06/11/2018 08:49:25</publishTime>
+    </File>
     <File Include="Formulario web1.aspx">
       <publishTime>11/10/2017 14:36:34</publishTime>
     </File>
     <File Include="Fuentes/InformeEvaluacionExterna.aspx">
-      <publishTime>07/17/2018 13:40:58</publishTime>
+      <publishTime>07/19/2018 10:43:55</publishTime>
     </File>
     <File Include="Fuentes/InformeEvaluacionInterna.aspx">
-      <publishTime>07/12/2018 14:48:09</publishTime>
+      <publishTime>07/24/2018 10:40:33</publishTime>
     </File>
     <File Include="Fuentes/IniciativaPropia.aspx">
-      <publishTime>07/12/2018 14:48:35</publishTime>
+      <publishTime>07/19/2018 10:44:21</publishTime>
     </File>
     <File Include="Fuentes/MedicionIndicadores.aspx">
-      <publishTime>07/12/2018 14:48:47</publishTime>
+      <publishTime>07/19/2018 10:43:36</publishTime>
     </File>
     <File Include="Fuentes/MedicionSatisfaccionCliente.aspx">
-      <publishTime>07/12/2018 14:48:53</publishTime>
+      <publishTime>07/19/2018 10:43:44</publishTime>
     </File>
     <File Include="Fuentes/MinutaRevisionAD.aspx">
-      <publishTime>07/12/2018 14:49:03</publishTime>
+      <publishTime>07/19/2018 10:45:06</publishTime>
     </File>
     <File Include="Fuentes/QuejaReclamo.aspx">
-      <publishTime>07/12/2018 14:49:17</publishTime>
+      <publishTime>07/19/2018 10:45:24</publishTime>
     </File>
     <File Include="Fuentes/SalidaNoConforme.aspx">
-      <publishTime>07/12/2018 14:49:25</publishTime>
+      <publishTime>07/23/2018 13:24:07</publishTime>
     </File>
     <File Include="Global.asax">
       <publishTime>02/16/2018 09:42:16</publishTime>
     </File>
     <File Include="InformeResultados/Acciones/ListadoAcciones.aspx">
-      <publishTime>07/17/2018 21:19:42</publishTime>
+      <publishTime>07/26/2018 10:48:18</publishTime>
+    </File>
+    <File Include="InformeResultados/Ampliacion.aspx">
+      <publishTime>07/23/2018 16:32:43</publishTime>
     </File>
     <File Include="InformeResultados/InformeCO.aspx">
       <publishTime>07/06/2018 11:03:58</publishTime>
@@ -355,7 +370,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>02/16/2018 09:42:16</publishTime>
     </File>
     <File Include="InformeResultados/PlanAccion.aspx">
-      <publishTime>07/12/2018 14:49:49</publishTime>
+      <publishTime>07/20/2018 15:01:39</publishTime>
     </File>
     <File Include="InformeResultados/SISCA/Content/fondo7.jpg">
       <publishTime>07/04/2018 11:12:12</publishTime>
@@ -364,7 +379,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>02/16/2018 09:42:16</publishTime>
     </File>
     <File Include="Login.aspx">
-      <publishTime>03/23/2018 12:00:14</publishTime>
+      <publishTime>07/25/2018 22:37:53</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>05/29/2018 14:58:03</publishTime>
@@ -478,13 +493,13 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>05/10/2018 15:52:48</publishTime>
     </File>
     <File Include="Seguimientos/SeguimientoPlanAccion.aspx">
-      <publishTime>07/17/2018 22:44:03</publishTime>
+      <publishTime>07/25/2018 10:02:24</publishTime>
     </File>
     <File Include="SISCA/Content/fondo7.jpg">
       <publishTime>09/02/2018 12:10:38</publishTime>
     </File>
     <File Include="Site.Master">
-      <publishTime>07/12/2018 10:18:29</publishTime>
+      <publishTime>07/19/2018 15:57:09</publishTime>
     </File>
     <File Include="Site.Mobile.Master">
       <publishTime>02/16/2018 09:42:16</publishTime>
@@ -508,7 +523,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>05/14/2018 14:21:22</publishTime>
     </File>
     <File Include="Usuarios/ListadoUsuarios.aspx">
-      <publishTime>05/14/2018 14:21:57</publishTime>
+      <publishTime>07/25/2018 16:45:53</publishTime>
     </File>
     <File Include="Verificaciones/Fuentes/VerificacionInformeEE.aspx">
       <publishTime>07/17/2018 20:48:51</publishTime>
@@ -520,13 +535,13 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>07/17/2018 20:48:31</publishTime>
     </File>
     <File Include="Verificaciones/InformeResultados/VerificacionInformesCO.aspx">
-      <publishTime>07/12/2018 14:55:51</publishTime>
+      <publishTime>07/18/2018 12:11:29</publishTime>
     </File>
     <File Include="Verificaciones/InformeResultados/VerificacionInformesOM.aspx">
-      <publishTime>07/12/2018 14:55:59</publishTime>
+      <publishTime>07/18/2018 13:17:21</publishTime>
     </File>
     <File Include="Verificaciones/InformeResultados/VerificacionPlanes.aspx">
-      <publishTime>07/17/2018 21:26:57</publishTime>
+      <publishTime>07/26/2018 10:52:52</publishTime>
     </File>
     <File Include="Verificaciones/SISCA/Content/fondo7.jpg">
       <publishTime>07/04/2018 11:11:56</publishTime>
@@ -559,7 +574,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>07/12/2018 14:56:28</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/18/2018 10:14:30</publishTime>
+      <publishTime>07/26/2018 11:18:32</publishTime>
     </File>
   </ItemGroup>
 </Project>

@@ -25,6 +25,7 @@ namespace Modelos
         public int id_ccl_accion_generada { get; set; }
         public int id_proceso { get; set; }
         public int id_tipo_accion { get; set; }
+        public int id_accion_anual { get; set; }
         public int aprobado { get; set; }
         public int id_fadn { get; set; }
         public int id_periodo { get; set; }

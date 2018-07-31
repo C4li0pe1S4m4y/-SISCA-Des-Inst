@@ -321,6 +321,12 @@ namespace SistemaGdC.Fuentes
                 if (aprobado == "2") (e.Row.FindControl("btIngresar") as Button).ControlStyle.CssClass = "btn btn-success";
                 else if (aprobado == "-2") (e.Row.FindControl("btIngresar") as Button).ControlStyle.CssClass = "btn btn-danger";
                 else (e.Row.FindControl("btIngresar") as Button).ControlStyle.CssClass = "btn btn-info";
+
+                int colDescrip = 5;
+                e.Row.Cells[colDescrip].Text =
+                    e.Row.Cells[colDescrip].Text.Length > 50 ?
+                    (e.Row.Cells[colDescrip].Text.Substring(0, 50) + "...") :
+                    e.Row.Cells[colDescrip].Text;
             }
         }
 
@@ -335,7 +341,7 @@ namespace SistemaGdC.Fuentes
 
         protected void btnFinalizar_Click(object sender, EventArgs e)
         {
-            cSalidaNoConforme.actualizarInforme(int.Parse(Session["idFuente"].ToString()), 1);
+            cSalidaNoConforme.actualizarStatusFuente(int.Parse(Session["idFuente"].ToString()), 1);
             ScriptManager.RegisterStartupScript(this, typeof(string), "Mensaje", "swal('Ha finalizado correctamente el Informe', '', 'success');", true);
             Response.Redirect("~/Fuentes/SalidaNoConforme.aspx");
         }

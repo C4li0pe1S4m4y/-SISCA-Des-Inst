@@ -119,7 +119,7 @@ namespace Controladores
             return result;
         }
 
-        public string nombreFuente(string idAccion) //OK -- agregar switch por tipo de fuente
+        public string nombreFuenteA(string idAccion) //OK -- agregar switch por tipo de fuente
         {
             string nombre = "";
             try
@@ -141,6 +141,42 @@ namespace Controladores
                     "INNER JOIN sgc_accion_generada ag ON f.id_fuente = ag.id_fuente " +
                     "INNER JOIN sgc_tipo_fuente tf ON f.id_tipo_fuente = tf.id_tipo_fuente " +
                 "WHERE ag.id_accion_generada = '{0}'; ", idAccion);
+                MySqlCommand cmd = new MySqlCommand(query, conectar.conectar);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                    nombre = reader["fuente"].ToString();
+
+                conectar.CerrarConexion();
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+            return nombre;
+        }
+
+        public string nombreFuenteF(string idFuente) //OK -- agregar switch por tipo de fuente
+        {
+            string nombre = "";
+            try
+            {
+                conectar.AbrirConexion();
+                string query = string.Format("SELECT " +
+                    "CASE f.id_tipo_fuente " +
+                        "WHEN 1 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_informe_ei, ')') " +
+                        "WHEN 2 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_informe_ee, ')') " +
+                        "WHEN 3 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_queja, ')') " +
+                        "WHEN 4 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_iniciativa_pro, ')') " +
+                        "WHEN 5 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_medicion_ind, ')') " +
+                        "WHEN 6 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_medicion_satisfaccion, ')') " +
+                        "WHEN 7 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_minuta_rev_ad, ')') " +
+                        "WHEN 8 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_salida_no_conforme, ')') " +
+                        "WHEN 9 THEN CONCAT(tf.nombre, ' (', f.anio, '-', f.no_ineficacia, ')') " +
+                    "END AS fuente " +
+                "FROM sgc_fuente f " +
+                    "INNER JOIN sgc_accion_generada ag ON f.id_fuente = ag.id_fuente " +
+                    "INNER JOIN sgc_tipo_fuente tf ON f.id_tipo_fuente = tf.id_tipo_fuente " +
+                "WHERE f.id_fuente = '{0}'; ", idFuente);
                 MySqlCommand cmd = new MySqlCommand(query, conectar.conectar);
                 MySqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
@@ -324,7 +360,10 @@ namespace Controladores
                 conectar.CerrarConexion();
                 return result;
             }
-            finally { }            
+            finally
+            {
+                //return result;
+            }
         }
 
         public DataSet ListadoFuentes(int status, int tipoFuente) //ok
@@ -339,7 +378,7 @@ namespace Controladores
         }
 
 
-        public void actualizarInforme(int idFuente, int status) //ok
+        public void actualizarStatusFuente(int idFuente, int status) //ok
         {
             conectar.AbrirConexion();
             MySqlTransaction transaccion = conectar.conectar.BeginTransaction();

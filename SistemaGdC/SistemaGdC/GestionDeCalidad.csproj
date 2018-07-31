@@ -145,6 +145,7 @@
     <Folder Include="Archivos\EficaciaPlanAccion\" />
     <Folder Include="Archivos\EvidenciasPlanesAccion\" />
     <Folder Include="Archivos\InformeCorreccion\" />
+    <Folder Include="Archivos\InformeOM\" />
     <Folder Include="fonts\font-awesome-4.7.0\css\" />
     <Folder Include="fonts\font-awesome-4.7.0\fonts\" />
     <Folder Include="fonts\font-awesome-4.7.0\less\" />
@@ -175,6 +176,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\fondo7.jpg" />
+    <Content Include="Content\fondoLogin.png" />
     <Content Include="Content\Site.css" />
     <Content Include="css\chosen.css" />
     <Content Include="css\Control.css" />
@@ -192,7 +194,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Archivos\InformeOM\1.pdf" />
     <Content Include="dbcdagsgc2DataSet.xsc">
       <DependentUpon>dbcdagsgc2DataSet.xsd</DependentUpon>
     </Content>
@@ -207,6 +208,17 @@
     <Content Include="datasetsisca.xss">
       <DependentUpon>datasetsisca.xsd</DependentUpon>
     </Content>
+    <Content Include="DataSet\DataUsuario.xsc">
+      <DependentUpon>DataUsuario.xsd</DependentUpon>
+    </Content>
+    <None Include="DataSet\DataUsuario.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataUsuario.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DataSet\DataUsuario.xss">
+      <DependentUpon>DataUsuario.xsd</DependentUpon>
+    </Content>
     <None Include="dbcdagsgc2DataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>dbcdagsgc2DataSet.Designer.cs</LastGenOutput>
@@ -218,6 +230,7 @@
     <None Include="Properties\PublishProfiles\pubSE.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="fonts\logoCdag.png" />
+    <Content Include="fonts\logoCdagNuevo.png" />
     <Content Include="Fuentes\InformeEvaluacionExterna.aspx" />
     <Content Include="Fuentes\SalidaNoConforme.aspx" />
     <Content Include="Fuentes\MinutaRevisionAD.aspx" />
@@ -235,6 +248,7 @@
     <Content Include="Seguimientos\SeguimientoPlanAccion.aspx" />
     <Content Include="SISCA\Content\fondo7.jpg" />
     <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="Usuarios\ListadoUsuarios.aspx" />
     <Content Include="Verificaciones\Fuentes\VerificacionQuejaReclamo.aspx" />
     <Content Include="Verificaciones\Fuentes\VerificacionInformeEI.aspx" />
     <Content Include="Verificaciones\Fuentes\VerificacionInformeEE.aspx" />
@@ -277,7 +291,6 @@
     <Content Include="Site.Master" />
     <Content Include="InformeResultados\Acciones\ListadoAcciones.aspx" />
     <Content Include="Usuarios\IngresoUsuarios.aspx" />
-    <Content Include="Usuarios\ListadoUsuarios.aspx" />
     <Content Include="Verificaciones\SISCA\Content\fondo7.jpg" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Visualizar\VerInformeOM.aspx" />
@@ -326,6 +339,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>datasetsisca.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\DataUsuario.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataUsuario.xsd</DependentUpon>
     </Compile>
     <Compile Include="dbcdagsgc2DataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -433,6 +451,12 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\ReporteUsuario.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReporteUsuario.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Seguimientos\SeguimientoPlanAccion.aspx.cs">
       <DependentUpon>SeguimientoPlanAccion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -441,6 +465,13 @@
       <DependentUpon>SeguimientoPlanAccion.aspx</DependentUpon>
     </Compile>
     <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="Usuarios\ListadoUsuarios.aspx.cs">
+      <DependentUpon>ListadoUsuarios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Usuarios\ListadoUsuarios.aspx.designer.cs">
+      <DependentUpon>ListadoUsuarios.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Verificaciones\Fuentes\VerificacionQuejaReclamo.aspx.cs">
       <DependentUpon>VerificacionQuejaReclamo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -512,13 +543,6 @@
     <Compile Include="Usuarios\IngresoUsuarios.aspx.designer.cs">
       <DependentUpon>IngresoUsuarios.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Usuarios\ListadoUsuarios.aspx.cs">
-      <DependentUpon>ListadoUsuarios.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Usuarios\ListadoUsuarios.aspx.designer.cs">
-      <DependentUpon>ListadoUsuarios.aspx</DependentUpon>
-    </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -564,6 +588,12 @@
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Reportes\ReporteUsuario.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ReporteUsuario.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

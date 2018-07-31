@@ -88,7 +88,7 @@ namespace SistemaGdC.Verificaciones.InformeResultados
 
                 mAccionG = cAcciones.Obtner_AccionGenerada(int.Parse(selectedRow.Cells[0].Text));
 
-                lblFuente.InnerText = cFuente.nombreFuente(mAccionG.id_accion_generada.ToString());
+                lblFuente.InnerText = cFuente.nombreFuenteA(mAccionG.id_accion_generada.ToString());
                 ///////////////////////////////////////////////////////////////////////
                 //txtanio.Text = mAccionG.anio_informe_ei.ToString();
                 cAcciones.dropUnidad(ddlunidad);
